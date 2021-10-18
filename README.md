@@ -1,15 +1,13 @@
-# {Project Name}
+# Platformer Aplha
 
 ## Description
 
-{project description}
+A simple platformer made with XML and TMXL
 
 ## Key Features
 
- - {Feature01}
- - {Feature02}
- - {Feature03}
- - {Feature04}
+ - Movement with the keyboard
+ - Platforming
  
 ## Controls
 
@@ -17,13 +15,11 @@
 
 ## Developers
 
- - {Dev01} - {Role(s)}
- - {Dev02} - {Role(s)}
- - {Dev03} - {Role(s)}
- - {Dev04} - {Role(s)}
+ - Jose A. Atencia - Developer
+ - Víctor Falcón - Developer
+
 
 ## License
 
 This project is licensed under an unmodified MIT license, which is an OSI-certified license that allows static linking with closed source software. Check [LICENSE](LICENSE) for further details.
 
-{AdditionalLicenses}
