@@ -50,7 +50,6 @@ struct MapLayer
 	{
 		RELEASE(data);
 	}
-	int id;
 	SString name;
 	int width;
 	int height;

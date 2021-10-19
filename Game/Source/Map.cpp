@@ -165,20 +165,7 @@ bool Map::Load(const char* filename)
 		}
 
 		// L04: TODO 4: LOG the info for each loaded layer
-		ListItem<MapLayer*>* layer;
-		layer = mapData.maplayers.start;
-		LOG("----------------------------");
-		LOG("Layer");
-		while (layer != NULL)
-		{
-			LOG("Name: %i ID: %i", layer->data->name, layer->data->id);
-			
-			LOG("Layer width: %i Layer height: %i", layer->data->width, layer->data->height);
-			
-
-			layer = layer->next;
-		}
-	}
+    }
 	
 	// Clean up the pugui tree
 	if(mapFile) mapFile.reset();
@@ -279,7 +266,6 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	bool ret = true;
 	
 	//Load the attributes and assign to the layer variables
-	layer->id = node.attribute("id").as_int();
 	layer->name = node.attribute("name").as_string();
 	layer->width = node.attribute("width").as_int();
 	layer->height = node.attribute("height").as_int();
