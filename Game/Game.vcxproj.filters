@@ -34,6 +34,9 @@
     <ClCompile Include="Source\Window.cpp">
       <Filter>Source\Modules\Core</Filter>
     </ClCompile>
+    <ClCompile Include="Physics.cpp">
+      <Filter>Source\Modules\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -85,6 +88,9 @@
       <Filter>Source\Modules\Core</Filter>
     </ClInclude>
     <ClInclude Include="Source\Window.h">
+      <Filter>Source\Modules\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics.h">
       <Filter>Source\Modules\Core</Filter>
     </ClInclude>
   </ItemGroup>
