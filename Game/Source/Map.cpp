@@ -48,12 +48,22 @@ void Map::Draw()
 	*/
 	
 	// L04: TODO 5: Prepare the loop to draw all tiles in a layer + DrawTexture()
+	for (int x = 0; x < mapData.maplayers.start->data->width; x++)
+	{
+		for (int y = 0; y < mapData.maplayers.start->data->height; y++)
+		{
+			// L04: TODO 9: Complete the draw function (inside the loop from TODO 5)
+			// Find which tile id is on x, y coordinates 
+			// Find out that Tile’s Rect inside the tileset Image (
+			// Find out where in the World(screen) we have to draw
+			// DrawTexture()
+			int id = mapData.maplayers.start->data->Get(x, y);
+			SDL_Rect rect = mapData.tilesets.start->data->GetTileRect(id);
+			iPoint p = MapToWorld(x, y);
+			app->render->DrawTexture(mapData.tilesets.start->data->texture, p.x, p.y, &rect);
 
-	// L04: TODO 9: Complete the draw function (inside the loop from TODO 5)
-	// Find which tile id is on x, y coordinates 
-	// Find out that Tile’s Rect inside the tileset Image (
-	// Find out where in the World(screen) we have to draw
-	// DrawTexture()
+		}
+	}
 
 
 }
@@ -63,8 +73,8 @@ iPoint Map::MapToWorld(int x, int y) const
 {
 	iPoint ret;
 
-	//ret.x = //..;
-	//ret.y = //..;
+	ret.x = x * mapData.tileWidth;
+	ret.y = y * mapData.tileHeight;
 
 	return ret;
 }
@@ -73,6 +83,15 @@ iPoint Map::MapToWorld(int x, int y) const
 SDL_Rect TileSet::GetTileRect(int id) const
 {
 	SDL_Rect rect = { 0 };
+
+	int relativeIndex = id - firstgid;
+
+	rect.w = tile_width;
+	rect.h = tile_height;
+
+	rect.x = margin + (tile_width + spacing) * (relativeIndex % columns);
+	rect.y = margin + (tile_height + spacing) * (relativeIndex / columns);
+	
 
 	return rect;
 }
@@ -172,6 +191,7 @@ bool Map::Load(const char* filename)
 			LOG("Name: %i ID: %i", layer->data->name, layer->data->id);
 
 			LOG("Layer width: %i Layer height: %i", layer->data->width, layer->data->height);
+			LOG("Data: %i", layer->data->data[0]);
 
 
 			layer = layer->next;
@@ -289,13 +309,13 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	layer->data = new uint[layer->width * layer->height];
 	memset(layer->data, 0, layer->width * layer->height);
 	//Iterate over all the tiles in the xml and assign the values
+	pugi::xml_node tile;
 	int i = 0;
-	for (pugi::xml_node nodeTile = node.child("data").child("tile"); nodeTile && ret; nodeTile = nodeTile.next_sibling("tile"))
+	for (tile = node.child("data").child("tile"); tile && ret; tile = tile.next_sibling("tile"))
 	{
-		layer->data[i] = nodeTile.attribute("gid").as_uint();
+		layer->data[i] = tile.attribute("gid").as_int();
 		i++;
 	}
-
 
 	return ret;
 }

@@ -56,6 +56,9 @@ struct MapLayer
 	int height;
 	uint* data;
 	// L04: TODO 6: Short function to get the value of x,y
+	inline uint Get(int x, int y) const {
+		return data[y * width + x];
+	}
 	
 };
 
