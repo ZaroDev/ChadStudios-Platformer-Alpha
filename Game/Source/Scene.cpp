@@ -32,8 +32,9 @@ bool Scene::Awake()
 bool Scene::Start()
 {
 	// L03: DONE: Load map
-	app->map->Load("hello.tmx");
+	app->map->Load("map.tmx");
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
+	background = app->tex->Load("Assets/textures/environment/layers/back.png");
 
 	return true;
 }
@@ -69,7 +70,9 @@ bool Scene::Update(float dt)
 	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
 
 	// Draw map
+	app->render->DrawTexture(background, 0, 0, NULL, 1.0f);
 	app->map->Draw();
+
 
 	// L03: DONE 7: Set the window title with map/tileset info
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",

@@ -37,6 +37,9 @@
     <ClCompile Include="Source\Physics.cpp">
       <Filter>Source\Modules\Core</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Player.cpp">
+      <Filter>Source\Modules\Gameplay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -96,6 +99,9 @@
     <ClInclude Include="Source\Animation.h">
       <Filter>Source\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Player.h">
+      <Filter>Source\Modules\Gameplay</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
@@ -122,5 +128,8 @@
     <Filter Include="Source\Modules\Gameplay">
       <UniqueIdentifier>{9d88a43c-f085-42d5-baf0-5b2517495539}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Output\config.xml" />
   </ItemGroup>
 </Project>
