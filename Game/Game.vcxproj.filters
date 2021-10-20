@@ -34,7 +34,9 @@
     <ClCompile Include="Source\Window.cpp">
       <Filter>Source\Modules\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Physics.cpp" />
+    <ClCompile Include="Source\Physics.cpp">
+      <Filter>Source\Modules\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -88,7 +90,12 @@
     <ClInclude Include="Source\Window.h">
       <Filter>Source\Modules\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Physics.h" />
+    <ClInclude Include="Source\Physics.h">
+      <Filter>Source\Modules\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Animation.h">
+      <Filter>Source\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

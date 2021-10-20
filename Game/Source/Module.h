@@ -5,6 +5,7 @@
 
 #include "PugiXml/src/pugixml.hpp"
 
+class PhysBody;
 class App;
 
 class Module
@@ -66,7 +67,10 @@ public:
 	{
 		return true;
 	}
+	virtual void OnCollision(PhysBody* bodyA, PhysBody* bodyB)
+	{
 
+	}
 public:
 
 	SString name;
