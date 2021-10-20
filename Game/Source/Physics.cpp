@@ -7,10 +7,10 @@
 #include "Defs.h"
 #include "Log.h"
 #include "Render.h"
+
 #include "Box2D/Box2D/Box2D.h"
 
-
-#ifdef _DEBUG
+#ifdef DEBUG
 
 #pragma comment( lib, "../Game/Source/External/Box2D/libx86/DDebug/Box2D.lib" )
 #else
