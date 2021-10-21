@@ -35,6 +35,8 @@ public:
 private:
 	SDL_Texture* img;
 	SDL_Texture* background;
+
+	PhysBody* ground;
 };
 
 #endif // __SCENE_H__

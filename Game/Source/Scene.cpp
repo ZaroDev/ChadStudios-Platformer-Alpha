@@ -6,6 +6,8 @@
 #include "Window.h"
 #include "Scene.h"
 #include "Map.h"
+#include "Physics.h"
+
 
 #include "Defs.h"
 #include "Log.h"
@@ -35,6 +37,8 @@ bool Scene::Start()
 	app->map->Load("map.tmx");
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 	background = app->tex->Load("Assets/textures/environment/layers/back.png");
+
+	ground = app->physics->CreateRectangle(0, 300, 1600, 50, KINEMATIC);
 
 	return true;
 }
@@ -66,8 +70,17 @@ bool Scene::Update(float dt)
 
 	if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		app->render->camera.x += 1;
-
-	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
+	if (app->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN)
+	{
+		app->audio->volMusic++;
+		app->audio->volFX++;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_KP_LESS) == KEY_DOWN)
+	{
+		app->audio->volMusic--;
+		app->audio->volFX--;
+	}
+	
 
 	// Draw map
 	app->render->DrawTexture(background, 0, 0, NULL, 1.0f);

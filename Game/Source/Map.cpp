@@ -34,18 +34,7 @@ void Map::Draw()
 {
 	if (mapLoaded == false) return;
 
-    // L03: DONE 6: Iterate all tilesets and draw all their 
-    // images in 0,0 (you should have only one tileset for now)
-	/*
-    ListItem<TileSet*>* tileset;
-    tileset = mapData.tilesets.start;
-
-    while (tileset != NULL) 
-	{
-        app->render->DrawTexture(tileset->data->texture,0,0);
-        tileset = tileset->next;
-    }
-	*/
+    
 	
 	// L04: TODO 5: Prepare the loop to draw all tiles in a layer + DrawTexture()
 	for (int x = 0; x < mapData.maplayers.start->data->width; x++)
@@ -284,8 +273,7 @@ bool Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 		// L03: DONE 4: Load Tileset image
 		SString tmp("%s%s", folder.GetString(), image.attribute("source").as_string());
 		
-		//SDL_Surface* surface = IMG_Load(tmp.GetString()); //Need include #include "SDL_image/include/SDL_image.h"
-		//set->texture = SDL_CreateTextureFromSurface(app->render->renderer, surface);
+
 
 		//NOTE: This line simplifies the loading
 		set->texture = app->tex->Load(tmp.GetString());

@@ -54,7 +54,8 @@ bool Audio::Awake(pugi::xml_node& config)
 		active = false;
 		ret = true;
 	}
-
+	volMusic = Mix_VolumeMusic(config.child("music").attribute("value").as_int());
+	volFX = Mix_Volume(-1, config.child("fx").attribute("value").as_int());
 	return ret;
 }
 
@@ -161,7 +162,7 @@ unsigned int Audio::LoadFx(const char* path)
 	return ret;
 }
 
-// Play WAV
+// Play WAVF
 bool Audio::PlayFx(unsigned int id, int repeat)
 {
 	bool ret = false;
@@ -173,6 +174,26 @@ bool Audio::PlayFx(unsigned int id, int repeat)
 	{
 		Mix_PlayChannel(-1, fx[id - 1], repeat);
 	}
+
+	return ret;
+}
+
+bool Audio::LoadState(pugi::xml_node& data)
+{
+	bool ret = true;
+	
+	volMusic = Mix_VolumeMusic(data.child("music").attribute("value").as_int());
+	volFX = Mix_Volume(-1, data.child("fx").attribute("value").as_int());
+	return ret;
+}
+
+bool Audio::SaveState(pugi::xml_node& data) const
+{
+	bool ret = true;
+	pugi::xml_node music = data.append_child("music");
+	music.append_attribute("value").set_value(volMusic);
+	pugi::xml_node fx = data.append_child("fx");
+	fx.append_attribute("value").set_value(volFX);
 
 	return ret;
 }

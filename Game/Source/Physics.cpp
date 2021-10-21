@@ -104,6 +104,7 @@ PhysBody* Physics::CreateRectangle(int x, int y, int width, int height, bodyType
 	b2FixtureDef fixture;
 	fixture.shape = &box;
 	fixture.density = 1.0f;
+	b->ResetMassData();
 
 	b->CreateFixture(&fixture);
 

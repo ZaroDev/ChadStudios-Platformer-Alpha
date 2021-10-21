@@ -7,6 +7,7 @@
 #include "Scene.h"
 #include "Map.h"
 #include "Player.h"
+#include "Physics.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -27,6 +28,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	scene = new Scene();
 	map = new Map();
 	player = new Player(true);
+	physics = new Physics();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -34,10 +36,10 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(input);
 	AddModule(tex);
 	AddModule(audio);
+	AddModule(physics);
 	AddModule(scene);
 	AddModule(map);
 	AddModule(player);
-
 	// Render last to swap buffer
 	AddModule(render);
 }
@@ -292,25 +294,51 @@ void App::SaveGameRequest() const
 }
 
 // ---------------------------------------
-// L02: TODO 5: Create a method to actually load an xml file
+// L02: DONE 5: Create a method to actually load an xml file
 // then call all the modules to load themselves
 bool App::LoadGame()
 {
-	bool ret = false;
+	bool ret = true;
 
-	//...
+	pugi::xml_parse_result result = gameStateFile.load_file("save_game.xml");
+	
+	if (result == NULL)
+	{
+		LOG("Could not load map xml file config.xml. pugi error: %s", result.description());
+		ret = false;
+	}
+
+	ListItem<Module*>* item;
+	item = modules.start;
+
+	while (item != NULL && ret == true)
+	{
+		ret = item->data->LoadState(gameStateFile.child("game_state").child(item->data->name.GetString()));
+		item = item->next;
+	}
 
 	loadGameRequested = false;
 
 	return ret;
 }
 
-// L02: TODO 7: Implement the xml save method for current state
+// L02: DONE 7: Implement the xml save method for current state
 bool App::SaveGame() const
 {
 	bool ret = true;
 
-	//...
+	pugi::xml_document* saveDoc = new pugi::xml_document();
+	pugi::xml_node saveStateNode = saveDoc->append_child("game_state");
+
+	ListItem<Module*>* item;
+	item = modules.start;
+
+	while (item != NULL)
+	{
+		ret = item->data->SaveState(saveStateNode.append_child(item->data->name.GetString()));
+		item = item->next;
+	}
+	ret = saveDoc->save_file("save_game.xml");
 
 	saveGameRequested = false;
 

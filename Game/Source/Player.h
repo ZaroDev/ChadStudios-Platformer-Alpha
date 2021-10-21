@@ -1,15 +1,19 @@
 #include "Module.h"
 #include "Point.h"
 #include "Animation.h"
-
+#include "Box2D/Box2D/Box2D.h"
 
 struct SDL_Texture;
+
+
 
 class Player : public Module
 {
 public:
 	Player(bool active);
 	~Player();
+
+	bool Awake(pugi::xml_node&);
 
 	bool Start() override;
 
@@ -19,9 +23,14 @@ public:
 
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB) override;
 
+	bool LoadState(pugi::xml_node&);
+	bool SaveState(pugi::xml_node&) const;
+
 	iPoint pos;
 
-	int speed;
+	PhysBody* body;
+
+	int speed = 1;
 
 	SDL_Texture* tex;
 
@@ -35,4 +44,5 @@ public:
 
 	Animation jumpAnimL;
 	Animation jumpAnimR;
+	bool grounded;
 };

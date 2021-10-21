@@ -6,17 +6,24 @@
     <organization>UPC</organization>
   </app>
 
-  <renderer>
+  <render>
     <vsync value="false"/>
-  </renderer>
+  </render>
 
   <window>
-    <resolution width="1600" height="900" scale="5"/>
+    <resolution width="1600" height="900" scale="1"/>
     <fullscreen value="false"/>
     <borderless value="false"/>
     <resizable value="false"/>
     <fullscreen_window value="false"/>
   </window>
+  <audio>
+    <music value="14" />
+    <fx value="40" />
+  </audio>
+  <player>
+    <pos x="300" y="0"/>
+  </player>
 
   <!-- L03: Added maps folder as config option -->
   <map>
