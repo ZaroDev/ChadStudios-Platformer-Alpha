@@ -98,8 +98,7 @@ bool Player::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		
-		body->body->ApplyLinearImpulse({ 0.01, -0.1 }, body->body->GetWorldCenter(), true);
+		body->body->SetLinearVelocity({ body->body->GetLinearVelocity().x, -0.5f});
 		
 	}
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE)

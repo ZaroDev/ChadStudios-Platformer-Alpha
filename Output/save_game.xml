@@ -11,7 +11,7 @@
 	<scene />
 	<map />
 	<player>
-		<pos x="563" y="125" />
+		<pos x="218" y="249" />
 	</player>
 	<render>
 		<camera x="0" y="0" />
