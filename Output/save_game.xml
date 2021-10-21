@@ -7,11 +7,11 @@
 		<music value="128" />
 		<fx value="128" />
 	</audio>
-
+	<:anonymous />
 	<scene />
 	<map />
 	<player>
-		<pos x="100" y="0" />
+		<pos x="563" y="125" />
 	</player>
 	<render>
 		<camera x="0" y="0" />

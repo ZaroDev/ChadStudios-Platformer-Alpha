@@ -65,7 +65,6 @@ bool Player::Start()
 	currentAnimation = &idleAnimR;
 	body = app->physics->CreateRectangle(pos.x, pos.y, 24, 25, DYNAMIC);
 	body->body->SetFixedRotation(true);
-	
 	grounded = true;
 	return ret;
 }
@@ -73,7 +72,7 @@ bool Player::Start()
 bool Player::Update(float dt)
 {
 	bool ret = true;
-	b2Vec2 vel = body->body->GetLinearVelocity();
+	b2Vec2 velocity = body->body->GetLinearVelocity();
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		b2Vec2 vel = body->body->GetLinearVelocity();
@@ -99,8 +98,8 @@ bool Player::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		float impulse = body->body->GetMass() * 10000;
-		body->body->ApplyLinearImpulse(b2Vec2(0, impulse), body->body->GetWorldCenter(), true);
+		
+		body->body->ApplyLinearImpulse({ 0.01, -0.1 }, body->body->GetWorldCenter(), true);
 		
 	}
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE)
