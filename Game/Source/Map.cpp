@@ -61,9 +61,18 @@ void Map::Draw()
 iPoint Map::MapToWorld(int x, int y) const
 {
 	iPoint ret;
+	if (mapData.type == MAPTYPE_ORTHOGONAL)
+	{
+		ret.x = x * mapData.tileWidth;
+		ret.y = y * mapData.tileHeight;
+	}
+	if (mapData.type == MAPTYPE_ISOMETRIC)
+	{
+		ret.x = (x - y) * (mapData.tileWidth * 0.5f);
+		ret.y = (x + y) * (mapData.tileHeight * 0.5f);
 
-	ret.x = x * mapData.tileWidth;
-	ret.y = y * mapData.tileHeight;
+
+	}
 
 	return ret;
 }

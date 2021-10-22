@@ -89,7 +89,7 @@ bool Player::Start()
 	b->SetUserData(pbody);
 	pbody->width = 24 * 0.5f;
 	pbody->height = 27 * 0.5f;
-
+	pbody->listener = this;
 
 	return ret;
 }

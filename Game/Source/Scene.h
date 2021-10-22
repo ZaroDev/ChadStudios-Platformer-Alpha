@@ -4,7 +4,20 @@
 #include "Module.h"
 
 struct SDL_Texture;
+class Tile
+{
+public:
+	Tile() {};
+	~Tile() {};
+	enum Type
+	{
+		NONE = -1,
+		GROUND,
 
+	};
+	Type type;
+	PhysBody* body;
+};
 class Scene : public Module
 {
 public:
@@ -36,7 +49,7 @@ private:
 	SDL_Texture* img;
 	SDL_Texture* background;
 
-	PhysBody* ground;
+	List<Tile*> ground;
 };
 
 #endif // __SCENE_H__

@@ -34,11 +34,14 @@ bool Scene::Awake()
 bool Scene::Start()
 {
 	// L03: DONE: Load map
-	app->map->Load("map.tmx");
+	app->map->Load("iso.tmx");
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 	background = app->tex->Load("Assets/textures/environment/layers/back.png");
+	Tile* ground1 = new Tile();
+	ground1->body =app->physics->CreateRectangle(0, 300, 1600, 50, KINEMATIC);
+	ground1->type = Tile::Type::GROUND;
 
-	ground = app->physics->CreateRectangle(0, 300, 1600, 50, KINEMATIC);
+	ground.add(ground1);
 
 	return true;
 }
@@ -83,7 +86,7 @@ bool Scene::Update(float dt)
 	
 
 	// Draw map
-	app->render->DrawTexture(background, 0, 0, NULL, 1.0f);
+	//app->render->DrawTexture(background, 0, 0, NULL, 1.0f);
 	app->map->Draw();
 
 
