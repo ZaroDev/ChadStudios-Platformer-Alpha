@@ -28,7 +28,7 @@ public:
 
 	iPoint pos;
 
-	PhysBody* body;
+	PhysBody* pbody;
 
 	int speed = 1;
 

@@ -6,6 +6,8 @@
 #include "Render.h"
 #include "Log.h"
 
+
+
 Player::Player(bool active)
 {
 	name.Create("player");
@@ -13,14 +15,14 @@ Player::Player(bool active)
 	idleAnimR.PushBack({ 51, 9, 25, 28 });
 	idleAnimR.PushBack({ 98, 10, 28, 27 });
 	idleAnimR.PushBack({ 139, 9, 25, 28 });
-	idleAnimR.speed = 0.001f;
+	idleAnimR.speed = 0.01f;
 	idleAnimR.loop = true;
 
 	idleAnimL.PushBack({ 314, 7, 24, 30 });
 	idleAnimL.PushBack({ 270, 9, 25, 28 });
 	idleAnimL.PushBack({ 226, 10, 28, 27 });
 	idleAnimL.PushBack({ 189, 9, 25, 28 });
-	idleAnimL.speed = 0.001f;
+	idleAnimL.speed = 0.01f;
 	idleAnimL.loop = true;
 
 	runAnimR.PushBack({ 260, 89, 24, 30 });
@@ -29,7 +31,7 @@ Player::Player(bool active)
 	runAnimR.PushBack({ 393, 89, 24, 30 });
 	runAnimR.PushBack({ 439, 88, 22, 30 });
 	runAnimR.PushBack({ 481, 89, 24, 30 });
-	runAnimR.speed = 0.001f;
+	runAnimR.speed = 0.01f;
 	runAnimR.loop = true;
 
 	runAnimL.PushBack({ 226, 89, 24, 30 });
@@ -38,7 +40,7 @@ Player::Player(bool active)
 	runAnimL.PushBack({ 93, 89, 24, 30 });
 	runAnimL.PushBack({ 49, 88, 22, 30 });
 	runAnimL.PushBack({ 5, 89, 24, 30 });
-	runAnimL.speed = 0.001f;
+	runAnimL.speed = 0.01f;
 	runAnimL.loop = true;
 
 }
@@ -63,21 +65,44 @@ bool Player::Start()
 	bool ret = true;
 	tex = app->tex->Load("Assets/textures/sprites/player.png");
 	currentAnimation = &idleAnimR;
-	body = app->physics->CreateRectangle(pos.x, pos.y, 24, 25, DYNAMIC);
-	body->body->SetFixedRotation(true);
+
+
 	grounded = true;
+	b2BodyDef body;
+	body.type = b2_dynamicBody;
+	body.position.Set(PIXEL_TO_METERS(pos.x), PIXEL_TO_METERS(pos.y));
+	body.fixedRotation = true;
+	b2Body* b = app->physics->world->CreateBody(&body);
+	b2PolygonShape box;
+	box.SetAsBox(PIXEL_TO_METERS(24) * 0.5f, PIXEL_TO_METERS(30) * 0.5f);
+
+	b2FixtureDef fixture;
+	fixture.shape = &box;
+	fixture.density = 10.0f;
+	fixture.friction = 100.0f;
+	b->ResetMassData();
+
+	b->CreateFixture(&fixture);
+
+	pbody = new PhysBody();
+	pbody->body = b;
+	b->SetUserData(pbody);
+	pbody->width = 24 * 0.5f;
+	pbody->height = 27 * 0.5f;
+
+
 	return ret;
 }
 
 bool Player::Update(float dt)
 {
 	bool ret = true;
-	b2Vec2 velocity = body->body->GetLinearVelocity();
+	b2Vec2 velocity = pbody->body->GetLinearVelocity();
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		b2Vec2 vel = body->body->GetLinearVelocity();
-		vel.x = 0.1;
-		body->body->SetLinearVelocity(vel);
+		b2Vec2 vel = pbody->body->GetLinearVelocity();
+		vel.x = 0.5;
+		pbody->body->SetLinearVelocity(vel);
 		if(currentAnimation != &runAnimR && grounded)
 		{
 			runAnimR.Reset();
@@ -86,9 +111,9 @@ bool Player::Update(float dt)
 	}
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		b2Vec2 vel = body->body->GetLinearVelocity();
-		vel.x = -0.1;
-		body->body->SetLinearVelocity(vel);
+		b2Vec2 vel = pbody->body->GetLinearVelocity();
+		vel.x = -0.5;
+		pbody->body->SetLinearVelocity(vel);
 		if (currentAnimation != &runAnimL && grounded)
 		{
 			runAnimL.Reset();
@@ -98,7 +123,7 @@ bool Player::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		body->body->SetLinearVelocity({ body->body->GetLinearVelocity().x, -0.5f});
+		pbody->body->SetLinearVelocity({ pbody->body->GetLinearVelocity().x, -0.5f});
 		
 	}
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE)
@@ -120,7 +145,7 @@ bool Player::PostUpdate()
 {
 	bool ret = true;
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
-	body->GetPosition(pos.x, pos.y);
+	pbody->GetPosition(pos.x, pos.y);
 	app->render->DrawTexture(tex, pos.x, pos.y, &rect);
 	return ret;
 }
