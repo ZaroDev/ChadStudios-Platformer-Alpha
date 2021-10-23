@@ -68,25 +68,41 @@ bool Player::Start()
 
 
 	grounded = true;
-	b2BodyDef body;
+	/*b2BodyDef body;
 	body.type = b2_dynamicBody;
 	body.position.Set(PIXEL_TO_METERS(pos.x), PIXEL_TO_METERS(pos.y));
 	body.fixedRotation = true;
 	b2Body* b = app->physics->world->CreateBody(&body);
 	b2PolygonShape box;
-	box.SetAsBox(PIXEL_TO_METERS(24) * 0.5f, PIXEL_TO_METERS(30) * 0.5f);
-
+	box.SetAsBox(PIXEL_TO_METERS(24) * 0.5f, PIXEL_TO_METERS(20) * 0.5f);
 	b2FixtureDef fixture;
 	fixture.shape = &box;
 	fixture.density = 20.0f;
 	fixture.friction = 100.0f;
 	b->ResetMassData();
+	b->CreateFixture(&fixture);*/
 
-	b->CreateFixture(&fixture);
+	b2BodyDef cbody;
+	cbody.type = b2_dynamicBody;
+	cbody.position.Set(PIXEL_TO_METERS(pos.x), PIXEL_TO_METERS(pos.y));
+	cbody.fixedRotation = true;
+	b2Body* c = app->physics->world->CreateBody(&cbody);
+	b2CircleShape circle;
+	circle.m_radius = PIXEL_TO_METERS(12);
+	b2FixtureDef fixturec;
+	fixturec.shape = &circle;
+	fixturec.density = 20.0f;
+	fixturec.friction = 100.0f;
+	c->ResetMassData();
+	c->CreateFixture(&fixturec);
+
+
+	
+
 
 	pbody = new PhysBody();
-	pbody->body = b;
-	b->SetUserData(pbody);
+	pbody->body = c;
+	c->SetUserData(pbody);
 	pbody->width = 24 * 0.5f;
 	pbody->height = 27 * 0.5f;
 	pbody->listener = this;
@@ -121,9 +137,9 @@ bool Player::Update(float dt)
 			app->render->camera.x = 0;
 		if (app->render->camera.y > 0)
 			app->render->camera.y = 0;
+		
 	}
 	
-	b2Vec2 velocity = pbody->body->GetLinearVelocity();
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		b2Vec2 vel = pbody->body->GetLinearVelocity();

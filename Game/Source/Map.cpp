@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Defs.h"
 #include "Log.h"
+#include "Physics.h"
 
 #include <math.h>
 
@@ -86,7 +87,7 @@ void Map::Draw()
 				}
 			}
 		}
-
+		
 		mapLayerItem = mapLayerItem->next;
 	}
 }
@@ -162,6 +163,47 @@ TileSet* Map::GetTilesetFromTileId(int id) const
 	}
 
 	return set;
+}
+
+bool Map::LoadColliders()
+{
+	bool ret = true;
+	List<PhysBody*> chains;
+	ListItem<MapLayer*>* mapLayerItem;
+	mapLayerItem = mapData.layers.start;
+	
+	int* chain = new int[mapLayerItem->data->width * mapLayerItem->data->height];
+	mapLayerItem = mapData.layers.start;
+	while (mapLayerItem != NULL) {
+		if (mapLayerItem->data->properties.GetProperty("Collider") == 1)
+		{
+			for (int x = 0; x < mapLayerItem->data->width; x++)
+			{
+				for (int y = 0; y < mapLayerItem->data->height; y++)
+				{
+					int gid = mapLayerItem->data->Get(x, y);
+					
+					if (gid > 0) {
+						
+						//L06: TODO 4: Obtain the tile set using GetTilesetFromTileId
+						//now we always use the firt tileset in the list
+						//TileSet* tileset = mapData.tilesets.start->data;
+						TileSet* tileset = GetTilesetFromTileId(gid);
+
+						SDL_Rect r = tileset->GetTileRect(gid);
+						iPoint pos = MapToWorld(x, y);
+						pos.x += r.w / 2;
+						pos.y += r.h / 2;
+						app->physics->CreateRectangle(pos.x, pos.y, r.w, r.h, KINEMATIC);
+					}
+
+				}
+			}
+		}
+		mapLayerItem = mapLayerItem->next;
+	}
+
+	return ret;
 }
 
 // Get relative Tile rectangle
@@ -298,7 +340,7 @@ bool Map::Load(const char* filename)
 			layer = layer->next;
 		}
 	}
-
+	LoadColliders();
 	mapLoaded = ret;
 
 	return ret;

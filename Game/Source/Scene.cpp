@@ -37,12 +37,7 @@ bool Scene::Start()
 	app->map->Load("map.tmx");
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 	background = app->tex->Load("Assets/textures/environment/layers/back.png");
-	Tile* ground1 = new Tile();
-	ground1->body =app->physics->CreateRectangle(0, 300, 1600, 50, KINEMATIC);
-	ground1->type = Tile::Type::GROUND;
-	ground1->body->listener = this;
 
-	ground.add(ground1);
 
 	return true;
 }
