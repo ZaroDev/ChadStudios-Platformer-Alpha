@@ -5,7 +5,7 @@
 #include "App.h"
 #include "Render.h"
 #include "Log.h"
-
+#include "Window.h"
 
 
 Player::Player(bool active)
@@ -103,10 +103,17 @@ bool Player::Update(float dt)
 	{
 		grounded = true;
 	}
-	if(app->render->camera.x > 0)
-	{
-		app->render->camera.x = pos.x;
-	}
+	uint width, height;
+	app->win->GetWindowSize(width, height);
+	app->render->camera.x = -((pos.x * (int)app->win->GetScale()) - ((int)width) / 2  + pbody->width /2);
+	app->render->camera.y = -((pos.y * (int)app->win->GetScale()) - ((int)height) / 2 + pbody->height / 2);
+
+	if (app->render->camera.x > 0)
+		app->render->camera.x = 0;
+	if (app->render->camera.y > 0)
+		app->render->camera.y = 0;
+	
+	
 	b2Vec2 velocity = pbody->body->GetLinearVelocity();
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
@@ -139,8 +146,7 @@ bool Player::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && grounded)
 	{
-		pbody->body->SetLinearVelocity({ pbody->body->GetLinearVelocity().x, -5.0f});
-		
+		pbody->body->SetLinearVelocity({ pbody->body->GetLinearVelocity().x, -5.0f });
 
 	}
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE)

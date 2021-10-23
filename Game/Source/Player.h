@@ -30,8 +30,6 @@ public:
 
 	PhysBody* pbody;
 
-	int speed = 1;
-
 	SDL_Texture* tex;
 
 	Animation* currentAnimation = nullptr;
@@ -44,5 +42,8 @@ public:
 
 	Animation jumpAnimL;
 	Animation jumpAnimR;
+
+
 	bool grounded;
+	int numJumps = 2;
 };
