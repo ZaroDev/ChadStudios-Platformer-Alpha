@@ -15,14 +15,14 @@ Player::Player(bool active)
 	idleAnimR.PushBack({ 51, 9, 25, 28 });
 	idleAnimR.PushBack({ 98, 10, 28, 27 });
 	idleAnimR.PushBack({ 139, 9, 25, 28 });
-	idleAnimR.speed = 0.01f;
+	idleAnimR.speed = 0.1f;
 	idleAnimR.loop = true;
 
 	idleAnimL.PushBack({ 314, 7, 24, 30 });
 	idleAnimL.PushBack({ 270, 9, 25, 28 });
 	idleAnimL.PushBack({ 226, 10, 28, 27 });
 	idleAnimL.PushBack({ 189, 9, 25, 28 });
-	idleAnimL.speed = 0.01f;
+	idleAnimL.speed = 0.1f;
 	idleAnimL.loop = true;
 
 	runAnimR.PushBack({ 260, 89, 24, 30 });
@@ -31,7 +31,7 @@ Player::Player(bool active)
 	runAnimR.PushBack({ 393, 89, 24, 30 });
 	runAnimR.PushBack({ 439, 88, 22, 30 });
 	runAnimR.PushBack({ 481, 89, 24, 30 });
-	runAnimR.speed = 0.01f;
+	runAnimR.speed = 0.1f;
 	runAnimR.loop = true;
 
 	runAnimL.PushBack({ 226, 89, 24, 30 });
@@ -40,7 +40,7 @@ Player::Player(bool active)
 	runAnimL.PushBack({ 93, 89, 24, 30 });
 	runAnimL.PushBack({ 49, 88, 22, 30 });
 	runAnimL.PushBack({ 5, 89, 24, 30 });
-	runAnimL.speed = 0.01f;
+	runAnimL.speed = 0.1f;
 	runAnimL.loop = true;
 
 }
@@ -78,7 +78,7 @@ bool Player::Start()
 
 	b2FixtureDef fixture;
 	fixture.shape = &box;
-	fixture.density = 10.0f;
+	fixture.density = 20.0f;
 	fixture.friction = 100.0f;
 	b->ResetMassData();
 
@@ -97,13 +97,26 @@ bool Player::Start()
 bool Player::Update(float dt)
 {
 	bool ret = true;
+	grounded = false;
+	LOG("%f", pbody->body->GetLinearVelocity().y);
+	if (pbody->body->GetLinearVelocity().y < 0.1f && pbody->body->GetLinearVelocity().y > -0.1f)
+	{
+		grounded = true;
+	}
+	if(app->render->camera.x > 0)
+	{
+		app->render->camera.x = pos.x;
+	}
 	b2Vec2 velocity = pbody->body->GetLinearVelocity();
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		b2Vec2 vel = pbody->body->GetLinearVelocity();
-		vel.x = 0.5;
+		if (grounded)
+			vel.x = 5.0f;
+		else
+			vel.x = 2.5f;
 		pbody->body->SetLinearVelocity(vel);
-		if(currentAnimation != &runAnimR && grounded)
+		if(currentAnimation != &runAnimR )
 		{
 			runAnimR.Reset();
 			currentAnimation = &runAnimR;
@@ -112,19 +125,23 @@ bool Player::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		b2Vec2 vel = pbody->body->GetLinearVelocity();
-		vel.x = -0.5;
+		if (grounded)
+			vel.x = -5.0f;
+		else
+			vel.x = -2.5f;
 		pbody->body->SetLinearVelocity(vel);
-		if (currentAnimation != &runAnimL && grounded)
+		if (currentAnimation != &runAnimL)
 		{
 			runAnimL.Reset();
 			currentAnimation = &runAnimL;
 		}
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && grounded)
 	{
-		pbody->body->SetLinearVelocity({ pbody->body->GetLinearVelocity().x, -0.5f});
+		pbody->body->SetLinearVelocity({ pbody->body->GetLinearVelocity().x, -5.0f});
 		
+
 	}
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE)
 	{

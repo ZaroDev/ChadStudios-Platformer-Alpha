@@ -7,7 +7,7 @@
 #include "Scene.h"
 #include "Map.h"
 #include "Physics.h"
-
+#include "Player.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -40,6 +40,7 @@ bool Scene::Start()
 	Tile* ground1 = new Tile();
 	ground1->body =app->physics->CreateRectangle(0, 300, 1600, 50, KINEMATIC);
 	ground1->type = Tile::Type::GROUND;
+	ground1->body->listener = this;
 
 	ground.add(ground1);
 
@@ -97,7 +98,7 @@ bool Scene::Update(float dt)
 				   app->map->mapData.tilesets.count());
 
 	app->win->SetTitle(title.GetString());
-
+	
 	return true;
 }
 
@@ -118,4 +119,21 @@ bool Scene::CleanUp()
 	LOG("Freeing scene");
 
 	return true;
+}
+
+void Scene::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
+{
+	/*ListItem<Tile*>* t = ground.start;
+	while (t != NULL)
+	{
+ 		if (bodyA == t->data->body && bodyB->listener == (Module*)app->player)
+		{
+
+ 			if (t->data->type == Tile::Type::GROUND)
+			{
+				app->player->grounded = true;
+			}
+		}
+		t = t->next;
+	}*/
 }

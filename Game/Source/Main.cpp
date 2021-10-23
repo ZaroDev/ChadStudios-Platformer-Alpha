@@ -33,9 +33,12 @@ int main(int argc, char* args[])
 
 	MainState state = CREATE;
 	int result = EXIT_FAILURE;
-
+	Uint32 startingTick;
+	int FPS = 60;
+	int RealFPS;
 	while(state != EXIT)
 	{
+		startingTick = SDL_GetTicks();
 		switch(state)
 		{
 
@@ -107,6 +110,13 @@ int main(int argc, char* args[])
 			state = EXIT;
 			break;
 		}
+		if ((1000 / FPS) > SDL_GetTicks() - startingTick)
+		{
+			SDL_Delay((1000 / FPS) - (SDL_GetTicks() - startingTick));
+		}
+
+		RealFPS = (SDL_GetTicks() - startingTick);
+		LOG("%i", RealFPS);
 	}
 
 	LOG("... Bye! :)\n");

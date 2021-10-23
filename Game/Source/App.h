@@ -110,7 +110,7 @@ private:
 	pugi::xml_node configApp;
 
 	uint frames;
-	float dt;
+	float dt = 1 / 60;
 
 	// L02: DONE 1: Create variables to control when to execute the request load / save
 	mutable bool saveGameRequested;

@@ -45,6 +45,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
+
 private:
 	SDL_Texture* img;
 	SDL_Texture* background;
