@@ -7,7 +7,7 @@
 #include "Defs.h"
 #include "Log.h"
 #include "Render.h"
-
+#include "Player.h"
 #include "Box2D/Box2D/Box2D.h"
 
 #ifdef _DEBUG
@@ -34,7 +34,7 @@ bool Physics::Start()
 	LOG("Creating Physics 2D environment");
 
 	world = new b2World(b2Vec2(GRAVITY_X, -GRAVITY_Y));
-	debug = true;
+	
 
 	return true;
 }
@@ -190,11 +190,10 @@ PhysBody* Physics::CreateChain(int x, int y, int* points, int size, bodyType typ
 bool Physics::PostUpdate()
 {
 	bool ret = true;
-	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-		debug = !debug;
+	
 	// Bonus code: this will iterate all objects in the world and draw the circles
 	// You need to provide your own macro to translate meters to pixels
-	if (debug)
+	if (app->player->debug)
 	{
 		for (b2Body* b = world->GetBodyList(); b; b = b->GetNext())
 		{

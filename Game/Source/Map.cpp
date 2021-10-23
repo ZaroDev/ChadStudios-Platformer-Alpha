@@ -3,7 +3,7 @@
 #include "Render.h"
 #include "Textures.h"
 #include "Map.h"
-
+#include "Player.h"
 #include "Defs.h"
 #include "Log.h"
 
@@ -58,7 +58,7 @@ void Map::Draw()
 	// L06: TODO 4: Make sure we draw all the layers and not just the first one
 	while (mapLayerItem != NULL) {
 
-		if (mapLayerItem->data->properties.GetProperty("Draw") == 1) {
+		if (mapLayerItem->data->properties.GetProperty("Draw") == 1 || app->player->debug) {
 
 			for (int x = 0; x < mapLayerItem->data->width; x++)
 			{

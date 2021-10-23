@@ -46,4 +46,6 @@ public:
 
 	bool grounded;
 	int numJumps = 2;
+
+	bool debug;
 };

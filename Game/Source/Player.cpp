@@ -91,28 +91,37 @@ bool Player::Start()
 	pbody->height = 27 * 0.5f;
 	pbody->listener = this;
 
+	debug = false;
+
 	return ret;
 }
 
 bool Player::Update(float dt)
 {
 	bool ret = true;
+
+
 	grounded = false;
-	LOG("%f", pbody->body->GetLinearVelocity().y);
+
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+		debug = !debug;
+
 	if (pbody->body->GetLinearVelocity().y < 0.1f && pbody->body->GetLinearVelocity().y > -0.1f)
 	{
 		grounded = true;
 	}
-	uint width, height;
-	app->win->GetWindowSize(width, height);
-	app->render->camera.x = -((pos.x * (int)app->win->GetScale()) - ((int)width) / 2  + pbody->width /2);
-	app->render->camera.y = -((pos.y * (int)app->win->GetScale()) - ((int)height) / 2 + pbody->height / 2);
+	if (!debug)
+	{
+		uint width, height;
+		app->win->GetWindowSize(width, height);
+		app->render->camera.x = -((pos.x * (int)app->win->GetScale()) - ((int)width) / 2 + pbody->width / 2);
+		app->render->camera.y = -((pos.y * (int)app->win->GetScale()) - ((int)height) / 2 + pbody->height / 2);
 
-	if (app->render->camera.x > 0)
-		app->render->camera.x = 0;
-	if (app->render->camera.y > 0)
-		app->render->camera.y = 0;
-	
+		if (app->render->camera.x > 0)
+			app->render->camera.x = 0;
+		if (app->render->camera.y > 0)
+			app->render->camera.y = 0;
+	}
 	
 	b2Vec2 velocity = pbody->body->GetLinearVelocity();
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
