@@ -19,6 +19,9 @@
   </wangsets>
  </tileset>
  <layer id="1" name="Capa de patrones 1" width="128" height="45">
+  <properties>
+   <property name="Draw" value="1"/>
+  </properties>
   <data>
    <tile/>
    <tile/>

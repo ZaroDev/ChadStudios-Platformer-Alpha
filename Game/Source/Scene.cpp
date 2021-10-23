@@ -34,7 +34,7 @@ bool Scene::Awake()
 bool Scene::Start()
 {
 	// L03: DONE: Load map
-	app->map->Load("iso.tmx");
+	app->map->Load("map.tmx");
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 	background = app->tex->Load("Assets/textures/environment/layers/back.png");
 	Tile* ground1 = new Tile();
@@ -86,7 +86,7 @@ bool Scene::Update(float dt)
 	
 
 	// Draw map
-	//app->render->DrawTexture(background, 0, 0, NULL, 1.0f);
+	app->render->DrawTexture(background, 0, 0, NULL, 1.0f);
 	app->map->Draw();
 
 
