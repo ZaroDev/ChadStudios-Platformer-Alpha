@@ -26,6 +26,8 @@
  </tileset>
  <layer id="1" name="Capa de patrones 1" width="150" height="60" offsetx="-209" offsety="-71">
   <properties>
+   <property name="BoundX" value="5080"/>
+   <property name="BoundY" value="1810"/>
    <property name="Draw" value="1"/>
   </properties>
   <data>

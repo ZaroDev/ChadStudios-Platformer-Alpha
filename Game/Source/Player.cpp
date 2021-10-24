@@ -7,6 +7,7 @@
 #include "Log.h"
 #include "Window.h"
 #include "Audio.h"
+#include "Map.h"
 
 Player::Player(bool active)
 {
@@ -70,6 +71,9 @@ bool Player::Awake(pugi::xml_node&config)
 	jumpVel = config.child("jump_vel").attribute("value").as_float();
 	folder.Create(config.child("folder").child_value());
 	jumpSFXFile.Create(config.child("jump_SFX").child_value());
+
+
+
 	return ret;
 }
 
@@ -152,19 +156,26 @@ bool Player::Update(float dt)
 	}
 	if (!debug)
 	{
+		//Camera follows the player
 		uint width, height;
 		app->win->GetWindowSize(width, height);
 		app->render->camera.x = -((pos.x * (int)app->win->GetScale()) - ((int)width) / 2 + pbody->width / 2);
 		app->render->camera.y = -((pos.y * (int)app->win->GetScale()) - ((int)height) / 2 + pbody->height / 2);
-
+		//Camera bounds
 		if (app->render->camera.x > 0)
 			app->render->camera.x = 0;
 		if (app->render->camera.y > 0)
 			app->render->camera.y = 0;
-		if (-app->render->camera.x > 4500)
-			app->render->camera.x = -4500;
+		if (-app->render->camera.x > app->map->bounds.x)
+			app->render->camera.x = -app->map->bounds.x;
+		if (-app->render->camera.y > app->map->bounds.y)
+			app->render->camera.y = -app->map->bounds.y;
+		//Die state
+		if (pbody->body->GetPosition().x < app->map->bounds.y)
+			die = true;
 	}
-	LOG("%i", app->render->camera.x);
+	LOG("X:%i, %i", app->render->camera.x, app->map->bounds.x);
+	LOG("Y:%i, %i", app->render->camera.y, app->map->bounds.y);
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		b2Vec2 vel = pbody->body->GetLinearVelocity();
@@ -251,6 +262,8 @@ bool Player::LoadState(pugi::xml_node&data)
 	bool ret = true;
 	pos.x = data.child("pos").attribute("x").as_int();
 	pos.y = data.child("pos").attribute("y").as_int();
+	pbody->body->SetTransform({ PIXEL_TO_METERS(pos.x), PIXEL_TO_METERS(pos.y) }, 0.0f);
+
 	return ret;
 }
 

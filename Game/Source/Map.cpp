@@ -200,6 +200,10 @@ bool Map::LoadColliders()
 				}
 			}
 		}
+		if(mapLayerItem->data->properties.GetProperty("BoundX") != 0)
+			bounds.x = mapLayerItem->data->properties.GetProperty("BoundX");
+		if (mapLayerItem->data->properties.GetProperty("BoundY") != 0)
+			bounds.y = mapLayerItem->data->properties.GetProperty("BoundY");
 		mapLayerItem = mapLayerItem->next;
 	}
 
@@ -364,7 +368,7 @@ bool Map::LoadMap(pugi::xml_node mapFile)
 		mapData.width = map.attribute("width").as_int();
 		mapData.tileHeight = map.attribute("tileheight").as_int();
 		mapData.tileWidth = map.attribute("tilewidth").as_int();
-
+		
 		// L05: DONE 1: Add formula to go from isometric map to world coordinates
 		mapData.type = MAPTYPE_UNKNOWN;
 		if (strcmp(map.attribute("orientation").as_string(), "isometric") == 0)

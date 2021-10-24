@@ -102,6 +102,7 @@ struct MapData
 	int	height;
 	int	tileWidth;
 	int	tileHeight;
+	
 	SDL_Color backgroundColor;
 	MapTypes type;
 	List<TileSet*> tilesets;
@@ -161,12 +162,12 @@ public:
 
 	// L03: DONE 1: Add your struct for map info
 	MapData mapData;
+	iPoint bounds;
 
 private:
 
 	SString folder;
 	bool mapLoaded;
-	
 };
 
 #endif // __MAP_H__

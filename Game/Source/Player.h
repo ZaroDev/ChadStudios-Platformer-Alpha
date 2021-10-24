@@ -54,6 +54,7 @@ public:
 	float jumpVel;
 	SString folder;
 	SString jumpSFXFile;
+	bool die;
 
 	bool debug;
 };
