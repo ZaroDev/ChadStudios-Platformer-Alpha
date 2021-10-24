@@ -4,7 +4,7 @@
 
 #include "Defs.h"
 #include "Log.h"
-
+#include <stdio.h>
 // NOTE: SDL redefines main function
 #include "SDL/include/SDL.h"
 
@@ -35,7 +35,7 @@ int main(int argc, char* args[])
 	int result = EXIT_FAILURE;
 	Uint32 startingTick;
 	int FPS = 60;
-	int RealFPS;
+	float RealFPS;
 	while(state != EXIT)
 	{
 		startingTick = SDL_GetTicks();
@@ -116,7 +116,7 @@ int main(int argc, char* args[])
 		}
 
 		RealFPS = (SDL_GetTicks() - startingTick);
-		LOG("%i", RealFPS);
+		printf("\nFPS: %f", 1000 /RealFPS);
 	}
 
 	LOG("... Bye! :)\n");

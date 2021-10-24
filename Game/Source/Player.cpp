@@ -151,9 +151,11 @@ bool Player::Update(float dt)
 		debug = !debug;
 
 	if (pbody->body->GetLinearVelocity().y < 0.1f && pbody->body->GetLinearVelocity().y > -0.1f)
-	{
 		grounded = true;
-	}
+			
+	if (pbody->body->GetLinearVelocity().y == 0)
+		numJumps = 2;
+	
 	if (!debug)
 	{
 		//Camera follows the player
@@ -176,6 +178,8 @@ bool Player::Update(float dt)
 	}
 	LOG("X:%i, %i", app->render->camera.x, app->map->bounds.x);
 	LOG("Y:%i, %i", app->render->camera.y, app->map->bounds.y);
+
+
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		b2Vec2 vel = pbody->body->GetLinearVelocity();
@@ -205,11 +209,14 @@ bool Player::Update(float dt)
 		}
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && grounded)
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && numJumps > 0)
 	{
 		app->audio->PlayFx(jumpSFX);
 		pbody->body->SetLinearVelocity({ pbody->body->GetLinearVelocity().x, jumpVel });
+		numJumps--;
 	}
+	LOG("J: %i", numJumps);
+	LOG("G: %i", grounded);
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE)
 	{
 		if (currentAnimation == &runAnimR || currentAnimation == &jumpAnimR || currentAnimation == &downAnimR)
@@ -236,6 +243,18 @@ bool Player::Update(float dt)
 		if (pbody->body->GetLinearVelocity().y > 0.1f && pbody->body->GetLinearVelocity().x > -0.1f)
 			if (currentAnimation != &downAnimR)
 				currentAnimation = &downAnimR;
+	}
+
+
+	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+	{
+		app->audio->volMusic++;
+		app->audio->volFX++;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
+	{
+		app->audio->volMusic--;
+		app->audio->volFX--;
 	}
 	LOG("%f", pbody->body->GetLinearVelocity().y);
 	LOG("%i", grounded);

@@ -73,20 +73,11 @@ bool Scene::Update(float dt)
 		if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 			app->render->camera.x -= 30;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN)
-	{
-		app->audio->volMusic++;
-		app->audio->volFX++;
-	}
-	if (app->input->GetKey(SDL_SCANCODE_KP_LESS) == KEY_DOWN)
-	{
-		app->audio->volMusic--;
-		app->audio->volFX--;
-	}
+	
 	
 
 	// Draw map
-	app->render->DrawTexture(background, 0, 0, NULL, 0.75f);
+	app->render->DrawTexture(background, 0,METERS_TO_PIXELS(app->player->pbody->body->GetPosition().y) - 720 + 200, NULL, 0.75f);
 	app->map->Draw();
 
 

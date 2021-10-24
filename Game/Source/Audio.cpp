@@ -85,6 +85,14 @@ bool Audio::CleanUp()
 	return true;
 }
 
+bool Audio::Update(float dt)
+{
+	bool ret = true;
+	Mix_VolumeMusic(volMusic);
+	Mix_Volume(-1, volFX);
+	return ret;
+}
+
 // Play a music file
 bool Audio::PlayMusic(const char* path, float fade_time)
 {
