@@ -6,14 +6,14 @@
 #include "Render.h"
 #include "Log.h"
 #include "Window.h"
-
+#include "Audio.h"
 
 Player::Player(bool active)
 {
 	name.Create("player");
 	idleAnimR.PushBack({ 8, 7, 24, 30 });
 	idleAnimR.PushBack({ 51, 9, 25, 28 });
-	idleAnimR.PushBack({ 98, 10, 28, 27 });
+	idleAnimR.PushBack({ 92, 10, 28, 27 });
 	idleAnimR.PushBack({ 139, 9, 25, 28 });
 	idleAnimR.speed = 0.1f;
 	idleAnimR.loop = true;
@@ -21,7 +21,7 @@ Player::Player(bool active)
 	idleAnimL.PushBack({ 314, 7, 24, 30 });
 	idleAnimL.PushBack({ 270, 9, 25, 28 });
 	idleAnimL.PushBack({ 226, 10, 28, 27 });
-	idleAnimL.PushBack({ 189, 9, 25, 28 });
+	idleAnimL.PushBack({ 182, 9, 25, 28 });
 	idleAnimL.speed = 0.1f;
 	idleAnimL.loop = true;
 
@@ -43,6 +43,14 @@ Player::Player(bool active)
 	runAnimL.speed = 0.1f;
 	runAnimL.loop = true;
 
+	jumpAnimR.PushBack({ 5, 50, 31, 28 });
+	jumpAnimR.loop = false;
+	downAnimR.PushBack({ 51, 47, 28, 30 });
+	downAnimR.loop = false;
+	jumpAnimL.PushBack({ 139, 49, 31, 28 });
+	jumpAnimL.loop = false;
+	downAnimL.PushBack({ 96, 46, 28, 30 });
+	downAnimL.loop = false;
 }
 
 Player::~Player()
@@ -56,17 +64,26 @@ bool Player::Awake(pugi::xml_node&config)
 
 	pos.x = config.child("pos").attribute("x").as_int();
 	pos.y = config.child("pos").attribute("y").as_int();
-
+	numJumps = config.child("num_jumps").attribute("value").as_int();
+	minVel = config.child("min_vel").attribute("value").as_float();
+	maxVel = config.child("max_vel").attribute("value").as_float();
+	jumpVel = config.child("jump_vel").attribute("value").as_float();
+	folder.Create(config.child("folder").child_value());
+	jumpSFXFile.Create(config.child("jump_SFX").child_value());
 	return ret;
 }
 
 bool Player::Start()
 {
 	bool ret = true;
-	tex = app->tex->Load("Assets/textures/sprites/player.png");
+
+
+
+	tex = app->tex->Load(folder.GetString());
 	currentAnimation = &idleAnimR;
 
 
+	jumpSFX = app->audio->LoadFx(jumpSFXFile.GetString());
 	grounded = true;
 	/*b2BodyDef body;
 	body.type = b2_dynamicBody;
@@ -82,6 +99,7 @@ bool Player::Start()
 	b->ResetMassData();
 	b->CreateFixture(&fixture);*/
 
+
 	b2BodyDef cbody;
 	cbody.type = b2_dynamicBody;
 	cbody.position.Set(PIXEL_TO_METERS(pos.x), PIXEL_TO_METERS(pos.y));
@@ -96,9 +114,15 @@ bool Player::Start()
 	c->ResetMassData();
 	c->CreateFixture(&fixturec);
 
+	/*b2WeldJointDef* jointDef = new b2WeldJointDef();
+	jointDef->bodyA = b;
+	jointDef->bodyB = c;
+	jointDef->localAnchorA = { 0, 0.5 };
+	jointDef->localAnchorB = { 0, 0 };
 
-	
+	jointDef->referenceAngle = 0;
 
+	b2Joint* joint = app->physics->world->CreateJoint(jointDef);*/
 
 	pbody = new PhysBody();
 	pbody->body = c;
@@ -137,16 +161,17 @@ bool Player::Update(float dt)
 			app->render->camera.x = 0;
 		if (app->render->camera.y > 0)
 			app->render->camera.y = 0;
-		
+		if (-app->render->camera.x > 4500)
+			app->render->camera.x = -4500;
 	}
-	
+	LOG("%i", app->render->camera.x);
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		b2Vec2 vel = pbody->body->GetLinearVelocity();
 		if (grounded)
-			vel.x = 5.0f;
+			vel.x = maxVel;
 		else
-			vel.x = 2.5f;
+			vel.x = minVel;
 		pbody->body->SetLinearVelocity(vel);
 		if(currentAnimation != &runAnimR )
 		{
@@ -158,9 +183,9 @@ bool Player::Update(float dt)
 	{
 		b2Vec2 vel = pbody->body->GetLinearVelocity();
 		if (grounded)
-			vel.x = -5.0f;
+			vel.x = -maxVel;
 		else
-			vel.x = -2.5f;
+			vel.x = -minVel;
 		pbody->body->SetLinearVelocity(vel);
 		if (currentAnimation != &runAnimL)
 		{
@@ -171,20 +196,39 @@ bool Player::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && grounded)
 	{
-		pbody->body->SetLinearVelocity({ pbody->body->GetLinearVelocity().x, -5.0f });
-
+		app->audio->PlayFx(jumpSFX);
+		pbody->body->SetLinearVelocity({ pbody->body->GetLinearVelocity().x, jumpVel });
 	}
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE)
 	{
-		if (currentAnimation == &runAnimR || currentAnimation == &jumpAnimR)
+		if (currentAnimation == &runAnimR || currentAnimation == &jumpAnimR || currentAnimation == &downAnimR)
 		{
 			currentAnimation = &idleAnimR;
 		}
-		if (currentAnimation == &runAnimL || currentAnimation == &jumpAnimL)
+		if (currentAnimation == &runAnimL || currentAnimation == &jumpAnimL || currentAnimation == &downAnimL)
 		{
 			currentAnimation = &idleAnimL;
 		}
 	}
+	if (!grounded)
+	{
+		if (pbody->body->GetLinearVelocity().y < -1.0f && pbody->body->GetLinearVelocity().x > 0.1f)
+			if (currentAnimation != &jumpAnimR)
+				currentAnimation = &jumpAnimR;
+		if(pbody->body->GetLinearVelocity().y < -1.0f && pbody->body->GetLinearVelocity().x < -0.1f)
+			if (currentAnimation != &jumpAnimL)
+				currentAnimation = &jumpAnimL;
+		
+		if (pbody->body->GetLinearVelocity().y > 0.1f && pbody->body->GetLinearVelocity().x < 0.1f)
+			if (currentAnimation != &downAnimL)
+				currentAnimation = &downAnimL;
+		if (pbody->body->GetLinearVelocity().y > 0.1f && pbody->body->GetLinearVelocity().x > -0.1f)
+			if (currentAnimation != &downAnimR)
+				currentAnimation = &downAnimR;
+	}
+	LOG("%f", pbody->body->GetLinearVelocity().y);
+	LOG("%i", grounded);
+
 	currentAnimation->Update();
 	return ret;
 }

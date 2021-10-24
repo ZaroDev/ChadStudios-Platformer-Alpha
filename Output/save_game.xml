@@ -11,9 +11,9 @@
 	<scene />
 	<map />
 	<player>
-		<pos x="448" y="463" />
+		<pos x="350" y="550" />
 	</player>
 	<render>
-		<camera x="-556" y="-945" />
+		<camera x="-256" y="-1206" />
 	</render>
 </game_state>

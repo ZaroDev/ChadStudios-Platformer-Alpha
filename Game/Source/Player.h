@@ -41,11 +41,19 @@ public:
 	Animation runAnimR;
 
 	Animation jumpAnimL;
+	Animation downAnimL;
 	Animation jumpAnimR;
+	Animation downAnimR;
 
+	int jumpSFX;
 
 	bool grounded;
-	int numJumps = 2;
+	int numJumps;
+	float minVel;
+	float maxVel;
+	float jumpVel;
+	SString folder;
+	SString jumpSFXFile;
 
 	bool debug;
 };
