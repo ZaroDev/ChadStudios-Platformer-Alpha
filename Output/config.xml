@@ -22,7 +22,7 @@
     <fx value="40" />
   </audio>
   <player>
-    <pos x="100" y="570"/>
+    <pos x="23" y="837"/>
     <folder>Assets/textures/sprites/player.png</folder>
     <jump_SFX>Assets/audio/fx/jumpSFX.wav</jump_SFX>
     <num_jumps value="2"/>
