@@ -4,8 +4,8 @@
 	<input />
 	<textures />
 	<audio>
-		<music value="128" />
-		<fx value="128" />
+		<music value="10" />
+		<fx value="10" />
 	</audio>
 	<:anonymous />
 	<scene />

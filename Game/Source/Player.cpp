@@ -9,9 +9,30 @@
 #include "Audio.h"
 #include "Map.h"
 
-Player::Player(bool active)
+Player::Player(bool startEnabled) : Module(startEnabled)
 {
 	name.Create("player");
+	
+}
+
+Player::~Player()
+{
+}
+
+bool Player::Awake(pugi::xml_node&config)
+{
+	LOG("Loading Player");
+	bool ret = true;
+
+	pos.x = config.child("pos").attribute("x").as_int();
+	pos.y = config.child("pos").attribute("y").as_int();
+	numJumps = config.child("num_jumps").attribute("value").as_int();
+	minVel = config.child("min_vel").attribute("value").as_float();
+	maxVel = config.child("max_vel").attribute("value").as_float();
+	jumpVel = config.child("jump_vel").attribute("value").as_float();
+	folder.Create(config.child("folder").child_value());
+	jumpSFXFile.Create(config.child("jump_SFX").child_value());
+
 	idleAnimR.PushBack({ 8, 7, 24, 30 });
 	idleAnimR.PushBack({ 51, 9, 25, 28 });
 	idleAnimR.PushBack({ 92, 10, 28, 27 });
@@ -52,27 +73,6 @@ Player::Player(bool active)
 	jumpAnimL.loop = false;
 	downAnimL.PushBack({ 96, 46, 28, 30 });
 	downAnimL.loop = false;
-}
-
-Player::~Player()
-{
-}
-
-bool Player::Awake(pugi::xml_node&config)
-{
-	LOG("Loading Player");
-	bool ret = true;
-
-	pos.x = config.child("pos").attribute("x").as_int();
-	pos.y = config.child("pos").attribute("y").as_int();
-	numJumps = config.child("num_jumps").attribute("value").as_int();
-	minVel = config.child("min_vel").attribute("value").as_float();
-	maxVel = config.child("max_vel").attribute("value").as_float();
-	jumpVel = config.child("jump_vel").attribute("value").as_float();
-	folder.Create(config.child("folder").child_value());
-	jumpSFXFile.Create(config.child("jump_SFX").child_value());
-
-
 
 	return ret;
 }

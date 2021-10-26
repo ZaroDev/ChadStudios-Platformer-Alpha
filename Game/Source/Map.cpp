@@ -10,7 +10,7 @@
 
 #include <math.h>
 
-Map::Map() : Module(), mapLoaded(false)
+Map::Map(bool startEnabled) : Module(startEnabled), mapLoaded(false)
 {
 	name.Create("map");
 }
@@ -262,7 +262,7 @@ bool Map::Load(const char* filename)
 {
 	bool ret = true;
 	SString tmp("%s%s", folder.GetString(), filename);
-
+	LOG("%s", tmp.GetString());
 	pugi::xml_document mapFile;
 	pugi::xml_parse_result result = mapFile.load_file(tmp.GetString());
 

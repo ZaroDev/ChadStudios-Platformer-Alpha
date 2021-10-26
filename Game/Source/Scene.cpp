@@ -12,7 +12,7 @@
 #include "Defs.h"
 #include "Log.h"
 
-Scene::Scene() : Module()
+Scene::Scene(bool startEnabled) : Module(startEnabled)
 {
 	name.Create("scene");
 }
@@ -22,23 +22,31 @@ Scene::~Scene()
 {}
 
 // Called before render is available
-bool Scene::Awake()
+bool Scene::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Scene");
 	bool ret = true;
-
+	folder.Create(config.child("folder").child_value());
+	audioFile.Create(config.child("audio").child_value());
+	LOG("%s", folder.GetString());
 	return ret;
 }
 
 // Called before the first frame
 bool Scene::Start()
 {
-	// L03: DONE: Load map
+	SString tmp("%s%s", folder.GetString(),"background.png");
+	SString tmp2("%s%s", folder.GetString(), "jungle.png");
 	app->map->Load("map.tmx");
-	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
-	background = app->tex->Load("Assets/maps/background.png");
-	jungle = app->tex->Load("Assets/maps/jungle.png");
-
+	SString tmp3("%s%s", audioFile.GetString(), "music/lvl1.wav");
+	app->audio->PlayMusic(tmp3.GetString());
+	background = app->tex->Load(tmp.GetString());
+	jungle = app->tex->Load(tmp2.GetString());
+	LOG("%s", tmp.GetString());
+	app->physics->Enable();
+	app->player->Enable();
+	app->audio->Enable();
+	app->tex->Enable();
 	return true;
 }
 
@@ -53,7 +61,6 @@ bool Scene::Update(float dt)
 {
 	
 
-    // L02: DONE 3: Request Load / Save when pressing L/S
 	if(app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		app->LoadGameRequest();
 
@@ -81,14 +88,7 @@ bool Scene::Update(float dt)
 	app->render->DrawTexture(jungle, 0, 284, NULL, 0.5f);
 	app->map->Draw();
 
-
-	// L03: DONE 7: Set the window title with map/tileset info
-	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
-				   app->map->mapData.width, app->map->mapData.height,
-				   app->map->mapData.tileWidth, app->map->mapData.tileHeight,
-				   app->map->mapData.tilesets.count());
-
-	app->win->SetTitle(title.GetString());
+	
 	
 	return true;
 }
@@ -108,23 +108,8 @@ bool Scene::PostUpdate()
 bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
-
+	app->tex->UnLoad(background);
+	app->tex->UnLoad(jungle);
+	app->player->Disable();
 	return true;
-}
-
-void Scene::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
-{
-	/*ListItem<Tile*>* t = ground.start;
-	while (t != NULL)
-	{
- 		if (bodyA == t->data->body && bodyB->listener == (Module*)app->player)
-		{
-
- 			if (t->data->type == Tile::Type::GROUND)
-			{
-				app->player->grounded = true;
-			}
-		}
-		t = t->next;
-	}*/
 }

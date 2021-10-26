@@ -8,7 +8,8 @@
 #include "Map.h"
 #include "Player.h"
 #include "Physics.h"
-
+#include "Intro.h"
+#include "FadeToBlack.h"
 #include "Defs.h"
 #include "Log.h"
 
@@ -20,15 +21,17 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 {
 	frames = 0;
 
-	win = new Window();
-	input = new Input();
-	render = new Render();
-	tex = new Textures();
-	audio = new Audio();
-	scene = new Scene();
-	map = new Map();
-	player = new Player(true);
-	physics = new Physics();
+	win = new Window(true);
+	input = new Input(true);
+	render = new Render(true);
+	tex = new Textures(true);
+	audio = new Audio(true);
+	fadeToBlack = new FadeToBlack(true);
+	intro = new Intro(true);
+	scene = new Scene(false);
+	map = new Map(true);
+	player = new Player(false);
+	physics = new Physics(true);
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -36,10 +39,12 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(input);
 	AddModule(tex);
 	AddModule(audio);
+	AddModule(fadeToBlack);
 	AddModule(physics);
-	AddModule(scene);
 	AddModule(map);
 	AddModule(player);
+	AddModule(intro);
+	AddModule(scene);
 	// Render last to swap buffer
 	AddModule(render);
 }
@@ -99,6 +104,7 @@ bool App::Awake()
 			// that can be used to read all variables for that module.
 			// Send nullptr if the node does not exist in config.xml
 			ret = item->data->Awake(config.child(item->data->name.GetString()));
+
 			item = item->next;
 		}
 	}
@@ -115,7 +121,9 @@ bool App::Start()
 
 	while(item != NULL && ret == true)
 	{
-		ret = item->data->Start();
+		if (item->data->IsEnabled())
+			ret = item->data->Start();
+
 		item = item->next;
 	}
 
@@ -186,8 +194,8 @@ bool App::PreUpdate()
 		if(pModule->active == false) {
 			continue;
 		}
-
-		ret = item->data->PreUpdate();
+		if (item->data->IsEnabled())
+			ret = item->data->PreUpdate();
 	}
 
 	return ret;
@@ -208,8 +216,8 @@ bool App::DoUpdate()
 		if(pModule->active == false) {
 			continue;
 		}
-
-		ret = item->data->Update(dt);
+		if (item->data->IsEnabled())
+			ret = item->data->Update(dt);
 	}
 
 	return ret;
@@ -229,8 +237,8 @@ bool App::PostUpdate()
 		if(pModule->active == false) {
 			continue;
 		}
-
-		ret = item->data->PostUpdate();
+		if (item->data->IsEnabled())
+			ret = item->data->PostUpdate();
 	}
 
 	return ret;
@@ -245,7 +253,8 @@ bool App::CleanUp()
 
 	while(item != NULL && ret == true)
 	{
-		ret = item->data->CleanUp();
+		if (item->data->IsEnabled())
+			ret = item->data->CleanUp();
 		item = item->prev;
 	}
 

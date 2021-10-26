@@ -19,6 +19,8 @@ class Scene;
 class Map;
 class Physics;
 class Player;
+class FadeToBlack;
+class Intro;
 
 class App
 {
@@ -92,6 +94,8 @@ public:
 	Map* map;
 	Player* player;
 	Physics* physics;
+	FadeToBlack* fadeToBlack;
+	Intro* intro;
 
 private:
 
