@@ -4,20 +4,7 @@
 #include "Module.h"
 
 struct SDL_Texture;
-class Tile
-{
-public:
-	Tile() {};
-	~Tile() {};
-	enum Type
-	{
-		NONE = -1,
-		GROUND,
 
-	};
-	Type type;
-	PhysBody* body;
-};
 class Scene : public Module
 {
 public:
@@ -28,7 +15,7 @@ public:
 	virtual ~Scene();
 
 	// Called before render is available
-	bool Awake();
+	bool Awake(pugi::xml_node& config);
 
 	// Called before the first frame
 	bool Start();
@@ -45,14 +32,13 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
+	
 
 private:
-	SDL_Texture* img;
 	SDL_Texture* background;
 	SDL_Texture* jungle;
-
-	List<Tile*> ground;
+	SString folder;
+	SString audioFile;
 };
 
 #endif // __SCENE_H__

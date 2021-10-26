@@ -8,7 +8,8 @@
 #include "Map.h"
 #include "Player.h"
 #include "Physics.h"
-
+#include "Intro.h"
+#include "FadeToBlack.h"
 #include "Defs.h"
 #include "Log.h"
 
@@ -25,9 +26,11 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	render = new Render(true);
 	tex = new Textures(true);
 	audio = new Audio(true);
+	fadeToBlack = new FadeToBlack(true);
+	intro = new Intro(true);
 	scene = new Scene(false);
 	map = new Map(true);
-	player = new Player(true);
+	player = new Player(false);
 	physics = new Physics(true);
 
 	// Ordered for awake / Start / Update
@@ -36,10 +39,12 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(input);
 	AddModule(tex);
 	AddModule(audio);
+	AddModule(fadeToBlack);
 	AddModule(physics);
-	AddModule(scene);
 	AddModule(map);
 	AddModule(player);
+	AddModule(intro);
+	AddModule(scene);
 	// Render last to swap buffer
 	AddModule(render);
 }
@@ -98,8 +103,7 @@ bool App::Awake()
 			// If the section with the module name exists in config.xml, fill the pointer with the valid xml_node
 			// that can be used to read all variables for that module.
 			// Send nullptr if the node does not exist in config.xml
-			if(item->data->IsEnabled())
-				ret = item->data->Awake(config.child(item->data->name.GetString()));
+			ret = item->data->Awake(config.child(item->data->name.GetString()));
 
 			item = item->next;
 		}

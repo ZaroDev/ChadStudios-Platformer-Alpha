@@ -2,7 +2,7 @@
 <!-- L01: DONE 1: Create configuration file-->
 <config>
   <app>
-    <title>Game Development Testbed</title>
+    <title>Sunny Land 2D</title>
     <organization>UPC</organization>
   </app>
 
@@ -18,8 +18,8 @@
     <fullscreen_window value="false"/>
   </window>
   <audio>
-    <music value="14" />
-    <fx value="40" />
+    <music value="5" />
+    <fx value="5" />
   </audio>
   <player>
     <pos x="23" y="837"/>
@@ -35,4 +35,12 @@
   <map>
     <folder>Assets/maps/</folder>
   </map>
+  <intro>
+    <audio>Assets/audio/</audio>
+    <folder>Assets/maps/</folder>
+  </intro>
+  <scene>
+    <audio>Assets/audio/</audio>
+    <folder>Assets/maps/</folder>
+  </scene>
 </config>

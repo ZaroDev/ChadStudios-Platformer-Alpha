@@ -43,6 +43,9 @@
     <ClCompile Include="Source\FadeToBlack.cpp">
       <Filter>Source\Modules\Core</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Intro.cpp">
+      <Filter>Source\Modules\Gameplay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -107,6 +110,9 @@
     </ClInclude>
     <ClInclude Include="Source\FadeToBlack.h">
       <Filter>Source\Modules\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Intro.h">
+      <Filter>Source\Modules\Gameplay</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
