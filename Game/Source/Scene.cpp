@@ -37,7 +37,7 @@ bool Scene::Start()
 	app->map->Load("map.tmx");
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 	background = app->tex->Load("Assets/maps/background.png");
-
+	jungle = app->tex->Load("Assets/maps/jungle.png");
 
 	return true;
 }
@@ -77,7 +77,8 @@ bool Scene::Update(float dt)
 	
 
 	// Draw map
-	app->render->DrawTexture(background, 0,METERS_TO_PIXELS(app->player->pbody->body->GetPosition().y) - 720 + 200, NULL, 0.75f);
+	app->render->DrawTexture(background, 0,0, NULL, 0.75f);
+	app->render->DrawTexture(jungle, 0, 284, NULL, 0.5f);
 	app->map->Draw();
 
 

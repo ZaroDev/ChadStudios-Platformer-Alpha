@@ -50,6 +50,7 @@ public:
 private:
 	SDL_Texture* img;
 	SDL_Texture* background;
+	SDL_Texture* jungle;
 
 	List<Tile*> ground;
 };
