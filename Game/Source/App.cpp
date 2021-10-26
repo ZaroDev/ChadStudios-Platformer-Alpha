@@ -20,15 +20,15 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 {
 	frames = 0;
 
-	win = new Window();
-	input = new Input();
-	render = new Render();
-	tex = new Textures();
-	audio = new Audio();
-	scene = new Scene();
-	map = new Map();
+	win = new Window(true);
+	input = new Input(true);
+	render = new Render(true);
+	tex = new Textures(true);
+	audio = new Audio(true);
+	scene = new Scene(false);
+	map = new Map(true);
 	player = new Player(true);
-	physics = new Physics();
+	physics = new Physics(true);
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -98,7 +98,9 @@ bool App::Awake()
 			// If the section with the module name exists in config.xml, fill the pointer with the valid xml_node
 			// that can be used to read all variables for that module.
 			// Send nullptr if the node does not exist in config.xml
-			ret = item->data->Awake(config.child(item->data->name.GetString()));
+			if(item->data->IsEnabled())
+				ret = item->data->Awake(config.child(item->data->name.GetString()));
+
 			item = item->next;
 		}
 	}
@@ -115,7 +117,9 @@ bool App::Start()
 
 	while(item != NULL && ret == true)
 	{
-		ret = item->data->Start();
+		if (item->data->IsEnabled())
+			ret = item->data->Start();
+
 		item = item->next;
 	}
 
@@ -186,8 +190,8 @@ bool App::PreUpdate()
 		if(pModule->active == false) {
 			continue;
 		}
-
-		ret = item->data->PreUpdate();
+		if (item->data->IsEnabled())
+			ret = item->data->PreUpdate();
 	}
 
 	return ret;
@@ -208,8 +212,8 @@ bool App::DoUpdate()
 		if(pModule->active == false) {
 			continue;
 		}
-
-		ret = item->data->Update(dt);
+		if (item->data->IsEnabled())
+			ret = item->data->Update(dt);
 	}
 
 	return ret;
@@ -229,8 +233,8 @@ bool App::PostUpdate()
 		if(pModule->active == false) {
 			continue;
 		}
-
-		ret = item->data->PostUpdate();
+		if (item->data->IsEnabled())
+			ret = item->data->PostUpdate();
 	}
 
 	return ret;
@@ -245,7 +249,8 @@ bool App::CleanUp()
 
 	while(item != NULL && ret == true)
 	{
-		ret = item->data->CleanUp();
+		if (item->data->IsEnabled())
+			ret = item->data->CleanUp();
 		item = item->prev;
 	}
 

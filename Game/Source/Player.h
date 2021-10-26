@@ -10,7 +10,7 @@ struct SDL_Texture;
 class Player : public Module
 {
 public:
-	Player(bool active);
+	Player(bool startEnabled);
 	~Player();
 
 	bool Awake(pugi::xml_node&);

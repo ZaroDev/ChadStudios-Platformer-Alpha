@@ -9,7 +9,7 @@
 #include "Audio.h"
 #include "Map.h"
 
-Player::Player(bool active)
+Player::Player(bool startEnabled) : Module(startEnabled)
 {
 	name.Create("player");
 	idleAnimR.PushBack({ 8, 7, 24, 30 });

@@ -12,7 +12,7 @@ class Module
 {
 public:
 
-	Module() : active(false)
+	Module(bool startEnabled) : active(false), isEnabled(startEnabled)
 	{}
 
 	void Init()
@@ -88,6 +88,10 @@ public:
 			isEnabled = false;
 			CleanUp();
 		}
+	}
+	bool IsEnabled() const
+	{
+		return isEnabled;
 	}
 public:
 

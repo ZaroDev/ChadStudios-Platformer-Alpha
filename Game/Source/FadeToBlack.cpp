@@ -6,7 +6,7 @@
 
 #include "SDL/include/SDL_render.h"
 
-FadeToBlack::FadeToBlack(bool startEnabled)
+FadeToBlack::FadeToBlack(bool startEnabled) : Module(startEnabled)
 {
 	app->win->GetWindowSize(w, h);
 	screenRect = { 0, 0, (int)w, (int)h};
