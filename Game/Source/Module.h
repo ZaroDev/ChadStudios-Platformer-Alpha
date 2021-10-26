@@ -71,11 +71,29 @@ public:
 	{
 
 	}
+
+	virtual void Enable()
+	{
+		if (!isEnabled)
+		{
+			isEnabled = true;
+			Start();
+		}
+	}
+
+	virtual void Disable()
+	{
+		if (isEnabled)
+		{
+			isEnabled = false;
+			CleanUp();
+		}
+	}
 public:
 
 	SString name;
 	bool active;
+	bool isEnabled = true;
 
 };
-
 #endif // __MODULE_H__
