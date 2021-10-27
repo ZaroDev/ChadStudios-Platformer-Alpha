@@ -1,3 +1,4 @@
+
 #include "App.h"
 #include "Window.h"
 #include "Input.h"
@@ -10,6 +11,7 @@
 #include "Physics.h"
 #include "Intro.h"
 #include "FadeToBlack.h"
+#include "Scene2.h"
 #include "Defs.h"
 #include "Log.h"
 
@@ -32,6 +34,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	map = new Map(true);
 	player = new Player(false);
 	physics = new Physics(true);
+	scene2 = new Scene2(false);
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -45,6 +48,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(player);
 	AddModule(intro);
 	AddModule(scene);
+	AddModule(scene2);
 	// Render last to swap buffer
 	AddModule(render);
 }

@@ -23,15 +23,18 @@ bool Player::Awake(pugi::xml_node&config)
 {
 	LOG("Loading Player");
 	bool ret = true;
-
-	pos.x = config.child("pos").attribute("x").as_int();
-	pos.y = config.child("pos").attribute("y").as_int();
+	currentScene = config.child("start").attribute("value").as_int();
 	numJumps = config.child("num_jumps").attribute("value").as_int();
 	minVel = config.child("min_vel").attribute("value").as_float();
 	maxVel = config.child("max_vel").attribute("value").as_float();
 	jumpVel = config.child("jump_vel").attribute("value").as_float();
 	folder.Create(config.child("folder").child_value());
 	jumpSFXFile.Create(config.child("jump_SFX").child_value());
+	scene1.x = config.child("scene1").attribute("x").as_int();
+	scene1.y = config.child("scene1").attribute("y").as_int();
+
+	scene2.x = config.child("scene2").attribute("x").as_int();
+	scene2.y = config.child("scene2").attribute("y").as_int();
 
 	idleAnimR.PushBack({ 8, 7, 24, 30 });
 	idleAnimR.PushBack({ 51, 9, 25, 28 });
@@ -73,14 +76,28 @@ bool Player::Awake(pugi::xml_node&config)
 	jumpAnimL.loop = false;
 	downAnimL.PushBack({ 96, 46, 28, 30 });
 	downAnimL.loop = false;
-
 	return ret;
 }
 
 bool Player::Start()
 {
 	bool ret = true;
+	switch (currentScene)
+	{
+	case 1:
+	{
+		pos.x = scene1.x;
+		pos.y = scene1.y;
+	} break;
+	case 2:	
+	{		
+		pos.x = scene2.x;
+		pos.y = scene2.y;
 
+	}break;
+	default:
+		break;
+	}
 
 
 	tex = app->tex->Load(folder.GetString());
@@ -89,20 +106,6 @@ bool Player::Start()
 
 	jumpSFX = app->audio->LoadFx(jumpSFXFile.GetString());
 	grounded = true;
-	/*b2BodyDef body;
-	body.type = b2_dynamicBody;
-	body.position.Set(PIXEL_TO_METERS(pos.x), PIXEL_TO_METERS(pos.y));
-	body.fixedRotation = true;
-	b2Body* b = app->physics->world->CreateBody(&body);
-	b2PolygonShape box;
-	box.SetAsBox(PIXEL_TO_METERS(24) * 0.5f, PIXEL_TO_METERS(20) * 0.5f);
-	b2FixtureDef fixture;
-	fixture.shape = &box;
-	fixture.density = 20.0f;
-	fixture.friction = 100.0f;
-	b->ResetMassData();
-	b->CreateFixture(&fixture);*/
-
 
 	b2BodyDef cbody;
 	cbody.type = b2_dynamicBody;
@@ -117,16 +120,6 @@ bool Player::Start()
 	fixturec.friction = 100.0f;
 	c->ResetMassData();
 	c->CreateFixture(&fixturec);
-
-	/*b2WeldJointDef* jointDef = new b2WeldJointDef();
-	jointDef->bodyA = b;
-	jointDef->bodyB = c;
-	jointDef->localAnchorA = { 0, 0.5 };
-	jointDef->localAnchorB = { 0, 0 };
-
-	jointDef->referenceAngle = 0;
-
-	b2Joint* joint = app->physics->world->CreateJoint(jointDef);*/
 
 	pbody = new PhysBody();
 	pbody->body = c;

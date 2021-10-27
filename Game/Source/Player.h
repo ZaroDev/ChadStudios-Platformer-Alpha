@@ -46,13 +46,15 @@ public:
 	Animation downAnimR;
 
 	int jumpSFX;
-
+	int currentScene;
 	bool grounded;
 	int numJumps;
 	float minVel;
 	float maxVel;
 	float jumpVel;
 	SString folder;
+	iPoint scene1;
+	iPoint scene2;
 	SString jumpSFXFile;
 	bool die;
 

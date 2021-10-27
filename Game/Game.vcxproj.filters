@@ -46,6 +46,9 @@
     <ClCompile Include="Source\Intro.cpp">
       <Filter>Source\Modules\Gameplay</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Scene2.cpp">
+      <Filter>Source\Modules\Gameplay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -112,6 +115,9 @@
       <Filter>Source\Modules\Core</Filter>
     </ClInclude>
     <ClInclude Include="Source\Intro.h">
+      <Filter>Source\Modules\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene2.h">
       <Filter>Source\Modules\Gameplay</Filter>
     </ClInclude>
   </ItemGroup>

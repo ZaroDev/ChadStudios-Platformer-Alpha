@@ -1,18 +1,18 @@
-#ifndef __SCENE_H__
-#define __SCENE_H__
+#ifndef __SCENE2_H__
+#define __SCENE2_H__
 
 #include "Module.h"
 
 struct SDL_Texture;
 
-class Scene : public Module
+class Scene2 : public Module
 {
 public:
 
-	Scene(bool startEnabled);
+	Scene2(bool startEnabled);
 
 	// Destructor
-	virtual ~Scene();
+	virtual ~Scene2();
 
 	// Called before render is available
 	bool Awake(pugi::xml_node& config);
@@ -32,14 +32,13 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	
+
 
 private:
 	SDL_Texture* background;
 	SDL_Texture* jungle;
 	SString folder;
 	SString audioFile;
-	int winX;
 };
 
 #endif // __SCENE_H__

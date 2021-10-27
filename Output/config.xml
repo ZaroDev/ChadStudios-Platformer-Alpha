@@ -22,13 +22,15 @@
     <fx value="5" />
   </audio>
   <player>
-    <pos x="23" y="837"/>
     <folder>Assets/textures/sprites/player.png</folder>
     <jump_SFX>Assets/audio/fx/jumpSFX.wav</jump_SFX>
     <num_jumps value="2"/>
     <min_vel value="2.5f"/>
     <max_vel value="5.0f"/>
     <jump_vel value="-5.0f"/>
+    <start value="1"/>
+    <scene1 x="23" y="837" />
+    <scene2 x="0" y="0" />
   </player>
 
   <!-- L03: Added maps folder as config option -->
@@ -42,5 +44,6 @@
   <scene>
     <audio>Assets/audio/</audio>
     <folder>Assets/maps/</folder>
+    <winX value="2359"></winX>
   </scene>
 </config>

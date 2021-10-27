@@ -194,7 +194,9 @@ bool Map::LoadColliders()
 						iPoint pos = MapToWorld(x, y);
 						pos.x += r.w / 2;
 						pos.y += r.h / 2;
-						app->physics->CreateRectangle(pos.x, pos.y, r.w, r.h, KINEMATIC);
+						PhysBody* col = new PhysBody();
+						col = app->physics->CreateRectangle(pos.x, pos.y, r.w, r.h, KINEMATIC);
+						cols.add(col);
 					}
 
 				}
@@ -347,6 +349,20 @@ bool Map::Load(const char* filename)
 	LoadColliders();
 	mapLoaded = ret;
 
+	return ret;
+}
+
+bool Map::Unload()
+{
+	bool ret = true;
+	ListItem<PhysBody*>* c = cols.start;
+	
+	while (c != NULL)
+	{
+		app->physics->world->DestroyBody(c->data->body);
+		c = c->next;
+
+	}
 	return ret;
 }
 

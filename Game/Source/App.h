@@ -21,6 +21,7 @@ class Physics;
 class Player;
 class FadeToBlack;
 class Intro;
+class Scene2;
 
 class App
 {
@@ -96,6 +97,7 @@ public:
 	Physics* physics;
 	FadeToBlack* fadeToBlack;
 	Intro* intro;
+	Scene2* scene2;
 
 private:
 

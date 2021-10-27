@@ -4,16 +4,19 @@
 	<input />
 	<textures />
 	<audio>
-		<music value="10" />
-		<fx value="10" />
+		<music value="128" />
+		<fx value="128" />
 	</audio>
 	<:anonymous />
-	<scene />
+	<:anonymous />
 	<map />
 	<player>
-		<pos x="122" y="756" />
+		<pos x="2359" y="454" />
 	</player>
+	<intro />
+	<scene />
+	<scene />
 	<render>
-		<camera x="0" y="-1810" />
+		<camera x="-5530" y="-918" />
 	</render>
 </game_state>

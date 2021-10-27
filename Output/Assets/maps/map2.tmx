@@ -9021,7 +9021,7 @@
    <tile gid="211"/>
   </data>
  </layer>
- <layer id="2" name="Colliders" width="150" height="60" offsetx="-209" offsety="-71">
+ <layer id="2" name="Colliders" width="150" height="60" visible="0" offsetx="-209" offsety="-71">
   <properties>
    <property name="Collider" value="1"/>
    <property name="Draw" value="0"/>
