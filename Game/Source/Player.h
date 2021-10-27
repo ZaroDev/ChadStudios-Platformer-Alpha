@@ -2,6 +2,7 @@
 #include "Point.h"
 #include "Animation.h"
 #include "Box2D/Box2D/Box2D.h"
+#include "FadeToBlack.h"
 
 struct SDL_Texture;
 

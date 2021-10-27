@@ -143,6 +143,9 @@ bool Player::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		debug = !debug;
 
+	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+		app->fadeToBlack->MFadeToBlack(this, (Module*)app->death);
+
 	if (pbody->body->GetLinearVelocity().y < 0.1f && pbody->body->GetLinearVelocity().y > -0.1f)
 		grounded = true;
 			
