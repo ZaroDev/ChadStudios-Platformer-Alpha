@@ -275,7 +275,7 @@ bool Player::LoadState(pugi::xml_node&data)
 	pos.x = data.child("pos").attribute("x").as_int();
 	pos.y = data.child("pos").attribute("y").as_int();
 	pbody->body->SetTransform({ PIXEL_TO_METERS(pos.x), PIXEL_TO_METERS(pos.y) }, 0.0f);
-
+	currentScene = data.child("start").attribute("value").as_int();
 	return ret;
 }
 
@@ -285,6 +285,14 @@ bool Player::SaveState(pugi::xml_node&data) const
 	pugi::xml_node posN = data.append_child("pos");
 	posN.append_attribute("x").set_value(pos.x);
 	posN.append_attribute("y").set_value(pos.y);
-
+	pugi::xml_node currentState = data.append_child("start");
+	currentState.append_attribute("value").set_value(currentScene);
 	return true;
+}
+
+bool Player::CleanUp()
+{
+	bool ret = true;
+	app->tex->UnLoad(tex);
+	return ret;
 }

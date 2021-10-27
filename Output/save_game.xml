@@ -11,12 +11,13 @@
 	<:anonymous />
 	<map />
 	<player>
-		<pos x="2359" y="454" />
+		<pos x="2310" y="389" />
+		<start value="1" />
 	</player>
 	<intro />
 	<scene />
 	<scene />
 	<render>
-		<camera x="-5530" y="-918" />
+		<camera x="-5530" y="-720" />
 	</render>
 </game_state>

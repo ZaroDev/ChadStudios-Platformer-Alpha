@@ -30,7 +30,7 @@
     <jump_vel value="-5.0f"/>
     <start value="1"/>
     <scene1 x="23" y="837" />
-    <scene2 x="0" y="0" />
+    <scene2 x="20" y="100" />
   </player>
 
   <!-- L03: Added maps folder as config option -->

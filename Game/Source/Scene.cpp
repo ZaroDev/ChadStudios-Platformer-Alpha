@@ -85,6 +85,7 @@ bool Scene::Update(float dt)
 	if (app->player->pos.x == winX)
 	{
 		app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene2);
+		app->player->currentScene = 2;
 	}
 	
 
