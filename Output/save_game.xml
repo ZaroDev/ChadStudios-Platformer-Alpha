@@ -11,10 +11,23 @@
 	<:anonymous />
 	<map />
 	<player>
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+		<pos x="16" y="838" />
+	</player>
+	<intro />
+	<player-hurt />
+=======
+>>>>>>> Stashed changes
 		<pos x="2359" y="454" />
 	</player>
 	<intro />
 	<scene />
+<<<<<<< Updated upstream
+=======
+>>>>>>> f792107fbc071d285ab8e48cc4d7334419624f4a
+>>>>>>> Stashed changes
 	<scene />
 	<render>
 		<camera x="-5530" y="-918" />

@@ -46,7 +46,15 @@
     <ClCompile Include="Source\Intro.cpp">
       <Filter>Source\Modules\Gameplay</Filter>
     </ClCompile>
+<<<<<<< Updated upstream
     <ClCompile Include="Source\Scene2.cpp">
+=======
+<<<<<<< HEAD
+    <ClCompile Include="Source\Death.cpp">
+=======
+    <ClCompile Include="Source\Scene2.cpp">
+>>>>>>> f792107fbc071d285ab8e48cc4d7334419624f4a
+>>>>>>> Stashed changes
       <Filter>Source\Modules\Gameplay</Filter>
     </ClCompile>
   </ItemGroup>
@@ -117,7 +125,15 @@
     <ClInclude Include="Source\Intro.h">
       <Filter>Source\Modules\Gameplay</Filter>
     </ClInclude>
+<<<<<<< Updated upstream
     <ClInclude Include="Source\Scene2.h">
+=======
+<<<<<<< HEAD
+    <ClInclude Include="Source\Death.h">
+=======
+    <ClInclude Include="Source\Scene2.h">
+>>>>>>> f792107fbc071d285ab8e48cc4d7334419624f4a
+>>>>>>> Stashed changes
       <Filter>Source\Modules\Gameplay</Filter>
     </ClInclude>
   </ItemGroup>

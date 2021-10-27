@@ -21,7 +21,15 @@ class Physics;
 class Player;
 class FadeToBlack;
 class Intro;
+<<<<<<< Updated upstream
 class Scene2;
+=======
+<<<<<<< HEAD
+class Death;
+=======
+class Scene2;
+>>>>>>> f792107fbc071d285ab8e48cc4d7334419624f4a
+>>>>>>> Stashed changes
 
 class App
 {
@@ -97,7 +105,15 @@ public:
 	Physics* physics;
 	FadeToBlack* fadeToBlack;
 	Intro* intro;
+<<<<<<< Updated upstream
 	Scene2* scene2;
+=======
+<<<<<<< HEAD
+	Death* death;
+=======
+	Scene2* scene2;
+>>>>>>> f792107fbc071d285ab8e48cc4d7334419624f4a
+>>>>>>> Stashed changes
 
 private:
 

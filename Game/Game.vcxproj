@@ -89,6 +89,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Death.cpp" />
     <ClCompile Include="Source\Intro.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\App.cpp" />
@@ -104,6 +105,7 @@
     <ClCompile Include="Source\Textures.cpp" />
     <ClCompile Include="Source\Window.cpp" />
     <ClInclude Include="Source\Animation.h" />
+    <ClInclude Include="Source\Death.h" />
     <ClInclude Include="Source\Intro.h" />
     <ClInclude Include="Source\Map.h" />
     <ClInclude Include="Source\FadeToBlack.h" />
