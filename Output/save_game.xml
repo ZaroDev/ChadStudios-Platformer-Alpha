@@ -11,14 +11,14 @@
 	<:anonymous />
 	<map />
 	<player>
-		<pos x="16" y="838" />
-		<start value="1" />
+		<pos x="33" y="673" />
+		<start value="2" />
 	</player>
 	<intro />
 	<death />
 	<scene />
 	<scene />
 	<render>
-		<camera x="0" y="-1810" />
+		<camera x="0" y="-1569" />
 	</render>
 </game_state>

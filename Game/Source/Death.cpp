@@ -6,6 +6,7 @@
 #include "Render.h"
 #include "Window.h"
 #include "FadeToBlack.h"
+#include "Player.h"
 
 
 #include "Defs.h"
@@ -38,7 +39,7 @@ bool Death::Awake(pugi::xml_node& config)
 bool Death::Start()
 {
 	// L03: DONE: Load map
-	SString tmp("%s%s", folder.GetString(), "intro.png");
+	SString tmp("%s%s", folder.GetString(), "gameOver.png");
 	SString tmp2("%s%s", folder.GetString(), "deathAnim.png");
 	
 	SString tmp3("%s%s", audioFile.GetString(), "music/end.wav");
@@ -49,7 +50,7 @@ bool Death::Start()
 
 	app->tex->Enable();
 
-
+	app->render->camera.x = app->render->camera.y = 0;
 	return true;
 }
 
@@ -64,17 +65,24 @@ bool Death::Update(float dt)
 {
 	bool ret = true;
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
-		app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene);
+	{
+		if(app->player->currentScene == 1)
+			app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene);
+		if(app->player->currentScene == 2)
+			app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene2);
+	}
 	DeathAnim.Update();
 	
 
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
+	app->render->camera.x = app->render->camera.y = 0;
+
 	app->render->DrawTexture(background, 0, 0, NULL, 1.0f);
 	SDL_Rect rect = DeathAnim.GetCurrentFrame();
-	app->render->DrawTexture(deathImg, 20, 20, &rect);
-	app->render->DrawTexture(deathImg, 20, 220, &rect);
+	app->render->DrawTexture(deathImg, 91, 181, &rect);
+	app->render->DrawTexture(deathImg, 416, 181, &rect);
 
 	return ret;
 }
