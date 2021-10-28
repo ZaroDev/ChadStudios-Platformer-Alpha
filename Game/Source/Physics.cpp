@@ -15,7 +15,7 @@
 
 #pragma comment( lib, "../Game/Source/External/Box2D/libx86/DDebug/Box2D.lib" )
 #else
-#pragma comment( lib, "../Game/Source/External/Box2D/libx86/RRelease/Box2D.lib" )
+#pragma comment( lib, "../Game/Source/External/Box2D/libx86/Release/Box2D.lib" )
 #endif
 
 Physics::Physics(bool startEnabled) : Module(startEnabled)

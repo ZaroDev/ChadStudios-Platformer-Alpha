@@ -5,7 +5,7 @@
 #include "Log.h"
 
 #include "SDL/include/SDL.h"
-
+#include "SDL_image/include/SDL_image.h"
 
 Window::Window(bool startEnabled) : Module(startEnabled)
 {
@@ -39,6 +39,7 @@ bool Window::Awake(pugi::xml_node& config)
 		bool borderless = config.child("borderless").attribute("value").as_bool(false);
 		bool resizable = config.child("resizable").attribute("value").as_bool(false);
 		bool fullscreen_window = config.child("fullscreen_window").attribute("value").as_bool(false);
+		folder.Create(config.child("folder").child_value());
 
 		width = config.child("resolution").attribute("width").as_int(640);
 		height = config.child("resolution").attribute("height").as_int(480);
@@ -50,7 +51,8 @@ bool Window::Awake(pugi::xml_node& config)
 		if(fullscreen_window == true) flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
 
 		window = SDL_CreateWindow(app->GetTitle(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
-
+		SDL_Surface* icon = IMG_Load(folder.GetString());
+		SDL_SetWindowIcon(window, icon);
 		if(window == NULL)
 		{
 			LOG("Window could not be created! SDL_Error: %s\n", SDL_GetError());

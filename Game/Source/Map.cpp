@@ -365,7 +365,7 @@ bool Map::Unload()
 		c = c->next;
 	}
 	cols.clear();
-	
+	delete c;
 	return ret;
 }
 

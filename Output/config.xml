@@ -16,6 +16,7 @@
     <borderless value="false"/>
     <resizable value="false"/>
     <fullscreen_window value="false"/>
+    <folder>Assets/Icon.png</folder>
   </window>
   <audio>
     <music value="5" />

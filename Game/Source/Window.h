@@ -42,6 +42,7 @@ private:
 	uint width;
 	uint height;
 	uint scale;
+	SString folder;
 };
 
 #endif // __WINDOW_H__
