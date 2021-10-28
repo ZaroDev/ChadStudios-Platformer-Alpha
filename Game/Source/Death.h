@@ -36,7 +36,7 @@ public:
 private:
 	//SDL_Texture* logoImg;
 	SDL_Texture* background;
-	//SDL_Texture* enterImg;
+	SDL_Texture* deathImg;
 	Animation DeathAnim;
 	int frames = 0;
 	SString folder;

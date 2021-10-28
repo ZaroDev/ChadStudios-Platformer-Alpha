@@ -1,37 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Source\Log.cpp">
-      <Filter>Source\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\PugiXml\src\pugixml.cpp">
-      <Filter>External\PugiXml</Filter>
-    </ClCompile>
     <ClCompile Include="Source\App.cpp">
-      <Filter>Source\Application</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Main.cpp">
-      <Filter>Source\Application</Filter>
+      <Filter>Source\App</Filter>
     </ClCompile>
     <ClCompile Include="Source\Audio.cpp">
+      <Filter>Source\Modules\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Death.cpp">
+      <Filter>Source\Modules\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FadeToBlack.cpp">
       <Filter>Source\Modules\Core</Filter>
     </ClCompile>
     <ClCompile Include="Source\Input.cpp">
       <Filter>Source\Modules\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Map.cpp">
-      <Filter>Source\Modules\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Render.cpp">
-      <Filter>Source\Modules\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Scene.cpp">
+    <ClCompile Include="Source\Intro.cpp">
       <Filter>Source\Modules\Gameplay</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Textures.cpp">
-      <Filter>Source\Modules\Core</Filter>
+    <ClCompile Include="Source\Log.cpp">
+      <Filter>Source\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Window.cpp">
+    <ClCompile Include="Source\Main.cpp">
+      <Filter>Source\App</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Map.cpp">
       <Filter>Source\Modules\Core</Filter>
     </ClCompile>
     <ClCompile Include="Source\Physics.cpp">
@@ -40,30 +34,52 @@
     <ClCompile Include="Source\Player.cpp">
       <Filter>Source\Modules\Gameplay</Filter>
     </ClCompile>
-    <ClCompile Include="Source\FadeToBlack.cpp">
+    <ClCompile Include="Source\External\PugiXml\src\pugixml.cpp">
+      <Filter>External</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Render.cpp">
       <Filter>Source\Modules\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Intro.cpp">
+    <ClCompile Include="Source\Scene.cpp">
       <Filter>Source\Modules\Gameplay</Filter>
     </ClCompile>
-<<<<<<< Updated upstream
     <ClCompile Include="Source\Scene2.cpp">
-=======
-<<<<<<< HEAD
-    <ClCompile Include="Source\Death.cpp">
-=======
-    <ClCompile Include="Source\Scene2.cpp">
->>>>>>> f792107fbc071d285ab8e48cc4d7334419624f4a
->>>>>>> Stashed changes
       <Filter>Source\Modules\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Textures.cpp">
+      <Filter>Source\Modules\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Window.cpp">
+      <Filter>Source\Modules\Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Animation.h">
+      <Filter>Source\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\App.h">
+      <Filter>Source\App</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Audio.h">
+      <Filter>Source\Modules\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Death.h">
+      <Filter>Source\Modules\Gameplay</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Defs.h">
       <Filter>Source\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\DynArray.h">
       <Filter>Source\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FadeToBlack.h">
+      <Filter>Source\Modules\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Input.h">
+      <Filter>Source\Modules\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Intro.h">
+      <Filter>Source\Modules\Gameplay</Filter>
     </ClInclude>
     <ClInclude Include="Source\List.h">
       <Filter>Source\Utils</Filter>
@@ -71,32 +87,26 @@
     <ClInclude Include="Source\Log.h">
       <Filter>Source\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Point.h">
-      <Filter>Source\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SString.h">
-      <Filter>Source\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp">
-      <Filter>External\PugiXml</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\PugiXml\src\pugixml.hpp">
-      <Filter>External\PugiXml</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\App.h">
-      <Filter>Source\Application</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Audio.h">
-      <Filter>Source\Modules\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Input.h">
-      <Filter>Source\Modules\Core</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Map.h">
       <Filter>Source\Modules\Core</Filter>
     </ClInclude>
     <ClInclude Include="Source\Module.h">
       <Filter>Source\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Physics.h">
+      <Filter>Source\Modules\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Point.h">
+      <Filter>Source\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp">
+      <Filter>External</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Player.h">
+      <Filter>Source\Modules\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PugiXml\src\pugixml.hpp">
+      <Filter>External</Filter>
     </ClInclude>
     <ClInclude Include="Source\Render.h">
       <Filter>Source\Modules\Core</Filter>
@@ -104,67 +114,48 @@
     <ClInclude Include="Source\Scene.h">
       <Filter>Source\Modules\Gameplay</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Scene2.h">
+      <Filter>Source\Modules\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SString.h">
+      <Filter>Source\Utils</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Textures.h">
       <Filter>Source\Modules\Core</Filter>
     </ClInclude>
     <ClInclude Include="Source\Window.h">
       <Filter>Source\Modules\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Physics.h">
-      <Filter>Source\Modules\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Animation.h">
-      <Filter>Source\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Player.h">
-      <Filter>Source\Modules\Gameplay</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\FadeToBlack.h">
-      <Filter>Source\Modules\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Intro.h">
-      <Filter>Source\Modules\Gameplay</Filter>
-    </ClInclude>
-<<<<<<< Updated upstream
-    <ClInclude Include="Source\Scene2.h">
-=======
-<<<<<<< HEAD
-    <ClInclude Include="Source\Death.h">
-=======
-    <ClInclude Include="Source\Scene2.h">
->>>>>>> f792107fbc071d285ab8e48cc4d7334419624f4a
->>>>>>> Stashed changes
-      <Filter>Source\Modules\Gameplay</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="External">
-      <UniqueIdentifier>{83a966c7-b4bb-4eff-9c2c-3ff3c7b55a60}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="External\PugiXml">
-      <UniqueIdentifier>{2855ff7f-53a1-413d-a75b-18b4ade921dd}</UniqueIdentifier>
-    </Filter>
+    <Xml Include="..\Output\config.xml">
+      <Filter>External</Filter>
+    </Xml>
+    <Xml Include="..\Output\save_game.xml">
+      <Filter>External</Filter>
+    </Xml>
+  </ItemGroup>
+  <ItemGroup>
     <Filter Include="Source">
-      <UniqueIdentifier>{f6df08bd-3df4-458b-b6b5-7a47ffb8317e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Utils">
-      <UniqueIdentifier>{2cad778a-d356-48b0-9fee-587f1bbb187e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Application">
-      <UniqueIdentifier>{e26b1625-728e-457e-90d2-847f48e6c29f}</UniqueIdentifier>
+      <UniqueIdentifier>{802bb7d5-2e79-4249-a1a8-426e97888f3f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\Modules">
-      <UniqueIdentifier>{1dd52fa1-bacf-43a4-876e-36f1c355db99}</UniqueIdentifier>
+      <UniqueIdentifier>{2c250c8c-d3c8-47d2-b97e-e3ecc5c1fa2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\App">
+      <UniqueIdentifier>{5f79d68a-e432-4ef1-9847-48338b80d985}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Utils">
+      <UniqueIdentifier>{da43897b-9f00-4ffa-89dd-cdc0d67c1089}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\Modules\Core">
-      <UniqueIdentifier>{36cd5d20-db18-4a53-9eb9-1e03b64935e0}</UniqueIdentifier>
+      <UniqueIdentifier>{e124ae44-6076-4112-ad81-8baeb88059e1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\Modules\Gameplay">
-      <UniqueIdentifier>{9d88a43c-f085-42d5-baf0-5b2517495539}</UniqueIdentifier>
+      <UniqueIdentifier>{14e35f7e-7ba4-4426-859b-ecd0a75432b5}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <Xml Include="..\Output\config.xml" />
-    <Xml Include="..\Output\save_game.xml" />
+    <Filter Include="External">
+      <UniqueIdentifier>{ca02deac-1edc-4896-a369-f4889d57fe06}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

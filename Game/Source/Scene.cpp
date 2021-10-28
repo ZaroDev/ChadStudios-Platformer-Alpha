@@ -46,8 +46,6 @@ bool Scene::Start()
 	LOG("%s", tmp.GetString());
 	app->physics->Enable();
 	app->player->Enable();
-	app->audio->Enable();
-	app->tex->Enable();
 	app->map->Enable();
 	return true;
 }
@@ -87,7 +85,10 @@ bool Scene::Update(float dt)
 		app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene2);
 		app->player->currentScene = 2;
 	}
-	
+	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	{
+		app->fadeToBlack->MFadeToBlack(this, (Module*)app->death);
+	}
 
 	// Draw map
 	app->render->DrawTexture(background, 0,0, NULL, 0.75f);

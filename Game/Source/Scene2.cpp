@@ -46,7 +46,6 @@ bool Scene2::Start()
 	app->physics->Enable();
 	app->player->Enable();
 	app->audio->Enable();
-	app->tex->Enable();
 	app->map->Enable();
 
 	return true;
@@ -82,7 +81,10 @@ bool Scene2::Update(float dt)
 		if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 			app->render->camera.x -= 30;
 	}
-
+	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	{
+		app->fadeToBlack->MFadeToBlack(this, (Module*)app->death);
+	}
 
 
 	// Draw map
