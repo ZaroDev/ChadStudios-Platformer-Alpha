@@ -61,6 +61,6 @@ public:
 	SString jumpSFXFile;
 	bool die;
 	bool win;
-
+	b2Body* c;
 	bool debug;
 };

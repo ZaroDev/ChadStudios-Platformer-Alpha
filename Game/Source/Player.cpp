@@ -113,7 +113,7 @@ bool Player::Start()
 	cbody.type = b2_dynamicBody;
 	cbody.position.Set(PIXEL_TO_METERS(pos.x), PIXEL_TO_METERS(pos.y));
 	cbody.fixedRotation = true;
-	b2Body* c = app->physics->world->CreateBody(&cbody);
+	c = app->physics->world->CreateBody(&cbody);
 	b2CircleShape circle;
 	circle.m_radius = PIXEL_TO_METERS(12);
 	b2FixtureDef fixturec;
@@ -302,5 +302,6 @@ bool Player::CleanUp()
 {
 	bool ret = true;
 	app->tex->UnLoad(tex);
+	app->physics->world->DestroyBody(c);
 	return ret;
 }

@@ -60,33 +60,7 @@ bool Physics::PreUpdate()
 	return ret;
 }
 
-PhysBody* Physics::CreateCircle(int x, int y, int radius, bodyType type)
-{
-	b2BodyDef body;
 
-	if (type == DYNAMIC) body.type = b2_dynamicBody;
-	if (type == STATIC) body.type = b2_staticBody;
-	if (type == KINEMATIC) body.type = b2_kinematicBody;
-
-	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
-
-	b2Body* b = world->CreateBody(&body);
-
-	b2CircleShape shape;
-	shape.m_radius = PIXEL_TO_METERS(radius);
-	b2FixtureDef fixture;
-	fixture.shape = &shape;
-	fixture.density = 1.0f;
-
-	b->CreateFixture(&fixture);
-
-	PhysBody* pbody = new PhysBody();
-	pbody->body = b;
-	b->SetUserData(pbody);
-	pbody->width = pbody->height = radius;
-
-	return pbody;
-}
 
 PhysBody* Physics::CreateRectangle(int x, int y, int width, int height, bodyType type)
 {
