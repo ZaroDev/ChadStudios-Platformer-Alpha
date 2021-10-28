@@ -11,7 +11,7 @@
 	<:anonymous />
 	<map />
 	<player>
-		<pos x="16" y="838" />
+		<pos x="16" y="824" />
 		<start value="1" />
 	</player>
 	<intro />
