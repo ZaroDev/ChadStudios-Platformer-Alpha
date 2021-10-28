@@ -361,6 +361,7 @@ bool Map::Unload()
 	while (c != NULL)
 	{
 		app->physics->world->DestroyBody(c->data->body);
+
 		c = c->next;
 	}
 	cols.clear();

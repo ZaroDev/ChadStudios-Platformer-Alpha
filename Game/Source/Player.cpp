@@ -129,7 +129,7 @@ bool Player::Start()
 	pbody->width = 24 * 0.5f;
 	pbody->height = 27 * 0.5f;
 	pbody->listener = this;
-
+	die = false;
 	debug = false;
 
 	return ret;
@@ -168,7 +168,7 @@ bool Player::Update(float dt)
 		if (-app->render->camera.y > app->map->bounds.y)
 			app->render->camera.y = -app->map->bounds.y;
 		//Die state
-		if (pbody->body->GetPosition().x < app->map->bounds.y)
+		if (pbody->body->GetPosition().y > PIXEL_TO_METERS( 1049))
 			die = true;
 	}
 	LOG("X:%i, %i", app->render->camera.x, app->map->bounds.x);

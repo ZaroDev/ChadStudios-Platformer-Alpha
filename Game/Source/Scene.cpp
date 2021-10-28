@@ -38,7 +38,6 @@ bool Scene::Start()
 {
 	SString tmp("%s%s", folder.GetString(),"background.png");
 	SString tmp2("%s%s", folder.GetString(), "jungle.png");
-	app->map->Load("map.tmx");
 	SString tmp3("%s%s", audioFile.GetString(), "music/lvl1.wav");
 	app->audio->PlayMusic(tmp3.GetString());
 	background = app->tex->Load(tmp.GetString());
@@ -47,6 +46,8 @@ bool Scene::Start()
 	app->physics->Enable();
 	app->player->Enable();
 	app->map->Enable();
+	app->player->currentScene = 1;
+	app->map->Load("map.tmx");
 	return true;
 }
 
@@ -80,15 +81,17 @@ bool Scene::Update(float dt)
 		if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 			app->render->camera.x -= 30;
 	}
-	if (app->player->pos.x == winX)
+	if (app->player->pos.x == winX || app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN || app->player->currentScene == 2)
 	{
 		app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene2);
 		app->player->currentScene = 2;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN || app->player->die)
 	{
 		app->fadeToBlack->MFadeToBlack(this, (Module*)app->death);
 	}
+
+
 
 	// Draw map
 	app->render->DrawTexture(background, 0,0, NULL, 0.75f);
