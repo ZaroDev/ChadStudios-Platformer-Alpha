@@ -14,7 +14,7 @@
 
 Scene2::Scene2(bool startEnabled) : Module(startEnabled)
 {
-	name.Create("scene");
+	name.Create("scene2");
 }
 
 // Destructor
@@ -28,6 +28,7 @@ bool Scene2::Awake(pugi::xml_node& config)
 	bool ret = true;
 	folder.Create(config.child("folder").child_value());
 	audioFile.Create(config.child("audio").child_value());
+	winX = config.child("winX").attribute("value").as_int();
 	LOG("%s", folder.GetString());
 	return ret;
 }
@@ -62,11 +63,15 @@ bool Scene2::Update(float dt)
 {
 
 
-	if (app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		app->LoadGameRequest();
 
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		app->SaveGameRequest();
+
+	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN || app->player->die)
+		app->fadeToBlack->MFadeToBlack(this, (Module*)app->death);
+
 	if (app->player->debug)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
@@ -81,14 +86,15 @@ bool Scene2::Update(float dt)
 		if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 			app->render->camera.x -= 30;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN || app->player->die)
+
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN || app->player->currentScene == 1)
+		app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene);
+	
+	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN ||app->player->pos.x == winX)
 	{
 		app->fadeToBlack->MFadeToBlack(this, (Module*)app->death);
+		app->player->win = true;
 	}
-	if (app->player->currentScene == 1)
-		app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene);
-
-
 
 	// Draw map
 	app->render->DrawTexture(background, 0, 0, NULL, 0.75f);

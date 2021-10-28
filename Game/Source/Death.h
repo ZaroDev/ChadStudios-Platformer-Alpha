@@ -35,9 +35,13 @@ public:
 
 private:
 	//SDL_Texture* logoImg;
-	SDL_Texture* background;
+	SDL_Texture* backgroundDeath;
 	SDL_Texture* deathImg;
-	Animation DeathAnim;
+	SDL_Texture* backgroundWin;
+	SDL_Texture* winImg;
+
+	Animation deathAnim;
+	Animation winAnim;
 	int frames = 0;
 	SString folder;
 	SString audioFile;

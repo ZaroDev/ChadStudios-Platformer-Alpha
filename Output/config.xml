@@ -46,6 +46,11 @@
     <folder>Assets/maps/</folder>
     <winX value="2359"></winX>
   </scene>
+  <scene2>
+    <audio>Assets/audio/</audio>
+    <folder>Assets/maps/</folder>
+    <winX value="2359"></winX>
+  </scene2>
   <death>
     <audio>Assets/audio/</audio>
     <folder>Assets/maps/</folder>

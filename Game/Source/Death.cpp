@@ -15,10 +15,18 @@
 Death::Death(bool startEnabled) : Module(startEnabled)
 {
 	name.Create("death");
-	DeathAnim.PushBack({ 0, 0, 32, 32 });
-	DeathAnim.PushBack({ 33, 0, 32, 32 });
-	DeathAnim.loop = true;
-	DeathAnim.speed = 0.1f;
+	deathAnim.PushBack({ 0, 0, 32, 32 });
+	deathAnim.PushBack({ 33, 0, 32, 32 });
+	deathAnim.loop = true;
+	deathAnim.speed = 0.1f;
+
+	winAnim.PushBack({ 1, 1, 13, 11 });
+	winAnim.PushBack({ 16, 1, 13, 11 });
+	winAnim.PushBack({ 31, 1, 13, 11 });
+	winAnim.PushBack({ 46, 1, 13, 11 });
+	winAnim.PushBack({ 61, 1, 13, 11 });
+	winAnim.loop = true;
+	winAnim.speed = 0.1f;
 }
 
 // Destructor
@@ -43,11 +51,14 @@ bool Death::Start()
 	SString tmp2("%s%s", folder.GetString(), "deathAnim.png");
 	
 	SString tmp3("%s%s", audioFile.GetString(), "music/end.wav");
+	SString tmp4("%s%s", folder.GetString(), "win.png");
+	SString tmp5("%s%s", folder.GetString(), "gem.png");
 	app->audio->PlayMusic(tmp3.GetString());
 
-	background = app->tex->Load(tmp.GetString());
+	backgroundDeath = app->tex->Load(tmp.GetString());
 	deathImg = app->tex->Load(tmp2.GetString());
-
+	backgroundWin = app->tex->Load(tmp4.GetString());
+	winImg = app->tex->Load(tmp5.GetString());
 	app->tex->Enable();
 
 	app->render->camera.x = app->render->camera.y = 0;
@@ -64,25 +75,40 @@ bool Death::PreUpdate()
 bool Death::Update(float dt)
 {
 	bool ret = true;
-	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN  )
 	{
-		if(app->player->currentScene == 1)
+		if (app->player->die)
+		{
+			if (app->player->currentScene == 1)
+				app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene);
+			if (app->player->currentScene == 2)
+				app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene2);
+		}
+		else
 			app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene);
-		if(app->player->currentScene == 2)
-			app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene2);
 	}
-	DeathAnim.Update();
 	
 
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
 	app->render->camera.x = app->render->camera.y = 0;
-
-	app->render->DrawTexture(background, 0, 0, NULL, 1.0f);
-	SDL_Rect rect = DeathAnim.GetCurrentFrame();
-	app->render->DrawTexture(deathImg, 91, 181, &rect);
-	app->render->DrawTexture(deathImg, 416, 181, &rect);
+	if (app->player->die)
+	{
+		deathAnim.Update();
+		app->render->DrawTexture(backgroundDeath, 0, 0, NULL, 1.0f);
+		SDL_Rect rect = deathAnim.GetCurrentFrame();
+		app->render->DrawTexture(deathImg, 91, 181, &rect);
+		app->render->DrawTexture(deathImg, 416, 181, &rect);
+	}
+	if (app->player->win)
+	{
+		winAnim.Update();	
+		app->render->DrawTexture(backgroundWin, 0, 0, NULL);
+		SDL_Rect rect = winAnim.GetCurrentFrame();
+		app->render->DrawTexture(winImg, 137, 172, &rect);
+		app->render->DrawTexture(winImg, 370, 172, &rect);
+	}
 
 	return ret;
 }
@@ -98,7 +124,8 @@ bool Death::PostUpdate()
 bool Death::CleanUp()
 {
 	LOG("Freeing scene");
-	app->tex->UnLoad(background);
+	app->tex->UnLoad(backgroundDeath);
+	app->tex->UnLoad(backgroundWin);
 	app->tex->UnLoad(deathImg);
 
 	return true;

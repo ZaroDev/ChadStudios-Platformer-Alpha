@@ -131,7 +131,7 @@ bool Player::Start()
 	pbody->listener = this;
 	die = false;
 	debug = false;
-
+	win = false;
 	return ret;
 }
 
@@ -142,9 +142,16 @@ bool Player::Update(float dt)
 
 	grounded = false;
 
-	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 		debug = !debug;
 
+	if (app->input->GetKey(SDL_SCANCODE_F3))
+	{
+		if(currentScene == 1)
+			pbody->body->SetTransform({ PIXEL_TO_METERS(scene1.x), PIXEL_TO_METERS(scene1.y) }, 0.0f);
+		if(currentScene == 2)
+			pbody->body->SetTransform({ PIXEL_TO_METERS(scene2.x), PIXEL_TO_METERS(scene2.y) }, 0.0f);
+	}
 	if (pbody->body->GetLinearVelocity().y < 0.1f && pbody->body->GetLinearVelocity().y > -0.1f)
 		grounded = true;
 			
@@ -203,7 +210,6 @@ bool Player::Update(float dt)
 			currentAnimation = &runAnimL;
 		}
 	}
-
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && numJumps > 0)
 	{
 		app->audio->PlayFx(jumpSFX);

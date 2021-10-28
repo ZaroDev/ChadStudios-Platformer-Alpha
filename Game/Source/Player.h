@@ -60,6 +60,7 @@ public:
 	iPoint scene2;
 	SString jumpSFXFile;
 	bool die;
+	bool win;
 
 	bool debug;
 };

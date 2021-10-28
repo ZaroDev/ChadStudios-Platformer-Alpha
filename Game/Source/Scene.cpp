@@ -62,10 +62,10 @@ bool Scene::Update(float dt)
 {
 	
 
-	if(app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+	if(app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		app->LoadGameRequest();
 
-	if(app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+	if(app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		app->SaveGameRequest();
 	if (app->player->debug)
 	{
@@ -81,16 +81,22 @@ bool Scene::Update(float dt)
 		if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 			app->render->camera.x -= 30;
 	}
-	if (app->player->pos.x == winX || app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN || app->player->currentScene == 2)
+	if (app->player->pos.x == winX || app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN || app->player->currentScene == 2)
 	{
 		app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene2);
 		app->player->currentScene = 2;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN || app->player->die)
+	
+	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN || app->player->die)
 	{
 		app->fadeToBlack->MFadeToBlack(this, (Module*)app->death);
+		
 	}
-
+	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
+	{
+		app->fadeToBlack->MFadeToBlack(this, (Module*)app->death);
+		app->player->win = true;
+	}
 
 
 	// Draw map
