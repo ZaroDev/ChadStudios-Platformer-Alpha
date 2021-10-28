@@ -8,10 +8,29 @@ A simple platformer made with XML and TMXL
 
  - Movement with the keyboard
  - Platforming
+ - Double jump
+ - Two playable levels
+ - Save/Load game
+ - Debug mode with various features
  
 ## Controls
 
  - {ControlsScheme}
+ - A -> Move left
+ - D -> Move right
+ - Space -> Jump / jump twice
+
+DEBUG MODE
+
+ - F1 -> Start from the 1st level
+ - F2 -> Start from the 2nd level
+ - F3 -> Start from the beginning of the level
+ - F5 -> Save game
+ - F6 -> Load game
+ - F7 -> Win
+ - F9 -> Collision view
+ - F10 -> God mode
+ - Arrow keywords -> Move the camera
 
 ## Developers
 
