@@ -85,7 +85,10 @@ bool Death::Update(float dt)
 				app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene2);
 		}
 		else
+		{
+			app->player->currentScene = 1;
 			app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene);
+		}
 	}
 	
 

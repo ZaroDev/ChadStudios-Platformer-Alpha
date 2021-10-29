@@ -3,10 +3,21 @@
 #include "Animation.h"
 #include "Box2D/Box2D/Box2D.h"
 #include "FadeToBlack.h"
-
+#include "List.h"
 struct SDL_Texture;
 
-
+struct Sensor {
+	enum sensorValue
+	{
+		NONE = -1,
+		LEFT,
+		RIGHT
+	};
+	PhysBody* sensor;
+	sensorValue value;
+	bool isActive;
+	int sensorTimer = 0;
+};
 
 class Player : public Module
 {
@@ -28,7 +39,7 @@ public:
 	bool SaveState(pugi::xml_node&) const;
 
 	bool CleanUp() override;
-
+	void CreateSensor(PhysBody* sensor, Sensor::sensorValue sensorType, bool isActive);
 	iPoint pos;
 
 	PhysBody* pbody;
@@ -47,6 +58,7 @@ public:
 	Animation downAnimL;
 	Animation jumpAnimR;
 	Animation downAnimR;
+	List<Sensor*>sensors;
 
 	int jumpSFX;
 	int currentScene;

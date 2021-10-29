@@ -195,7 +195,8 @@ bool Map::LoadColliders()
 						pos.x += r.w / 2;
 						pos.y += r.h / 2;
 						PhysBody* col = new PhysBody();
-						col = app->physics->CreateRectangle(pos.x, pos.y, r.w, r.h, KINEMATIC);
+						col->listener = this;
+						col = app->physics->CreateRectangle(pos.x, pos.y, r.w, r.h, STATIC );
 						cols.add(col);
 						
 					}
@@ -366,6 +367,7 @@ bool Map::Unload()
 	}
 	cols.clear();
 	delete c;
+	
 	return ret;
 }
 

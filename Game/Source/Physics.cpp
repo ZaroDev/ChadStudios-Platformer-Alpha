@@ -48,7 +48,7 @@ bool Physics::PreUpdate()
 
 	for (b2Contact* c = world->GetContactList(); c; c = c->GetNext())
 	{
-		if (c->IsTouching())
+		if (c->IsTouching() && c->GetFixtureA()->IsSensor())
 		{
 			PhysBody* pb1 = (PhysBody*)c->GetFixtureA()->GetBody()->GetUserData();
 			PhysBody* pb2 = (PhysBody*)c->GetFixtureB()->GetBody()->GetUserData();
@@ -367,4 +367,18 @@ b2PrismaticJoint* Physics::CreatePrismaticJoint(PhysBody* A, b2Vec2 anchorA, Phy
 	prismaticJointDef.upperTranslation = maxHeight;
 
 	return (b2PrismaticJoint*)world->CreateJoint(&prismaticJointDef);
+}
+
+b2WeldJoint* Physics::CreateWeldJoint(PhysBody* A, b2Vec2 anchorA, PhysBody* B, b2Vec2 anchorB, float angle, bool collideConnected, bool enableLimit)
+{
+	b2WeldJointDef weldJointDef;
+	weldJointDef.bodyA = A->body;
+	weldJointDef.bodyB = B->body;
+	weldJointDef.collideConnected = collideConnected;
+	weldJointDef.localAnchorA.Set(anchorA.x, anchorA.y);
+	weldJointDef.localAnchorB.Set(anchorB.x, anchorB.y);
+	weldJointDef.referenceAngle = 0;
+	
+
+	return (b2WeldJoint*)world->CreateJoint(&weldJointDef);
 }

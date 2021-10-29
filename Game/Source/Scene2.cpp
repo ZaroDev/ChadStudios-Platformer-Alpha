@@ -124,6 +124,7 @@ bool Scene2::CleanUp()
 	app->tex->UnLoad(background);
 	app->tex->UnLoad(jungle);
 	app->player->Disable();
+	app->map->Unload();
 	app->map->Disable();
 	app->physics->Disable();
 	return true;

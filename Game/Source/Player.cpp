@@ -122,7 +122,8 @@ bool Player::Start()
 	fixturec.friction = 100.0f;
 	c->ResetMassData();
 	c->CreateFixture(&fixturec);
-
+	//CreateSensor(app->physics->CreateRectangleSensor(pos.x, pos.y, 2, 24, DYNAMIC), Sensor::LEFT, true);
+	//CreateSensor(app->physics->CreateRectangleSensor(pos.x, pos.y, 2, 24, DYNAMIC), Sensor::RIGHT, true);
 	pbody = new PhysBody();
 	pbody->body = c;
 	c->SetUserData(pbody);
@@ -132,6 +133,9 @@ bool Player::Start()
 	die = false;
 	debug = false;
 	win = false;
+
+
+	//app->physics->CreateWeldJoint(sensors.start->data->sensor, { 0.2f, 0 }, pbody, { 0, 0 }, 0, false, false);
 	return ret;
 }
 
@@ -261,6 +265,8 @@ bool Player::Update(float dt)
 	LOG("%i", grounded);
 
 	currentAnimation->Update();
+	//sensors.start->data->sensor->body->SetTransform({PIXEL_TO_METERS( pos.x) -0.1f,PIXEL_TO_METERS( pos.y)+0.2f}, 0);
+	//sensors.end->data->sensor->body->SetTransform({ PIXEL_TO_METERS(pos.x)+ 0.6f,PIXEL_TO_METERS(pos.y) + 0.2f }, 0);
 	return ret;
 }
 
@@ -275,6 +281,19 @@ bool Player::PostUpdate()
 
 void Player::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
+	/*ListItem<Sensor*>* s = sensors.start;
+	while (s != NULL)
+	{
+		if (s->data->value == Sensor::LEFT && bodyA == s->data->sensor && bodyB->listener == (Module*)app->map)
+		{
+			printf("LEFT");
+		}
+		if (s->data->value == Sensor::RIGHT && bodyA == s->data->sensor && bodyB->listener == (Module*)app->map)
+		{
+			printf("RIGHT");
+		}
+		s =	s->next;
+	}*/
 }
 
 bool Player::LoadState(pugi::xml_node&data)
@@ -303,5 +322,15 @@ bool Player::CleanUp()
 	bool ret = true;
 	app->tex->UnLoad(tex);
 	app->physics->world->DestroyBody(c);
+	sensors.clear();
 	return ret;
+}
+void Player::CreateSensor(PhysBody* sensor, Sensor::sensorValue sensorType, bool isActive)
+{
+	Sensor* newSensor = new Sensor;
+	newSensor->sensor = sensor;
+	newSensor->sensor->listener = this;
+	newSensor->value = sensorType;
+	newSensor->isActive = isActive;
+	sensors.add(newSensor);
 }

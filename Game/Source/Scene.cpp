@@ -90,6 +90,7 @@ bool Scene::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN || app->player->die)
 	{
 		app->fadeToBlack->MFadeToBlack(this, (Module*)app->death);
+		app->player->die = true;
 		
 	}
 	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
