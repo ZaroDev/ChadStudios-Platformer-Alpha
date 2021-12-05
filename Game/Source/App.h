@@ -20,6 +20,8 @@ class Map;
 class Physics;
 class Player;
 class FadeToBlack;
+class PathFinding;
+class UI;
 class Intro;
 
 class Scene2;
@@ -103,6 +105,8 @@ public:
 	Player* player;
 	Physics* physics;
 	FadeToBlack* fadeToBlack;
+	PathFinding* pathfinding;
+	UI* ui;
 	Intro* intro;
 	Scene2* scene2;
 	Death* death;

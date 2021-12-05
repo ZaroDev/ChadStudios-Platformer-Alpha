@@ -12,9 +12,12 @@
 #include "Physics.h"
 #include "Intro.h"
 #include "FadeToBlack.h"
+#include "Pathfinding.h"
+#include "UI.h"
 #include "Scene2.h"
 #include "Defs.h"
 #include "Log.h"
+
 
 #include <iostream>
 #include <sstream>
@@ -33,10 +36,13 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	intro = new Intro(true);
 	scene = new Scene(false);
 	death = new Death(false);
+	pathfinding = new PathFinding(false);
 	map = new Map(true);
+	ui = new UI(false);
 	player = new Player(false);
 	physics = new Physics(true);
 	scene2 = new Scene2(false);
+
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -46,12 +52,14 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(fadeToBlack);
 	AddModule(physics);
-	AddModule(map);
-	AddModule(player);
+	AddModule(pathfinding);
 	AddModule(intro);
 	AddModule(death);
 	AddModule(scene);
 	AddModule(scene2);
+	AddModule(ui);
+	AddModule(map);
+	AddModule(player);
 	// Render last to swap buffer
 	AddModule(render);
 }
@@ -68,13 +76,13 @@ App::~App()
 		item = item->prev;
 	}
 
-	modules.clear();
+	modules.Clear();
 }
 
 void App::AddModule(Module* module)
 {
 	module->Init();
-	modules.add(module);
+	modules.Add(module);
 }
 
 // Called before render is available

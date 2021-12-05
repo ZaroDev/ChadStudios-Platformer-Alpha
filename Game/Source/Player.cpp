@@ -11,6 +11,7 @@
 #include "Scene.h"
 #include "Scene2.h"
 
+
 Player::Player(bool startEnabled) : Module(startEnabled)
 {
 	name.Create("player");
@@ -306,6 +307,7 @@ bool Player::LoadState(pugi::xml_node&data)
 	return ret;
 }
 
+
 bool Player::SaveState(pugi::xml_node&data) const
 {
 	bool ret = true;
@@ -322,7 +324,7 @@ bool Player::CleanUp()
 	bool ret = true;
 	app->tex->UnLoad(tex);
 	app->physics->world->DestroyBody(c);
-	sensors.clear();
+	sensors.Clear();
 	return ret;
 }
 void Player::CreateSensor(PhysBody* sensor, Sensor::sensorValue sensorType, bool isActive)
@@ -332,5 +334,5 @@ void Player::CreateSensor(PhysBody* sensor, Sensor::sensorValue sensorType, bool
 	newSensor->sensor->listener = this;
 	newSensor->value = sensorType;
 	newSensor->isActive = isActive;
-	sensors.add(newSensor);
+	sensors.Add(newSensor);
 }

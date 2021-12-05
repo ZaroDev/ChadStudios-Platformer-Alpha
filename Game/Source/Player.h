@@ -64,6 +64,8 @@ public:
 	int currentScene;
 	bool grounded;
 	int numJumps;
+	int lives = 3;
+
 	float minVel;
 	float maxVel;
 	float jumpVel;

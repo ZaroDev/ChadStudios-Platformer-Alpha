@@ -3,6 +3,7 @@
 
 #include "Module.h"
 
+
 struct SDL_Texture;
 
 class Scene : public Module

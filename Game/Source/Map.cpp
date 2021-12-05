@@ -197,7 +197,7 @@ bool Map::LoadColliders()
 						PhysBody* col = new PhysBody();
 						col->listener = this;
 						col = app->physics->CreateRectangle(pos.x, pos.y, r.w, r.h, STATIC );
-						cols.add(col);
+						cols.Add(col);
 						
 					}
 
@@ -244,7 +244,7 @@ bool Map::CleanUp()
 		RELEASE(item->data);
 		item = item->next;
 	}
-	mapData.tilesets.clear();
+	mapData.tilesets.Clear();
 
 	// L04: DONE 2: clean up all layer data
 	// Remove all layers
@@ -256,7 +256,7 @@ bool Map::CleanUp()
 		RELEASE(item2->data);
 		item2 = item2->next;
 	}
-	mapData.layers.clear();
+	mapData.layers.Clear();
 
 	return true;
 }
@@ -365,7 +365,7 @@ bool Map::Unload()
 
 		c = c->next;
 	}
-	cols.clear();
+	cols.Clear();
 	delete c;
 	
 	return ret;
@@ -416,7 +416,7 @@ bool Map::LoadTileSets(pugi::xml_node mapFile) {
 		TileSet* set = new TileSet();
 		if (ret == true) ret = LoadTilesetDetails(tileset, set);
 		if (ret == true) ret = LoadTilesetImage(tileset, set);
-		mapData.tilesets.add(set);
+		mapData.tilesets.Add(set);
 	}
 
 	return ret;
@@ -500,7 +500,7 @@ bool Map::LoadAllLayers(pugi::xml_node mapNode) {
 		ret = LoadLayer(layerNode, mapLayer);
 
 		//add the layer to the map
-		mapData.layers.add(mapLayer);
+		mapData.layers.Add(mapLayer);
 	}
 
 	return ret;
@@ -517,7 +517,7 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 		p->name = propertieNode.attribute("name").as_string();
 		p->value = propertieNode.attribute("value").as_int();
 
-		properties.list.add(p);
+		properties.list.Add(p);
 	}
 
 	return ret;

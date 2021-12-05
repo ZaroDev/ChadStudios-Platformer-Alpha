@@ -33,7 +33,9 @@
     <scene1 x="23" y="837" />
     <scene2 x="20" y="100" />
   </player>
-
+  <ui>
+    <folder>Assets/textures/UI/heart.png</folder>
+  </ui>
   <!-- L03: Added maps folder as config option -->
   <map>
     <folder>Assets/maps/</folder>

@@ -60,7 +60,7 @@ struct Properties
 			item = item->next;
 		}
 
-		list.clear();
+		list.Clear();
 	}
 
 	// L06: TODO 7: Method to ask for the value of a custom property
