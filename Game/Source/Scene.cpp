@@ -103,8 +103,8 @@ bool Scene::Update(float dt)
 
 
 	// Draw map
-	app->render->DrawTexture(background, 0,0, NULL, 0.75f);
-	app->render->DrawTexture(jungle, 0, 284, NULL, 0.5f);
+	app->render->DrawTexture(background, 0,0, NULL, false,0.75f);
+	app->render->DrawTexture(jungle, 0, 284, NULL,false , 0.5f);
 	app->map->Draw();
 
 	

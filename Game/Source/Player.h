@@ -58,13 +58,15 @@ public:
 	Animation downAnimL;
 	Animation jumpAnimR;
 	Animation downAnimR;
+
+	Animation hurtAnim;
 	List<Sensor*>sensors;
 
 	int jumpSFX;
 	int currentScene;
 	bool grounded;
 	int numJumps;
-	int lives = 3;
+	int lives;
 
 	float minVel;
 	float maxVel;
@@ -73,6 +75,8 @@ public:
 	iPoint scene1;
 	iPoint scene2;
 	SString jumpSFXFile;
+	int counter;
+	bool hurt;
 	bool die;
 	bool win;
 	b2Body* c;

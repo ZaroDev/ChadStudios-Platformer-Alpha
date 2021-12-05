@@ -79,6 +79,12 @@ bool Player::Awake(pugi::xml_node&config)
 	jumpAnimL.loop = false;
 	downAnimL.PushBack({ 96, 46, 28, 30 });
 	downAnimL.loop = false;
+
+	hurtAnim.PushBack({ 5, 126, 30, 31 });
+	hurtAnim.PushBack({ 46, 128, 29, 31 });
+	hurtAnim.loop = true;
+	hurtAnim.speed = 0.1f;
+
 	return ret;
 }
 
@@ -101,8 +107,7 @@ bool Player::Start()
 	default:
 		break;
 	}
-
-
+	lives = 3;
 	tex = app->tex->Load(folder.GetString());
 	currentAnimation = &idleAnimR;
 
@@ -183,8 +188,6 @@ bool Player::Update(float dt)
 		if (pbody->body->GetPosition().y > PIXEL_TO_METERS( 1049))
 			die = true;
 	}
-	LOG("X:%i, %i", app->render->camera.x, app->map->bounds.x);
-	LOG("Y:%i, %i", app->render->camera.y, app->map->bounds.y);
 
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
@@ -221,11 +224,30 @@ bool Player::Update(float dt)
 		pbody->body->SetLinearVelocity({ pbody->body->GetLinearVelocity().x, jumpVel });
 		numJumps--;
 	}
-	LOG("J: %i", numJumps);
-	LOG("G: %i", grounded);
+	if (hurt)
+	{
+		counter++;
+		if (currentAnimation != &hurtAnim)
+		{
+			currentAnimation = &hurtAnim;
+		}
+		if (counter == 10)
+		{
+			lives--;
+			hurt = false;
+		}
+	}
+	if (!hurt)
+	{
+		counter = 0;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
+	{
+		hurt = true;
+	}
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE)
 	{
-		if (currentAnimation == &runAnimR || currentAnimation == &jumpAnimR || currentAnimation == &downAnimR)
+		if (currentAnimation == &runAnimR || currentAnimation == &jumpAnimR || currentAnimation == &downAnimR || hurt == false)
 		{
 			currentAnimation = &idleAnimR;
 		}
@@ -262,6 +284,7 @@ bool Player::Update(float dt)
 		app->audio->volMusic--;
 		app->audio->volFX--;
 	}
+
 	LOG("%f", pbody->body->GetLinearVelocity().y);
 	LOG("%i", grounded);
 
@@ -282,19 +305,13 @@ bool Player::PostUpdate()
 
 void Player::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
-	/*ListItem<Sensor*>* s = sensors.start;
-	while (s != NULL)
+	if (bodyA->listener == (Module*)app->player && bodyB->listener == (Module*)app->player)
 	{
-		if (s->data->value == Sensor::LEFT && bodyA == s->data->sensor && bodyB->listener == (Module*)app->map)
+		if (bodyA->body->GetPosition().y < bodyB->body->GetPosition().y)
 		{
-			printf("LEFT");
+			hurt = true;
 		}
-		if (s->data->value == Sensor::RIGHT && bodyA == s->data->sensor && bodyB->listener == (Module*)app->map)
-		{
-			printf("RIGHT");
-		}
-		s =	s->next;
-	}*/
+	}
 }
 
 bool Player::LoadState(pugi::xml_node&data)

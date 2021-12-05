@@ -21,8 +21,8 @@ bool UI::Awake(pugi::xml_node& config)
 
 bool UI::Start()
 {
-	heart = app->tex->Load(folder.GetString());
-	//heart = app->tex->Load("Assets/textures/UI/heart.png");
+	//heart = app->tex->Load(folder.GetString());
+	heart = app->tex->Load("Assets/textures/UI/heart.png");
 
 
 
@@ -35,15 +35,15 @@ bool UI::PostUpdate()
 
 	if (app->player->lives == 3)
 	{
-		app->render->DrawTexture(heart, 45, 10);
+		app->render->DrawTexture(heart, 115, 10, NULL, true);
 	}
 	if (app->player->lives >= 2)
 	{
-		app->render->DrawTexture(heart, 25, 10);
+		app->render->DrawTexture(heart, 60, 10, NULL, true);
 	}
 	if (app->player->lives >= 1)
 	{
-		app->render->DrawTexture(heart, 5, 10);
+		app->render->DrawTexture(heart, 5, 10, NULL, true);
 	}
 
 	return true;

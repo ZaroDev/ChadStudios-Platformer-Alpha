@@ -88,9 +88,9 @@ bool Intro::PostUpdate()
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
-	app->render->DrawTexture(background, 0, 0, NULL, 1.0f);
+	app->render->DrawTexture(background, 0, 0, NULL);
 	SDL_Rect rect = logoAnim.GetCurrentFrame();
-	app->render->DrawTexture(logoImg, 0, 0, &rect, 1.0f);
+	app->render->DrawTexture(logoImg, 0, 0, &rect);
 	
 	if ((frames / 60) % 2 == 0)
 	{
