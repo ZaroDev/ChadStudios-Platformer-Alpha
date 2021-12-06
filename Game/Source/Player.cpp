@@ -8,6 +8,7 @@
 #include "Window.h"
 #include "Audio.h"
 #include "Map.h"
+#include "UI.h"
 #include "Scene.h"
 #include "Scene2.h"
 
@@ -107,6 +108,7 @@ bool Player::Start()
 	default:
 		break;
 	}
+	app->ui->Enable();
 	lives = 3;
 	tex = app->tex->Load(folder.GetString());
 	currentAnimation = &idleAnimR;
@@ -341,6 +343,7 @@ bool Player::CleanUp()
 	bool ret = true;
 	app->tex->UnLoad(tex);
 	app->physics->world->DestroyBody(c);
+	app->ui->Disable();
 	sensors.Clear();
 	return ret;
 }

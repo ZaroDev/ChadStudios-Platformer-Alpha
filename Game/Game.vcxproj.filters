@@ -64,6 +64,7 @@
     <ClCompile Include="Source\UI.cpp">
       <Filter>Source\Modules\Core</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Fonts.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Animation.h">
@@ -150,6 +151,7 @@
     <ClInclude Include="Source\UI.h">
       <Filter>Source\Modules\Core</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Fonts.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Output\config.xml">

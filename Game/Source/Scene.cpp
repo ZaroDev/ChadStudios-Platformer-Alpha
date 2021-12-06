@@ -44,7 +44,6 @@ bool Scene::Start()
 	background = app->tex->Load(tmp.GetString());
 	jungle = app->tex->Load(tmp2.GetString());
 	LOG("%s", tmp.GetString());
-	app->ui->Enable();
 	app->physics->Enable();
 	app->player->Enable();
 	app->map->Enable();

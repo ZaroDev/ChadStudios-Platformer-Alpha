@@ -2,6 +2,7 @@
 #include "Textures.h"
 #include "Player.h"
 #include "Render.h"
+#include "Fonts.h"
 
 UI::UI(bool startEnabled) : Module(startEnabled)
 {
@@ -41,9 +42,14 @@ bool UI::Start()
 {
 	SString tmp1("%s%s", folder.GetString(), "heart.png");
 	SString tmp2("%s%s", folder.GetString(), "gem.png");
+	SString tmp3("%s%s", folder.GetString(), "font.png");
 
 	heart = app->tex->Load(tmp1.GetString());
 	gem = app->tex->Load(tmp2.GetString());
+
+	char lookUpTable[] = { "abcdefghijklmnopqrstuvwxyz0123456789!.?   " };
+
+	font = app->fonts->Load(tmp3.GetString(), lookUpTable, 7);
 
 	return true;
 }
@@ -65,9 +71,9 @@ bool UI::PostUpdate()
 	{
 		app->render->DrawTexture(heart, 5, 10, &heartAnim.GetCurrentFrame(), true);
 	}
-
+	SString tmp("%4d", app->player->score);
 	app->render->DrawTexture(gem, 1550, 10, &gemAnim.GetCurrentFrame(), true);
-
+	app->fonts->BlitText(480, 5, font, tmp.GetString());
 	return true;
 }
 
@@ -76,5 +82,7 @@ bool UI::PostUpdate()
 bool UI::CleanUp()
 {
 	app->tex->UnLoad(heart);
+	app->tex->UnLoad(gem);
+	app->fonts->UnLoad(font);
 	return true;
 }

@@ -24,6 +24,8 @@ private:
 	SDL_Texture* heart;
 	SDL_Texture* gem;
 	
+	int font;
+
 	Animation heartAnim;
 	Animation gemAnim;
 

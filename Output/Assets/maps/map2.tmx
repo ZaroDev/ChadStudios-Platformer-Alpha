@@ -15,6 +15,9 @@
  <tileset firstgid="709" name="props" tilewidth="16" tileheight="16" tilecount="364" columns="26">
   <image source="../textures/environment/layers/props.png" width="416" height="224"/>
  </tileset>
+ <tileset firstgid="1073" name="CheckPoint" tilewidth="16" tileheight="16" tilecount="18" columns="6">
+  <image source="../textures/checkpoint.png" width="96" height="53"/>
+ </tileset>
  <layer id="1" name="Capa de patrones 1" width="150" height="60" offsetx="-209" offsety="-71">
   <properties>
    <property name="BoundX" value="5550"/>

@@ -67,7 +67,7 @@ public:
 	bool grounded;
 	int numJumps;
 	int lives;
-
+	int score;
 	float minVel;
 	float maxVel;
 	float jumpVel;

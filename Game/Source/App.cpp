@@ -14,6 +14,7 @@
 #include "FadeToBlack.h"
 #include "Pathfinding.h"
 #include "UI.h"
+#include "Fonts.h"
 #include "Scene2.h"
 #include "Defs.h"
 #include "Log.h"
@@ -38,6 +39,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	death = new Death(false);
 	pathfinding = new PathFinding(false);
 	map = new Map(true);
+	fonts = new Fonts(true);
 	ui = new UI(false);
 	player = new Player(false);
 	physics = new Physics(true);
@@ -57,8 +59,9 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(death);
 	AddModule(scene);
 	AddModule(scene2);
-	AddModule(ui);
+	AddModule(fonts);
 	AddModule(map);
+	AddModule(ui);
 	AddModule(player);
 	// Render last to swap buffer
 	AddModule(render);

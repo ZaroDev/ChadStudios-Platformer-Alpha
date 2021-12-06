@@ -22,6 +22,7 @@ class Player;
 class FadeToBlack;
 class PathFinding;
 class UI;
+class Fonts;
 class Intro;
 
 class Scene2;
@@ -107,6 +108,7 @@ public:
 	FadeToBlack* fadeToBlack;
 	PathFinding* pathfinding;
 	UI* ui;
+	Fonts* fonts;
 	Intro* intro;
 	Scene2* scene2;
 	Death* death;
