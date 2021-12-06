@@ -22,6 +22,10 @@ public:
 
 private:
 	SDL_Texture* heart;
+	SDL_Texture* gem;
+	
+	Animation heartAnim;
+	Animation gemAnim;
 
 	SString folder;
 };
