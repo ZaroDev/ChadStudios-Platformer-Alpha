@@ -21,6 +21,7 @@ class Physics;
 class Player;
 class FadeToBlack;
 class PathFinding;
+class CheckPoint;
 class UI;
 class Fonts;
 class Intro;
@@ -108,6 +109,7 @@ public:
 	FadeToBlack* fadeToBlack;
 	PathFinding* pathfinding;
 	UI* ui;
+	CheckPoint* check;
 	Fonts* fonts;
 	Intro* intro;
 	Scene2* scene2;

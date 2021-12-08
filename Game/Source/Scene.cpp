@@ -12,6 +12,8 @@
 #include "UI.h"
 #include "Defs.h"
 #include "Log.h"
+#include "CheckPoint.h"
+#include "Pathfinding.h"
 
 Scene::Scene(bool startEnabled) : Module(startEnabled)
 {
@@ -47,14 +49,46 @@ bool Scene::Start()
 	app->physics->Enable();
 	app->player->Enable();
 	app->map->Enable();
+	//app->check->Enable();
 	app->player->currentScene = 1;
-	app->map->Load("map.tmx");
+	if (app->map->Load("map.tmx") == true)
+	{
+		int w, h;
+		uchar* data = NULL;
+
+		if (app->map->CreateWalkabilityMap(w, h, &data)) app->pathfinding->SetMap(w, h, data);
+
+		RELEASE_ARRAY(data);
+	}
+
+	pathTex = app->tex->Load("Assets/maps/path2.png");
+	originTex = app->tex->Load("Assets/maps/x.png");
+	//app->check->CreateCheckpoint(0, 0);
 	return true;
 }
 
 // Called each loop iteration
 bool Scene::PreUpdate()
 {
+	int mouseX, mouseY;
+	app->input->GetMousePosition(mouseX, mouseY);
+	iPoint p = app->render->ScreenToWorld(mouseX, mouseY);
+	p = app->map->WorldToMap(p.x, p.y);
+
+	if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+	{
+		if (originSelected == true)
+		{
+			app->pathfinding->CreatePath(origin, p);
+			originSelected = false;
+		}
+		else
+		{
+			origin = p;
+			originSelected = true;
+		}
+	}
+
 	return true;
 }
 
@@ -106,7 +140,35 @@ bool Scene::Update(float dt)
 	app->render->DrawTexture(jungle, 0, 284, NULL,false , 0.5f);
 	app->map->Draw();
 
-	
+	int mouseX, mouseY;
+	app->input->GetMousePosition(mouseX, mouseY);
+	iPoint mouseTile = app->map->WorldToMap(mouseX - app->render->camera.x, mouseY - app->render->camera.y);
+
+	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d Tile:[%d,%d]",
+		app->map->mapData.width, app->map->mapData.height,
+		app->map->mapData.tileWidth, app->map->mapData.tileHeight,
+		app->map->mapData.tilesets.Count(), mouseTile.x, mouseTile.y);
+
+	app->win->SetTitle(title.GetString());
+
+	// L12b: Debug pathfinding
+	app->input->GetMousePosition(mouseX, mouseY);
+	iPoint p = app->render->ScreenToWorld(mouseX, mouseY);
+	p = app->map->WorldToMap(p.x, p.y);
+	p = app->map->MapToWorld(p.x, p.y);
+
+	app->render->DrawTexture(pathTex, p.x, p.y);
+
+	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
+
+	for (uint i = 0; i < path->Count(); ++i)
+	{
+		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+		app->render->DrawTexture(pathTex, pos.x, pos.y);
+	}
+
+	iPoint originScreen = app->map->MapToWorld(origin.x, origin.y);
+	app->render->DrawTexture(originTex, originScreen.x, originScreen.y);
 	
 	return true;
 }

@@ -38,9 +38,15 @@ public:
 private:
 	SDL_Texture* background;
 	SDL_Texture* jungle;
+	SDL_Texture* pathTex;
+	SDL_Texture* originTex;
+	
 	SString folder;
 	SString audioFile;
 	int winX;
+
+	iPoint origin;
+	bool originSelected = false;
 };
 
 #endif // __SCENE_H__
