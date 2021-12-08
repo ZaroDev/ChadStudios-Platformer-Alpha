@@ -98,10 +98,10 @@ bool Scene::Update(float dt)
 	
 
 	if(app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
-		app->LoadGameRequest();
+		app->SaveGameRequest();
 
 	if(app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
-		app->SaveGameRequest();
+		app->LoadGameRequest();
 	if (app->player->debug)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
@@ -144,12 +144,6 @@ bool Scene::Update(float dt)
 	app->input->GetMousePosition(mouseX, mouseY);
 	iPoint mouseTile = app->map->WorldToMap(mouseX - app->render->camera.x, mouseY - app->render->camera.y);
 
-	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d Tile:[%d,%d]",
-		app->map->mapData.width, app->map->mapData.height,
-		app->map->mapData.tileWidth, app->map->mapData.tileHeight,
-		app->map->mapData.tilesets.Count(), mouseTile.x, mouseTile.y);
-
-	app->win->SetTitle(title.GetString());
 
 	// L12b: Debug pathfinding
 	app->input->GetMousePosition(mouseX, mouseY);

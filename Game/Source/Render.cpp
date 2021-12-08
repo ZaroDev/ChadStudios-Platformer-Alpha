@@ -1,6 +1,7 @@
 #include "App.h"
 #include "Window.h"
 #include "Render.h"
+#include "Input.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -28,7 +29,7 @@ bool Render::Awake(pugi::xml_node& config)
 
 	Uint32 flags = SDL_RENDERER_ACCELERATED;
 
-	if(config.child("vsync").attribute("value").as_bool(true) == true)
+	if(vsync = config.child("vsync").attribute("value").as_bool(true) == true)
 	{
 		flags |= SDL_RENDERER_PRESENTVSYNC;
 		LOG("Using vsync");
@@ -70,6 +71,10 @@ bool Render::PreUpdate()
 
 bool Render::Update(float dt)
 {
+	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
+	{
+		app->fpsCap = !app->fpsCap;
+	}
 	return true;
 }
 

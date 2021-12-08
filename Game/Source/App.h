@@ -2,6 +2,9 @@
 #define __APP_H__
 
 #include "Module.h"
+#include "PerfTimer.h"
+#include "Timer.h"
+
 #include "List.h"
 
 #include "PugiXml/src/pugixml.hpp"
@@ -115,8 +118,8 @@ public:
 	Scene2* scene2;
 	Death* death;
 
-
-
+	bool fpsCap = false;
+	float dt = 0.0f;
 private:
 
 	int argc;
@@ -134,11 +137,27 @@ private:
 	pugi::xml_node configApp;
 
 	uint frames;
-	float dt = 1 / 60;
 
 	// L02: DONE 1: Create variables to control when to execute the request load / save
 	mutable bool saveGameRequested;
 	bool loadGameRequested;
+
+
+	PerfTimer* ptimer;
+	PerfTimer* frameDuration;
+
+	Timer startupTime;
+	Timer frameTime;
+	Timer lastSecFrameTime;
+
+	uint64 frameCount = 0;
+	uint32 framesPerSecond = 0;
+	uint32 lastSecFrameCount = 0;
+
+	float averageFps = 0.0f;
+	
+
+	uint32 maxFrameRate = 0;
 };
 
 extern App* app;

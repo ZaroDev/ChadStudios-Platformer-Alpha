@@ -4,10 +4,11 @@
   <app>
     <title>Sunny Land 2D</title>
     <organization>UPC</organization>
+    <frcap value = "16"/>
   </app>
 
   <render>
-    <vsync value="true"/>
+    <vsync value="false"/>
   </render>
 
   <window>
