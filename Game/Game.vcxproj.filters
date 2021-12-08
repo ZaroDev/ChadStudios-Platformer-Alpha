@@ -7,17 +7,11 @@
     <ClCompile Include="Source\Audio.cpp">
       <Filter>Source\Modules\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Death.cpp">
-      <Filter>Source\Modules\Gameplay</Filter>
-    </ClCompile>
     <ClCompile Include="Source\FadeToBlack.cpp">
       <Filter>Source\Modules\Core</Filter>
     </ClCompile>
     <ClCompile Include="Source\Input.cpp">
       <Filter>Source\Modules\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Intro.cpp">
-      <Filter>Source\Modules\Gameplay</Filter>
     </ClCompile>
     <ClCompile Include="Source\Log.cpp">
       <Filter>Source\Utils</Filter>
@@ -40,12 +34,6 @@
     <ClCompile Include="Source\Render.cpp">
       <Filter>Source\Modules\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Scene.cpp">
-      <Filter>Source\Modules\Gameplay</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Scene2.cpp">
-      <Filter>Source\Modules\Gameplay</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Textures.cpp">
       <Filter>Source\Modules\Core</Filter>
     </ClCompile>
@@ -64,7 +52,24 @@
     <ClCompile Include="Source\UI.cpp">
       <Filter>Source\Modules\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Fonts.cpp" />
+    <ClCompile Include="Source\Fonts.cpp">
+      <Filter>Source\Modules\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Death.cpp">
+      <Filter>Source\Modules\Gameplay\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Intro.cpp">
+      <Filter>Source\Modules\Gameplay\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene.cpp">
+      <Filter>Source\Modules\Gameplay\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene2.cpp">
+      <Filter>Source\Modules\Gameplay\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CheckPoint.cpp">
+      <Filter>Source\Modules\Gameplay\Props</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Animation.h">
@@ -75,9 +80,6 @@
     </ClInclude>
     <ClInclude Include="Source\Audio.h">
       <Filter>Source\Modules\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Death.h">
-      <Filter>Source\Modules\Gameplay</Filter>
     </ClInclude>
     <ClInclude Include="Source\Defs.h">
       <Filter>Source\Utils</Filter>
@@ -90,9 +92,6 @@
     </ClInclude>
     <ClInclude Include="Source\Input.h">
       <Filter>Source\Modules\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Intro.h">
-      <Filter>Source\Modules\Gameplay</Filter>
     </ClInclude>
     <ClInclude Include="Source\List.h">
       <Filter>Source\Utils</Filter>
@@ -124,12 +123,6 @@
     <ClInclude Include="Source\Render.h">
       <Filter>Source\Modules\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Scene.h">
-      <Filter>Source\Modules\Gameplay</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Scene2.h">
-      <Filter>Source\Modules\Gameplay</Filter>
-    </ClInclude>
     <ClInclude Include="Source\SString.h">
       <Filter>Source\Utils</Filter>
     </ClInclude>
@@ -151,7 +144,24 @@
     <ClInclude Include="Source\UI.h">
       <Filter>Source\Modules\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Fonts.h" />
+    <ClInclude Include="Source\Fonts.h">
+      <Filter>Source\Modules\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Death.h">
+      <Filter>Source\Modules\Gameplay\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Intro.h">
+      <Filter>Source\Modules\Gameplay\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene.h">
+      <Filter>Source\Modules\Gameplay\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene2.h">
+      <Filter>Source\Modules\Gameplay\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CheckPoint.h">
+      <Filter>Source\Modules\Gameplay\Props</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Output\config.xml">
@@ -182,6 +192,12 @@
     </Filter>
     <Filter Include="External">
       <UniqueIdentifier>{ca02deac-1edc-4896-a369-f4889d57fe06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Modules\Gameplay\Scenes">
+      <UniqueIdentifier>{4ae2f61b-8c38-4833-9db4-c5f937767ab3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Modules\Gameplay\Props">
+      <UniqueIdentifier>{7366b8de-d923-4bc0-904f-f9f7f778021f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
