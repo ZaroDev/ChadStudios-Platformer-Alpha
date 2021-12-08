@@ -39,13 +39,43 @@ public:
 	bool SaveState(pugi::xml_node&) const;
 
 	bool CleanUp() override;
-	void CreateSensor(PhysBody* sensor, Sensor::sensorValue sensorType, bool isActive);
+
 	iPoint pos;
 
+
+	int currentScene;
+	bool grounded;
+	int lives;
+	int score;
+	bool win;
+	bool die;
+	bool debug;
+private:
+	//Player's physbody
 	PhysBody* pbody;
+	//Jump sound
+	int jumpSFX;
+	//Jump SFX folder path
+	SString jumpSFXFile;
+	//Variable for double jump
+	int numJumps;
+	//Velocity values
+	float minVel;
+	float maxVel;
+	float jumpVel;
+	//Sprite sheet folder path
+	SString folder;
+	//Positions where the player should spawn in diferent levels
+	iPoint scene1;
+	iPoint scene2;
 
+	int counter;
+	bool hurt;
+	//Player's b2 Body
+	b2Body* c;
+	//Player texture
 	SDL_Texture* tex;
-
+	//Animations
 	Animation* currentAnimation = nullptr;
 
 	Animation idleAnimL;
@@ -60,25 +90,5 @@ public:
 	Animation downAnimR;
 
 	Animation hurtAnim;
-	List<Sensor*>sensors;
 
-	int jumpSFX;
-	int currentScene;
-	bool grounded;
-	int numJumps;
-	int lives;
-	int score;
-	float minVel;
-	float maxVel;
-	float jumpVel;
-	SString folder;
-	iPoint scene1;
-	iPoint scene2;
-	SString jumpSFXFile;
-	int counter;
-	bool hurt;
-	bool die;
-	bool win;
-	b2Body* c;
-	bool debug;
 };

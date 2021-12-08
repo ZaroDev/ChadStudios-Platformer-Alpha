@@ -91,6 +91,7 @@
   <ItemGroup>
     <ClCompile Include="Source\CheckPoint.cpp" />
     <ClCompile Include="Source\Death.cpp" />
+    <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\Fonts.cpp" />
     <ClCompile Include="Source\Intro.cpp" />
     <ClCompile Include="Source\Main.cpp" />
@@ -113,6 +114,7 @@
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\CheckPoint.h" />
     <ClInclude Include="Source\Death.h" />
+    <ClInclude Include="Source\Enemy.h" />
     <ClInclude Include="Source\Fonts.h" />
     <ClInclude Include="Source\Intro.h" />
     <ClInclude Include="Source\Map.h" />

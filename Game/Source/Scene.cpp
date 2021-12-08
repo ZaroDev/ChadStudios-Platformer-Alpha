@@ -61,7 +61,7 @@ bool Scene::Start()
 		RELEASE_ARRAY(data);
 	}
 
-	pathTex = app->tex->Load("Assets/maps/path2.png");
+	pathTex = app->tex->Load("Assets/maps/collider.png");
 	originTex = app->tex->Load("Assets/maps/x.png");
 	//app->check->CreateCheckpoint(0, 0);
 	return true;

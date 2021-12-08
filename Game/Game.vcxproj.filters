@@ -70,6 +70,9 @@
     <ClCompile Include="Source\CheckPoint.cpp">
       <Filter>Source\Modules\Gameplay\Props</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Enemy.cpp">
+      <Filter>Source\Modules\Gameplay\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Animation.h">
@@ -162,6 +165,9 @@
     <ClInclude Include="Source\CheckPoint.h">
       <Filter>Source\Modules\Gameplay\Props</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Enemy.h">
+      <Filter>Source\Modules\Gameplay\Enemies</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Output\config.xml">
@@ -198,6 +204,9 @@
     </Filter>
     <Filter Include="Source\Modules\Gameplay\Props">
       <UniqueIdentifier>{7366b8de-d923-4bc0-904f-f9f7f778021f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Modules\Gameplay\Enemies">
+      <UniqueIdentifier>{5f47d1d5-b319-4fc0-b9f5-4c60f3246470}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -344,15 +344,6 @@ bool Player::CleanUp()
 	app->tex->UnLoad(tex);
 	app->physics->world->DestroyBody(c);
 	app->ui->Disable();
-	sensors.Clear();
+
 	return ret;
-}
-void Player::CreateSensor(PhysBody* sensor, Sensor::sensorValue sensorType, bool isActive)
-{
-	Sensor* newSensor = new Sensor;
-	newSensor->sensor = sensor;
-	newSensor->sensor->listener = this;
-	newSensor->value = sensorType;
-	newSensor->isActive = isActive;
-	sensors.Add(newSensor);
 }
