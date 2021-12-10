@@ -73,6 +73,12 @@
     <ClCompile Include="Source\Enemy.cpp">
       <Filter>Source\Modules\Gameplay\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Enemies.cpp">
+      <Filter>Source\Modules\Gameplay\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Eagle.cpp">
+      <Filter>Source\Modules\Gameplay\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Animation.h">
@@ -166,6 +172,12 @@
       <Filter>Source\Modules\Gameplay\Props</Filter>
     </ClInclude>
     <ClInclude Include="Source\Enemy.h">
+      <Filter>Source\Modules\Gameplay\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemies.h">
+      <Filter>Source\Modules\Gameplay\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Eagle.h">
       <Filter>Source\Modules\Gameplay\Enemies</Filter>
     </ClInclude>
   </ItemGroup>

@@ -12,11 +12,12 @@ public:
 	~Enemy();
 
 	iPoint GetPos();
-	void Update();
+	void SetPos(float x, float y);
+	virtual void Update();
 
+	SDL_Texture* tex;
+	Animation anim;
 private:
 	iPoint pos;
-	Animation anim;
-	SDL_Texture* tex;
 	PhysBody* pbody;
 };
