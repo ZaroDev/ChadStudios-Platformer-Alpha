@@ -86,6 +86,16 @@ bool Player::Awake(pugi::xml_node&config)
 	hurtAnim.loop = true;
 	hurtAnim.speed = 0.1f;
 
+	abilityAnimR.PushBack({ 90, 129, 29, 27 });
+	abilityAnimR.PushBack({ 138, 129, 28, 27 });
+	abilityAnimR.loop = true;
+	abilityAnimR.speed = 0.1f;
+
+	abilityAnimL.PushBack({ 88, 157, 28, 27 });
+	abilityAnimL.PushBack({ 135, 157, 29, 27 });
+	abilityAnimL.loop = true;
+	abilityAnimL.speed = 0.1f;
+
 	return ret;
 }
 
@@ -235,15 +245,18 @@ bool Player::Update(float dt)
 			pbody->body->SetLinearVelocity({ pbody->body->GetLinearVelocity().x, jumpVel * 1.5f });
 			useDownDash = true;
 		}
-		if (currentAnimation == &idleAnimL)
+		if (useDownDash == false)
 		{
-			abilityAnimL.Reset();
-			currentAnimation = &abilityAnimL;
-		}
-		else if (currentAnimation == &idleAnimR)
-		{
-			abilityAnimR.Reset();
-			currentAnimation = &abilityAnimR;
+			if (currentAnimation == &idleAnimL)
+			{
+				abilityAnimL.Reset();
+				currentAnimation = &abilityAnimL;
+			}
+			if (currentAnimation == &idleAnimR)
+			{
+				abilityAnimR.Reset();
+				currentAnimation = &abilityAnimR;
+			}
 		}
 	}
 	else
@@ -285,12 +298,13 @@ bool Player::Update(float dt)
 		&& app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE)
 	{
 		if (currentAnimation == &runAnimR || currentAnimation == &jumpAnimR || currentAnimation == &downAnimR
-			|| hurt == false || currentAnimation == &abilityAnimR)
+			|| currentAnimation == &abilityAnimR && hurt == false)
 		{
 			currentAnimation = &idleAnimR;
 		}
+		
 		if (currentAnimation == &runAnimL || currentAnimation == &jumpAnimL || currentAnimation == &downAnimL 
-			|| hurt == false || currentAnimation == &abilityAnimL)
+			 || currentAnimation == &abilityAnimL && hurt == false)
 		{
 			currentAnimation = &idleAnimL;
 		}

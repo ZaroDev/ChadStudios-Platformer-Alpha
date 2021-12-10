@@ -1,6 +1,7 @@
 #include "Enemies.h"
 #include "Eagle.h"
 #include "App.h"
+#include "Textures.h"
 #include "Render.h"
 Enemies::Enemies(bool startEnabled) : Module(startEnabled)
 {

@@ -21,10 +21,10 @@
 	<:anonymous />
 	<check />
 	<player>
-		<pos x="562" y="615" />
+		<pos x="1544" y="230" />
 		<start value="1" />
 	</player>
 	<render>
-		<camera x="-886" y="-1392" />
+		<camera x="-3874" y="-156" />
 	</render>
 </game_state>

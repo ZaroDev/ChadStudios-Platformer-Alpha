@@ -13,11 +13,11 @@ void Collectables::CreateObj(Type type_, float x, float y)
 	c->body->listener = this;
 	if (type_ == GEM)
 	{
-		c->anim.PushBack({ 1, 1, 13, 11 });
-		c->anim.PushBack({ 16, 1, 13, 11 });
-		c->anim.PushBack({ 31, 1, 13, 11 });
-		c->anim.PushBack({ 46, 1, 13, 11 });
-		c->anim.PushBack({ 61, 1, 13, 11 });
+		c->anim.PushBack({ 0, 1, 13, 11 });
+		c->anim.PushBack({ 15, 1, 13, 11 });
+		c->anim.PushBack({ 30, 1, 13, 11 });
+		c->anim.PushBack({ 45, 1, 13, 11 });
+		c->anim.PushBack({ 60, 1, 13, 11 });
 		c->anim.loop = true;
 		c->anim.speed = 0.1f;
 	}

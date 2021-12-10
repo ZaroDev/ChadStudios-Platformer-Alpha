@@ -93,11 +93,8 @@ private:
 	Animation downAnimR;
 
 	Animation hurtAnim;
-<<<<<<< Updated upstream
 
 	Animation abilityAnimL;
 	Animation abilityAnimR;
 
-=======
->>>>>>> Stashed changes
 };
