@@ -74,18 +74,11 @@ bool Collectables::Update(float dt)
 	for (ListItem<Collectable*>* c = colectables.start; c != NULL; c = c->next)
 	{
 		c->data->anim.Update();
-	}
-	return true;
-}
-
-bool Collectables::PostUpdate()
-{
-	for (ListItem<Collectable*>* c = colectables.start; c != NULL; c = c->next)
-	{
 		app->render->DrawTexture(tex, c->data->pos.x, c->data->pos.y, &c->data->anim.GetCurrentFrame());
 	}
 	return true;
 }
+
 
 bool Collectables::CleanUp()
 {

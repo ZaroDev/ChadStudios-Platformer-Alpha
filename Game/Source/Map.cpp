@@ -7,7 +7,9 @@
 #include "Defs.h"
 #include "Log.h"
 #include "Physics.h"
-
+#include "CheckPoint.h"
+#include "Collectables.h"
+#include "Window.h"
 #include <math.h>
 
 Map::Map(bool startEnabled) : Module(startEnabled), mapLoaded(false)
@@ -257,6 +259,91 @@ bool Map::LoadColliders()
 	return ret;
 }
 
+bool Map::LoadProps()
+{
+	bool ret = true;
+	List<PhysBody*> chains;
+	ListItem<MapLayer*>* mapLayerItem;
+	mapLayerItem = mapData.layers.start;
+
+	int* chain = new int[mapLayerItem->data->width * mapLayerItem->data->height];
+	mapLayerItem = mapData.layers.start;
+	while (mapLayerItem != NULL) {
+		if (mapLayerItem->data->properties.GetProperty("Check") == 1)
+		{
+			for (int x = 0; x < mapLayerItem->data->width; x++)
+			{
+				for (int y = 0; y < mapLayerItem->data->height; y++)
+				{
+					int gid = mapLayerItem->data->Get(x, y);
+
+					if (gid > 0) {
+
+						TileSet* tileset = GetTilesetFromTileId(gid);
+
+						SDL_Rect r = tileset->GetTileRect(gid);
+						iPoint pos = MapToWorld(x, y);
+						pos.x += r.w / 2;
+						pos.y += r.h / 2;
+						app->check->CreateCheckpoint(pos.x, pos.y);
+
+					}
+
+				}
+			}
+		}
+		if (mapLayerItem->data->properties.GetProperty("Gems") == 1)
+		{
+			for (int x = 0; x < mapLayerItem->data->width; x++)
+			{
+				for (int y = 0; y < mapLayerItem->data->height; y++)
+				{
+					int gid = mapLayerItem->data->Get(x, y);
+
+					if (gid > 0) {
+
+						TileSet* tileset = GetTilesetFromTileId(gid);
+
+						SDL_Rect r = tileset->GetTileRect(gid);
+						iPoint pos = MapToWorld(x, y);
+						pos.x += r.w / 2;
+						pos.y += r.h / 2;
+						app->collect->CreateObj(GEM ,pos.x, pos.y);
+
+					}
+
+				}
+			}
+		}
+		if (mapLayerItem->data->properties.GetProperty("Cherrys") == 1)
+		{
+			for (int x = 0; x < mapLayerItem->data->width; x++)
+			{
+				for (int y = 0; y < mapLayerItem->data->height; y++)
+				{
+					int gid = mapLayerItem->data->Get(x, y);
+
+					if (gid > 0) {
+
+						TileSet* tileset = GetTilesetFromTileId(gid);
+
+						SDL_Rect r = tileset->GetTileRect(gid);
+						iPoint pos = MapToWorld(x, y);
+						pos.x += r.w / 2;
+						pos.y += r.h / 2;
+						app->collect->CreateObj(CHERRY, pos.x, pos.y);
+
+					}
+
+				}
+			}
+		}
+		mapLayerItem = mapLayerItem->next;
+	}
+
+	return ret;
+}
+
 // Get relative Tile rectangle
 SDL_Rect TileSet::GetTileRect(int id) const
 {
@@ -392,6 +479,7 @@ bool Map::Load(const char* filename)
 		}
 	}
 	LoadColliders();
+	LoadProps();
 	mapLoaded = ret;
 
 	return ret;

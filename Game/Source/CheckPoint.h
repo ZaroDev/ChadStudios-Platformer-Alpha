@@ -26,7 +26,7 @@ public:
 
 	bool Start();
 
-	bool PostUpdate();
+	bool Update(float dt);
 
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 

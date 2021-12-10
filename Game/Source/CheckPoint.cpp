@@ -26,7 +26,7 @@ bool CheckPoint::Start()
 	return true;
 }
 
-bool CheckPoint::PostUpdate()
+bool CheckPoint::Update(float dt)
 {
 	ListItem<Flag*>* f = checkpoints.start;
 
