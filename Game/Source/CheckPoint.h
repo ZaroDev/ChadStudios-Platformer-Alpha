@@ -31,7 +31,7 @@ public:
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 
 	void CreateCheckpoint(int x, int y);
-
+private:
 	SDL_Texture* tex;
 	List<Flag*> checkpoints;
 };

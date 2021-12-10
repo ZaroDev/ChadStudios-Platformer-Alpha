@@ -17,6 +17,7 @@
 #include "Enemies.h"
 #include "CheckPoint.h"
 #include "Fonts.h"
+#include "Collectables.h"
 #include "Scene2.h"
 #include "Defs.h"
 #include "Log.h"
@@ -45,6 +46,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	fonts = new Fonts(true);
 	ui = new UI(false);
 	enemies = new Enemies(false);
+	collect = new Collectables(false);
 	player = new Player(false);
 	physics = new Physics(true);
 	scene2 = new Scene2(false);
@@ -66,6 +68,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(fonts);
 	AddModule(map);
 	AddModule(ui);
+	AddModule(collect);
 	AddModule(enemies);
 	AddModule(check);
 	AddModule(player);

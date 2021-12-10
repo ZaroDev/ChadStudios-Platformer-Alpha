@@ -76,6 +76,9 @@
     <ClCompile Include="Source\Eagle.cpp">
       <Filter>Source\Modules\Gameplay\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Collectables.cpp">
+      <Filter>Source\Modules\Gameplay\Props</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Animation.h">
@@ -176,6 +179,9 @@
     </ClInclude>
     <ClInclude Include="Source\Eagle.h">
       <Filter>Source\Modules\Gameplay\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Collectables.h">
+      <Filter>Source\Modules\Gameplay\Props</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -90,6 +90,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\CheckPoint.cpp" />
+    <ClCompile Include="Source\Collectables.cpp" />
     <ClCompile Include="Source\Death.cpp" />
     <ClCompile Include="Source\Eagle.cpp" />
     <ClCompile Include="Source\Enemies.cpp" />
@@ -114,6 +115,7 @@
     <ClCompile Include="Source\Window.cpp" />
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\CheckPoint.h" />
+    <ClInclude Include="Source\Collectables.h" />
     <ClInclude Include="Source\Death.h" />
     <ClInclude Include="Source\Eagle.h" />
     <ClInclude Include="Source\Enemies.h" />

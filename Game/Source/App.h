@@ -26,6 +26,7 @@ class FadeToBlack;
 class PathFinding;
 class CheckPoint;
 class UI;
+class Collectables;
 class Enemies;
 class Fonts;
 class Intro;
@@ -114,6 +115,7 @@ public:
 	PathFinding* pathfinding;
 	UI* ui;
 	Enemies* enemies;
+	Collectables* collect;
 	CheckPoint* check;
 	Fonts* fonts;
 	Intro* intro;

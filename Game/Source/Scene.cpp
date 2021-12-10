@@ -14,6 +14,7 @@
 #include "Log.h"
 #include "CheckPoint.h"
 #include "Pathfinding.h"
+#include "Collectables.h"
 
 Scene::Scene(bool startEnabled) : Module(startEnabled)
 {
@@ -50,6 +51,7 @@ bool Scene::Start()
 	app->player->Enable();
 	app->map->Enable();
 	app->check->Enable();
+	app->collect->Enable();
 	app->player->currentScene = 1;
 	if (app->map->Load("map.tmx") == true)
 	{
@@ -65,6 +67,10 @@ bool Scene::Start()
 	originTex = app->tex->Load("Assets/maps/x.png");
 	app->check->CreateCheckpoint(app->player->pos.x + 100, app->player->pos.y - 50);
 	app->check->CreateCheckpoint(app->player->pos.x + 200, app->player->pos.y - 50);
+	app->collect->CreateObj(CHERRY, app->player->pos.x + 250, app->player->pos.y - 50);
+	app->collect->CreateObj(GEM, app->player->pos.x + 300, app->player->pos.y - 50);
+	app->collect->CreateObj(GEM, app->player->pos.x + 350, app->player->pos.y - 50);
+	app->collect->CreateObj(CHERRY, app->player->pos.x + 400, app->player->pos.y - 100);
 	app->LoadGameRequest();
 	return true;
 }

@@ -17,10 +17,11 @@
 	<:anonymous />
 	<map />
 	<ui />
+	<collect />
 	<:anonymous />
 	<check />
 	<player>
-		<pos x="185" y="777" />
+		<pos x="184" y="792" />
 		<start value="1" />
 	</player>
 	<render>
