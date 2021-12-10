@@ -49,6 +49,7 @@ bool Scene2::Start()
 	app->audio->Enable();
 	app->player->currentScene = 2;
 	app->map->Load("map2.tmx");
+	app->LoadGameRequest();
 	return true;
 }
 

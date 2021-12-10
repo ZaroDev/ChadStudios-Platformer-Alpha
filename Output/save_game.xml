@@ -16,11 +16,11 @@
 	<scene2 />
 	<:anonymous />
 	<map />
-	<check />
 	<ui />
 	<:anonymous />
+	<check />
 	<player>
-		<pos x="104" y="814" />
+		<pos x="185" y="777" />
 		<start value="1" />
 	</player>
 	<render>

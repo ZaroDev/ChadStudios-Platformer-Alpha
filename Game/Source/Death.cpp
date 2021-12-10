@@ -80,9 +80,14 @@ bool Death::Update(float dt)
 		if (app->player->die)
 		{
 			if (app->player->currentScene == 1)
+			{
 				app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene);
+
+			}
 			if (app->player->currentScene == 2)
+			{
 				app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene2);
+			}
 		}
 		else
 		{

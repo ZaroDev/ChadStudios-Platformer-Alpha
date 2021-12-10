@@ -11,6 +11,7 @@ struct Flag
 {
 	iPoint pos;
 	PhysBody* body;
+	bool isActive = true;
 	Animation flagAnim;
 };
 
@@ -22,6 +23,8 @@ public:
 	~CheckPoint();
 
 	bool Awake(pugi::xml_node&);
+
+	bool Start();
 
 	bool PostUpdate();
 

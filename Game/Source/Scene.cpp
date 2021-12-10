@@ -49,7 +49,7 @@ bool Scene::Start()
 	app->physics->Enable();
 	app->player->Enable();
 	app->map->Enable();
-	//app->check->Enable();
+	app->check->Enable();
 	app->player->currentScene = 1;
 	if (app->map->Load("map.tmx") == true)
 	{
@@ -64,6 +64,8 @@ bool Scene::Start()
 	pathTex = app->tex->Load("Assets/maps/collider.png");
 	originTex = app->tex->Load("Assets/maps/x.png");
 	app->check->CreateCheckpoint(app->player->pos.x + 100, app->player->pos.y - 50);
+	app->check->CreateCheckpoint(app->player->pos.x + 200, app->player->pos.y - 50);
+	app->LoadGameRequest();
 	return true;
 }
 

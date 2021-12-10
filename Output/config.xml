@@ -23,6 +23,9 @@
     <music value="5" />
     <fx value="5" />
   </audio>
+  <check>
+    
+  </check>
   <player>
     <folder>Assets/textures/sprites/player.png</folder>
     <jump_SFX>Assets/audio/fx/jumpSFX.wav</jump_SFX>
