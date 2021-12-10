@@ -22,31 +22,31 @@ bool Enemies::Start()
 
 bool Enemies::Update()
 {
-	for (ListItem<Enemy*>* e = enemies->start; e != NULL; e = e->next)
-	{
-		e->data->Update();
-	}
+	//for (ListItem<Enemy*>* e = enemies->start; e != NULL; e = e->next)
+	//{
+	//	e->data->Update();
+	//}
 	return true;
 }
 
 bool Enemies::PostUpdate()
 {
-	for (ListItem<Enemy*>* e = enemies->start; e != NULL; e = e->next)
+	/*for (ListItem<Enemy*>* e = enemies->start; e != NULL; e = e->next)
 	{
 		app->render->DrawTexture(e->data->tex, e->data->GetPos().x, e->data->GetPos().y, &e->data->anim.GetCurrentFrame());
-	}
+	}*/
 	return true;
 }
 
 bool Enemies::CleanUp()
 {
-	enemies->Clear();
+	enemies.Clear();
 	return true;
 }
 
 void Enemies::CreateEnemy(EnemyType type, float x, float y)
 {
-	switch (type)
+	/*switch (type)
 	{
 	case EAGLE:
 	{
@@ -61,7 +61,7 @@ void Enemies::CreateEnemy(EnemyType type, float x, float y)
 		break;
 	default:
 		break;
-	}
+	}*/
 }
 
 

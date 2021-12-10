@@ -93,7 +93,6 @@
     <ClCompile Include="Source\Death.cpp" />
     <ClCompile Include="Source\Eagle.cpp" />
     <ClCompile Include="Source\Enemies.cpp" />
-    <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\Fonts.cpp" />
     <ClCompile Include="Source\Intro.cpp" />
     <ClCompile Include="Source\Main.cpp" />

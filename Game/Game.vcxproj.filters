@@ -70,9 +70,6 @@
     <ClCompile Include="Source\CheckPoint.cpp">
       <Filter>Source\Modules\Gameplay\Props</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Enemy.cpp">
-      <Filter>Source\Modules\Gameplay\Enemies</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Enemies.cpp">
       <Filter>Source\Modules\Gameplay\Enemies</Filter>
     </ClCompile>

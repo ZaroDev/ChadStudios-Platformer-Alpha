@@ -30,5 +30,5 @@ public:
 	void CreateCheckpoint(int x, int y);
 
 	SDL_Texture* tex;
-	List<Flag*>* checkpoints;
+	List<Flag*> checkpoints;
 };

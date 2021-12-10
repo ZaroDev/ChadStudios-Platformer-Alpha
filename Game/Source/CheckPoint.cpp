@@ -10,7 +10,7 @@ CheckPoint::CheckPoint(bool startEnabled) : Module(startEnabled)
 CheckPoint::~CheckPoint()
 {
 
-	checkpoints->Clear();
+	checkpoints.Clear();
 }
 
 bool CheckPoint::Awake(pugi::xml_node&)
@@ -22,12 +22,12 @@ bool CheckPoint::Awake(pugi::xml_node&)
 
 bool CheckPoint::PostUpdate()
 {
-	ListItem<Flag*>* f = checkpoints->start;
+	ListItem<Flag*>* f = checkpoints.start;
 
 	while (f != NULL)
 	{
+		f->data->flagAnim.Update();
 		app->render->DrawTexture(tex, f->data->pos.x, f->data->pos.y, &f->data->flagAnim.GetCurrentFrame());
-
 		f = f->next;
 	}
 
@@ -36,13 +36,13 @@ bool CheckPoint::PostUpdate()
 
 void CheckPoint::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
-	ListItem<Flag*>* f = checkpoints->start;
+	ListItem<Flag*>* f = checkpoints.start;
 
 	while (f != NULL)
 	{
 		if (bodyA == f->data->body && bodyB->listener == (Module*)app->player)
 		{
-			f->data->flagAnim.Update();
+			
 			app->SaveGameRequest();
 		}
 
@@ -61,5 +61,5 @@ void CheckPoint::CreateCheckpoint(int x, int y)
 	f->flagAnim.speed = 0.1f;
 	f->flagAnim.loop = false;
 
-	checkpoints->Add(f);
+	checkpoints.Add(f);
 }

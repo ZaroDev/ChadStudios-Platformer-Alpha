@@ -287,9 +287,6 @@ bool Player::Update(float dt)
 		app->audio->volFX--;
 	}
 
-	LOG("%f", pbody->body->GetLinearVelocity().y);
-	LOG("%i", grounded);
-
 	currentAnimation->Update();
 	//sensors.start->data->sensor->body->SetTransform({PIXEL_TO_METERS( pos.x) -0.1f,PIXEL_TO_METERS( pos.y)+0.2f}, 0);
 	//sensors.end->data->sensor->body->SetTransform({ PIXEL_TO_METERS(pos.x)+ 0.6f,PIXEL_TO_METERS(pos.y) + 0.2f }, 0);

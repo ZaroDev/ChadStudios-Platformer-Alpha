@@ -25,5 +25,5 @@ public:
 
 	void CreateEnemy(EnemyType type, float x, float y);
 private:
-	List<Enemy*>* enemies;
+	List<Enemy*> enemies;
 };
