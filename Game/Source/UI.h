@@ -23,11 +23,13 @@ public:
 private:
 	SDL_Texture* heart;
 	SDL_Texture* gem;
+	SDL_Texture* anim;
 	
 	int font;
 
 	Animation heartAnim;
 	Animation gemAnim;
+	Animation abAnim;
 
 	SString folder;
 };

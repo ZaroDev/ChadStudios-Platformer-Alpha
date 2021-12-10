@@ -35,6 +35,11 @@ bool UI::Awake(pugi::xml_node& config)
 	gemAnim.loop = true;
 	gemAnim.speed = 0.1f;
 
+	abAnim.PushBack({ 5, 13, 20, 19 });
+	abAnim.PushBack({ 31, 13, 20, 19 });
+	abAnim.loop = true;
+	abAnim.speed = 0.1f;
+
 	return true;
 }
 
@@ -43,10 +48,11 @@ bool UI::Start()
 	SString tmp1("%s%s", folder.GetString(), "heart.png");
 	SString tmp2("%s%s", folder.GetString(), "gem.png");
 	SString tmp3("%s%s", folder.GetString(), "font.png");
+	SString tmp4("%s%s", folder.GetString(), "abilityAnim.png");
 
 	heart = app->tex->Load(tmp1.GetString());
 	gem = app->tex->Load(tmp2.GetString());
-
+	anim = app->tex->Load(tmp4.GetString());
 	char lookUpTable[] = { "abcdefghijklmnopqrstuvwxyz0123456789!.?   " };
 
 	font = app->fonts->Load(tmp3.GetString(), lookUpTable, 7);
@@ -59,6 +65,7 @@ bool UI::PostUpdate()
 {
 	heartAnim.Update();
 	gemAnim.Update();
+	abAnim.Update();
 	if (app->player->lives == 3)
 	{
 		app->render->DrawTexture(heart, 115, 10, &heartAnim.GetCurrentFrame(), true);
@@ -78,7 +85,12 @@ bool UI::PostUpdate()
 	app->fonts->BlitText(480, 5, font, tmp.GetString()); 
 	if (app->player->abilityCD != 0)
 	{
-		app->fonts->BlitText(480, 250, font, tmp2.GetString());
+		app->fonts->BlitText(480, 270, font, tmp2.GetString());
+	}
+	else
+	{
+		
+		app->render->DrawTexture(anim, 1420, 790, &abAnim.GetCurrentFrame(), true);
 	}
 	return true;
 }
