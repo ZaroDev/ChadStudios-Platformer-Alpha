@@ -26,4 +26,6 @@ public:
 	void CreateEnemy(EnemyType type, float x, float y);
 private:
 	List<Enemy*> enemies;
+	SString folder;
+	SDL_Texture* tex;
 };

@@ -43,6 +43,9 @@
   <ui>
     <folder>Assets/textures/UI/</folder>
   </ui>
+  <enemies>
+    <folder>Assets/textures/sprites/enemies.png</folder>
+  </enemies>
   <!-- L03: Added maps folder as config option -->
   <map>
     <folder>Assets/maps/</folder>

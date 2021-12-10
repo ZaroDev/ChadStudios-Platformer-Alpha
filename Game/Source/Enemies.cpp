@@ -10,14 +10,17 @@ Enemies::~Enemies()
 {
 }
 
-bool Enemies::Awake(pugi::xml_node&)
+bool Enemies::Awake(pugi::xml_node&config)
 {
 	return true;
+	folder.Create(config.child("folder").child_value());
+	
 }
 
 bool Enemies::Start()
 {
 	return true;
+	tex = app->tex->Load(folder.GetString());
 }
 
 bool Enemies::Update()

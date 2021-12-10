@@ -22,12 +22,14 @@ public:
 		pos.y = y;
 	}
 	virtual void Update(){}
+	//virtual void Awale(){}
 public:
 	SDL_Texture* tex;
 	Animation anim;
 private:
 	iPoint pos;
 	PhysBody* pbody;
+	
 };
 
 #endif
