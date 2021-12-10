@@ -50,6 +50,8 @@ public:
 	bool win;
 	bool die;
 	bool debug;
+	bool useDownDash;
+	int abilityCD;
 private:
 	//Player's physbody
 	PhysBody* pbody;
@@ -68,6 +70,7 @@ private:
 	//Positions where the player should spawn in diferent levels
 	iPoint scene1;
 	iPoint scene2;
+	int counterDash;
 
 	int counter;
 	bool hurt;
@@ -90,5 +93,8 @@ private:
 	Animation downAnimR;
 
 	Animation hurtAnim;
+
+	Animation abilityAnimL;
+	Animation abilityAnimR;
 
 };

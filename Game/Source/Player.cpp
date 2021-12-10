@@ -138,6 +138,7 @@ bool Player::Start()
 	pbody->width = 24 * 0.5f;
 	pbody->height = 27 * 0.5f;
 	pbody->listener = this;
+	useDownDash = false;
 	die = false;
 	debug = false;
 	win = false;
@@ -204,7 +205,7 @@ bool Player::Update(float dt)
 		{
 			runAnimR.Reset();
 			currentAnimation = &runAnimR;
-		}
+		} 
 	}
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
@@ -226,6 +227,39 @@ bool Player::Update(float dt)
 		pbody->body->SetLinearVelocity({ pbody->body->GetLinearVelocity().x, jumpVel });
 		numJumps--;
 	}
+	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	{
+		counterDash++;
+		if (counterDash == 60 && useDownDash == false)
+		{
+			pbody->body->SetLinearVelocity({ pbody->body->GetLinearVelocity().x, jumpVel * 1.5f });
+			useDownDash = true;
+		}
+		if (currentAnimation == &idleAnimL)
+		{
+			abilityAnimL.Reset();
+			currentAnimation = &abilityAnimL;
+		}
+		else if (currentAnimation == &idleAnimR)
+		{
+			abilityAnimR.Reset();
+			currentAnimation = &abilityAnimR;
+		}
+	}
+	else
+	{
+		counterDash = 0;
+	}
+	if (useDownDash)
+	{
+		abilityCD++;
+		if(abilityCD == 360)
+		{
+			abilityCD = 0;
+			useDownDash = false;
+		}
+	}
+
 	if (hurt)
 	{
 		counter++;
@@ -247,13 +281,16 @@ bool Player::Update(float dt)
 	{
 		hurt = true;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE)
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE 
+		&& app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE)
 	{
-		if (currentAnimation == &runAnimR || currentAnimation == &jumpAnimR || currentAnimation == &downAnimR || hurt == false)
+		if (currentAnimation == &runAnimR || currentAnimation == &jumpAnimR || currentAnimation == &downAnimR
+			|| hurt == false || currentAnimation == &abilityAnimR)
 		{
 			currentAnimation = &idleAnimR;
 		}
-		if (currentAnimation == &runAnimL || currentAnimation == &jumpAnimL || currentAnimation == &downAnimL)
+		if (currentAnimation == &runAnimL || currentAnimation == &jumpAnimL || currentAnimation == &downAnimL 
+			|| hurt == false || currentAnimation == &abilityAnimL)
 		{
 			currentAnimation = &idleAnimL;
 		}
@@ -288,14 +325,14 @@ bool Player::Update(float dt)
 	}
 
 	currentAnimation->Update();
-	//sensors.start->data->sensor->body->SetTransform({PIXEL_TO_METERS( pos.x) -0.1f,PIXEL_TO_METERS( pos.y)+0.2f}, 0);
-	//sensors.end->data->sensor->body->SetTransform({ PIXEL_TO_METERS(pos.x)+ 0.6f,PIXEL_TO_METERS(pos.y) + 0.2f }, 0);
+
 	return ret;
 }
 
 bool Player::PostUpdate()
 {
 	bool ret = true;
+
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
 	pbody->GetPosition(pos.x, pos.y);
 	app->render->DrawTexture(tex, pos.x, pos.y, &rect);

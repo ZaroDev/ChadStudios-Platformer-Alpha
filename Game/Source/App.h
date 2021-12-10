@@ -124,6 +124,7 @@ public:
 
 	bool fpsCap = false;
 	float dt = 0.0f;
+	uint32 framesPerSecond = 0;
 private:
 
 	int argc;
@@ -155,7 +156,7 @@ private:
 	Timer lastSecFrameTime;
 
 	uint64 frameCount = 0;
-	uint32 framesPerSecond = 0;
+
 	uint32 lastSecFrameCount = 0;
 
 	float averageFps = 0.0f;

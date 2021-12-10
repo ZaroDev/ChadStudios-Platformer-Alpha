@@ -72,8 +72,14 @@ bool UI::PostUpdate()
 		app->render->DrawTexture(heart, 5, 10, &heartAnim.GetCurrentFrame(), true);
 	}
 	SString tmp("%4d", app->player->score);
+	SString tmp2("%d", (360 - app->player->abilityCD) / app->framesPerSecond);
+
 	app->render->DrawTexture(gem, 1550, 10, &gemAnim.GetCurrentFrame(), true);
-	app->fonts->BlitText(480, 5, font, tmp.GetString());
+	app->fonts->BlitText(480, 5, font, tmp.GetString()); 
+	if (app->player->abilityCD != 0)
+	{
+		app->fonts->BlitText(480, 250, font, tmp2.GetString());
+	}
 	return true;
 }
 
