@@ -38,7 +38,7 @@ public:
 	// Math ------------------------------------------------
 	Point operator -(const Point& v) const
 	{
-		TYPE r;
+		Point r;
 
 		r.x = x - v.x;
 		r.y = y - v.y;
@@ -48,7 +48,7 @@ public:
 
 	Point operator + (const Point& v) const
 	{
-		TYPE r;
+		Point r;
 
 		r.x = x + v.x;
 		r.y = y + v.y;
@@ -70,6 +70,12 @@ public:
 		y += v.y;
 
 		return(*this);
+	}
+
+	void operator *=(float scalar)
+	{
+		x *= scalar;
+		y *= scalar;
 	}
 
 	bool operator ==(const Point& v) const
@@ -100,6 +106,14 @@ public:
 		y = -y;
 
 		return(*this);
+	}
+
+	void Normalize()
+	{
+		float modulus = sqrtf(x * x + y * y);
+
+		x /= modulus;
+		y /= modulus;
 	}
 
 	// Distances ---------------------------------------------

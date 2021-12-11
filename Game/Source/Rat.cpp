@@ -26,7 +26,7 @@ Rat::~Rat()
 }
 
 
-void Rat::Update()
+void Rat::Update(float dt)
 {
 	anim.Update();
 
@@ -67,18 +67,5 @@ void Rat::ComputePath()
 
 void Rat::MoveToPlayer()
 {
-	if (currentPath->At(1)->x != NULL)
-	{
-		iPoint nextStep = { currentPath->At(1)->x, currentPath->At(1)->y };
-		nextStep = app->map->MapToWorld(nextStep.x, nextStep.y);
-		nextStep.x = PIXEL_TO_METERS(nextStep.x);
-		nextStep.y = PIXEL_TO_METERS(nextStep.y);
-
-		int posX = pbody->body->GetPosition().x;
-		int posY = pbody->body->GetPosition().y;
-		printf("\nposx: %i, %i", posX, nextStep.x);
-		printf("\nposy: %i, %i", posY, nextStep.y);
-		if (posX <= nextStep.x) pbody->body->SetLinearVelocity({ speed.x, pbody->body->GetLinearVelocity().y });
-		else if (posX > nextStep.x) pbody->body->SetLinearVelocity({ -speed.x, pbody->body->GetLinearVelocity().y });
-	}
+	
 }

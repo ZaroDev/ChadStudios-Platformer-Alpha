@@ -6,7 +6,8 @@ public:
 	Eagle();
 	~Eagle();
 
-	void Update();
-	void ComputePath();
-	void MoveToPlayer();
+	void Update(float dt);
+	void ComputePath(float dt);
+	void MoveToPlayer(iPoint destination, float dt);
+	
 };

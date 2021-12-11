@@ -6,7 +6,7 @@ public:
 	Rat();
 	~Rat();
 
-	void Update();
+	void Update(float dt);
 	void ComputePath();
 	void MoveToPlayer();
 };

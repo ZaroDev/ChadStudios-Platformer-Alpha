@@ -16,7 +16,9 @@ Eagle::Eagle() : Enemy()
 	h = 16;
 	w = 16;
 	health = 1;
-	range = 5;
+	range = 500;
+	pathUpdateTime = 1.5f;
+	pathUpdateTimer = pathUpdateTime;
 }
 
 Eagle::~Eagle()
@@ -24,17 +26,18 @@ Eagle::~Eagle()
 }
 
 
-void Eagle::Update()
+void Eagle::Update(float dt)
 {
 	anim.Update();
 
 	hasTarget = CheckIfHasTarget();
 
 	//The enemy has only to move if it's in range of the player
+
 	if (hasTarget && health > 0)
 	{
-		ComputePath();
-		MoveToPlayer();
+		printf("\nPos x: %i y %i", pos.x, pos.y);
+		ComputePath(dt);
 	}
 	else
 	{
@@ -52,65 +55,60 @@ void Eagle::Update()
 	
 }
 
-void Eagle::ComputePath()
+void Eagle::ComputePath(float dt)
 {
-	iPoint origin = { (int)METERS_TO_PIXELS((int)pbody->body->GetPosition().x), (int)METERS_TO_PIXELS((int)pbody->body->GetPosition().y) };
-	iPoint dest = { (int)METERS_TO_PIXELS((int)app->player->pbody->body->GetPosition().x + 12), (int)METERS_TO_PIXELS((int)app->player->pbody->body->GetPosition().y + 12) };
+	iPoint playerPos = app->player->pos;
+	float dist = Distance(pos.x, pos.y, playerPos.x, playerPos.y);
 
-	origin = app->map->WorldToMap(origin.x, origin.y);
-	dest = app->map->WorldToMap(dest.x, dest.y);
+	pathUpdateTimer += dt;
+	if (dist > range) {
+		
+	}
+	else
+	{
+		if (pathUpdateTimer >= pathUpdateTime) {
+			pathUpdateTimer = 0.0f;
+			pathIndex = 0;
 
-	app->pathfinding->CreatePath(origin, dest);
-	currentPath = app->pathfinding->GetLastPath();
+			iPoint origin = app->map->WorldToMap(pos.x, pos.y);
+			iPoint destination = app->map->WorldToMap(app->player->pos.x, app->player->pos.y);
+			int res = app->pathfinding->CreatePath(origin, destination);
+
+			if (res > 0) {
+				currentPath = app->pathfinding->GetLastPath();
+
+				ClosestPoint();
+				activeNode = app->map->MapToWorld(currentPath->At(pathIndex)->x, currentPath->At(pathIndex)->y);
+			}
+		}
+
+		if (currentPath->Count() > 0) {
+			if (pos == activeNode) {
+				pathIndex++;
+
+				if (pathIndex < currentPath->Count()) {
+					activeNode = app->map->MapToWorld(currentPath->At(pathIndex)->x, currentPath->At(pathIndex)->y);
+				}
+			}
+
+			if (pathIndex < currentPath->Count()) {
+				MoveToPlayer(activeNode, dt);
+			}
+		}
+	}
+	
 }
 
-void Eagle::MoveToPlayer()
+void Eagle::MoveToPlayer(iPoint destination, float dt)
 {
-	if (currentPath->At(1)->x != NULL)
-	{
-		iPoint nextStep = { currentPath->At(1)->x, currentPath->At(1)->y };
-		nextStep = app->map->MapToWorld(nextStep.x, nextStep.y);
-		nextStep.x = PIXEL_TO_METERS(nextStep.x);
-		nextStep.y = PIXEL_TO_METERS(nextStep.y);
+	iPoint diff = destination - pos;
 
-		int posX = pbody->body->GetPosition().x;
-		int posY = pbody->body->GetPosition().y;
-		printf("\nposx: %i, %i", posX, nextStep.x);
-		printf("\nposy: %i, %i", posY, nextStep.y);
-		if (posX < nextStep.x)
-		{
-			if (posY > nextStep.y)
-			{
-				pbody->body->SetLinearVelocity({ speed.x, speed.y });
-				printf("up\n");
-			}
-			else if (posY < nextStep.y)
-			{
-				pbody->body->SetLinearVelocity({ speed.x, -speed.y });
-				printf("down\n");
-			}
-		}
-		else if (posX >= nextStep.x) 
-		{
-			if (posY > nextStep.y)
-			{
-				pbody->body->SetLinearVelocity({ -speed.x, speed.y });
-				printf("up\n");
-			}
-			else if (posY < nextStep.y)
-			{
-				pbody->body->SetLinearVelocity({ -speed.x, -speed.y });
-				printf("down\n");
-			}
-		}
+	fPoint dir = { (float)diff.x, (float)diff.y };
+	dir.Normalize();
+	dir *= speed * 2;
 
-
-		if (posY == nextStep.y)
-		{
-			pbody->body->SetLinearVelocity({ pbody->body->GetLinearVelocity().x, 0 });
-			printf("equal\n");
-		}
-		if (posX == nextStep.x) pbody->body->SetLinearVelocity({ 0, pbody->body->GetLinearVelocity().y });
-	}
+	fPoint step = { dir.x / dt, dir.y / dt };
+	
+	pbody->body->SetLinearVelocity({ step.x, step.y });
 	
 }

@@ -9,7 +9,7 @@
 #include "Player.h"
 #include "Map.h"
 #include "Render.h"
-
+#include <iostream>
 struct SDL_Texture;
 
 
@@ -44,9 +44,33 @@ public:
 			}
 		}
 	}
+	int Distance(int x1, int y1, int x2, int y2)
+	{
+		return sqrtf(powf(x2 - x1, 2) + powf(y2 - y1, 2));
+	}
+	void ClosestPoint()
+	{
+		uint size = currentPath->Count();
 
+		float indexDist;
+		float activeDist;
 
-	virtual void Update(){}
+		iPoint dest = app->map->MapToWorld(currentPath->At(1)->x , currentPath->At(1)->y);
+
+		for (uint i = 0; i < size; i++) {
+			iPoint indexO = app->map->MapToWorld(currentPath->At(i)->x, currentPath->At(i)->x);
+
+			indexDist = Distance(indexO.x, indexO.y, dest.x, dest.y);
+			activeDist = Distance(pos.x, pos.y, dest.x, dest.y);
+
+			if (indexDist < activeDist) {
+				pathIndex = i;
+				break;
+			}
+		}
+	}
+
+	virtual void Update(float dt){}
 
 public:
 	bool setPendingToDelete = false;
@@ -57,11 +81,18 @@ public:
 	PhysBody* pbody;
 	iPoint pos;
 	int h, w;
-	b2Vec2 speed = { 1.0f, -1.0f };
+	int speed = 10;
 
 	const DynArray<iPoint>* currentPath;
 	int range;
 	bool hasTarget = false;
+
+	float pathUpdateTimer;
+	float pathUpdateTime;
+
+	iPoint activeNode;
+
+	int pathIndex;
 
 	bool facingLeft;
 

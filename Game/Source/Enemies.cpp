@@ -50,7 +50,7 @@ bool Enemies::Update(float dt)
 	{
 		int x, y;
 		e->data->pbody->GetPosition(x, y);
-		e->data->Update();
+		e->data->Update(dt);
 		if (e->data->facingLeft)
 			app->render->DrawTexture(tex, x, y, &e->data->anim.GetCurrentFrame());
 		else if (!e->data->facingLeft)
