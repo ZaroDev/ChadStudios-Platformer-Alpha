@@ -55,7 +55,7 @@ public:
 		float indexDist;
 		float activeDist;
 
-		iPoint dest = app->map->MapToWorld(currentPath->At(1)->x , currentPath->At(1)->y);
+		iPoint dest = app->map->MapToWorld(currentPath->At(size - 1)->x , currentPath->At(size - 1)->y);
 
 		for (uint i = 0; i < size; i++) {
 			iPoint indexO = app->map->MapToWorld(currentPath->At(i)->x, currentPath->At(i)->x);

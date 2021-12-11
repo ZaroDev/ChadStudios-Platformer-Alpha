@@ -70,6 +70,10 @@ bool Enemies::PostUpdate()
 
 bool Enemies::CleanUp()
 {
+	for (ListItem<Enemy*>* e = enemies.start; e != NULL; e = e->next)
+	{
+		app->physics->world->DestroyBody(e->data->pbody->body);
+	}
 	enemies.Clear();
 	return true;
 }

@@ -33,7 +33,8 @@ void Eagle::Update(float dt)
 	hasTarget = CheckIfHasTarget();
 
 	//The enemy has only to move if it's in range of the player
-
+	pos.x = METERS_TO_PIXELS(pbody->body->GetPosition().x);
+	pos.y = METERS_TO_PIXELS(pbody->body->GetPosition().y);
 	if (hasTarget && health > 0)
 	{
 		printf("\nPos x: %i y %i", pos.x, pos.y);
@@ -78,6 +79,7 @@ void Eagle::ComputePath(float dt)
 				currentPath = app->pathfinding->GetLastPath();
 
 				ClosestPoint();
+				printf("\nIndex %i", pathIndex);
 				activeNode = app->map->MapToWorld(currentPath->At(pathIndex)->x, currentPath->At(pathIndex)->y);
 			}
 		}
@@ -102,13 +104,13 @@ void Eagle::ComputePath(float dt)
 void Eagle::MoveToPlayer(iPoint destination, float dt)
 {
 	iPoint diff = destination - pos;
-
+	
 	fPoint dir = { (float)diff.x, (float)diff.y };
 	dir.Normalize();
 	dir *= speed * 2;
 
 	fPoint step = { dir.x / dt, dir.y / dt };
-	
+	printf("Step x: %f, y: %f", step.x, step.y);
 	pbody->body->SetLinearVelocity({ step.x, step.y });
 	
 }
