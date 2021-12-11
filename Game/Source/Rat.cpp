@@ -15,8 +15,8 @@ Rat::Rat() : Enemy()
 	anim.PushBack({ 183, 3, 31, 23 });
 	anim.speed = 0.1f;
 	anim.loop = true;
-	h = 16;
-	w = 16;
+	h = 20;
+	w = 20;
 	health = 1;
 	range = 5;
 }
@@ -56,7 +56,7 @@ void Rat::Update()
 void Rat::ComputePath()
 {
 	iPoint origin = { (int)METERS_TO_PIXELS((int)pbody->body->GetPosition().x), (int)METERS_TO_PIXELS((int)pbody->body->GetPosition().y) };
-	iPoint dest = { (int)METERS_TO_PIXELS((int)app->player->pbody->body->GetPosition().x + 12), (int)METERS_TO_PIXELS((int)app->player->pbody->body->GetPosition().y + 12) };
+	iPoint dest = { (int)METERS_TO_PIXELS((int)app->player->pbody->body->GetPosition().x + 24), (int)METERS_TO_PIXELS((int)app->player->pbody->body->GetPosition().y + 24) };
 
 	origin = app->map->WorldToMap(origin.x, origin.y);
 	dest = app->map->WorldToMap(dest.x, dest.y);

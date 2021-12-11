@@ -77,12 +77,40 @@ void Eagle::MoveToPlayer()
 		int posY = pbody->body->GetPosition().y;
 		printf("\nposx: %i, %i", posX, nextStep.x);
 		printf("\nposy: %i, %i", posY, nextStep.y);
-		if (posX <= nextStep.x) pbody->body->SetLinearVelocity({ speed.x, pbody->body->GetLinearVelocity().y });
+		if (posX < nextStep.x)
+		{
+			if (posY > nextStep.y)
+			{
+				pbody->body->SetLinearVelocity({ speed.x, speed.y });
+				printf("up\n");
+			}
+			else if (posY < nextStep.y)
+			{
+				pbody->body->SetLinearVelocity({ speed.x, -speed.y });
+				printf("down\n");
+			}
+		}
+		else if (posX >= nextStep.x) 
+		{
+			if (posY > nextStep.y)
+			{
+				pbody->body->SetLinearVelocity({ -speed.x, speed.y });
+				printf("up\n");
+			}
+			else if (posY < nextStep.y)
+			{
+				pbody->body->SetLinearVelocity({ -speed.x, -speed.y });
+				printf("down\n");
+			}
+		}
 
-		else if (posX > nextStep.x) pbody->body->SetLinearVelocity({ -speed.x, pbody->body->GetLinearVelocity().y });
 
-		if (posY > nextStep.y) pbody->body->SetLinearVelocity({ pbody->body->GetLinearVelocity().x, speed.y });
-		else if (posY <= nextStep.y) pbody->body->SetLinearVelocity({ pbody->body->GetLinearVelocity().x, -speed.y });
+		if (posY == nextStep.y)
+		{
+			pbody->body->SetLinearVelocity({ pbody->body->GetLinearVelocity().x, 0 });
+			printf("equal\n");
+		}
+		if (posX == nextStep.x) pbody->body->SetLinearVelocity({ 0, pbody->body->GetLinearVelocity().y });
 	}
 	
 }

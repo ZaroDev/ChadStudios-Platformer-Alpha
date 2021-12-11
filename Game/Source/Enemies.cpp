@@ -112,6 +112,8 @@ void Enemies::CreateEnemy(EnemyType type, float x, float y)
 		Rat* r = new Rat();
 		r->SetPos(x - r->w / 2, y - r->h / 2);
 		r->pbody = app->physics->CreateRectangle(r->GetPos().x + r->w / 2, r->GetPos().y + r->h / 2, r->w, r->h, DYNAMIC);
+		r->pbody->body->SetFixedRotation(false);
+		
 		r->pbody->listener = this;
 		enemies.Add(r);
 		break;

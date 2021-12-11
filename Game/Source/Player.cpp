@@ -140,8 +140,7 @@ bool Player::Start()
 	fixturec.friction = 100.0f;
 	c->ResetMassData();
 	c->CreateFixture(&fixturec);
-	//CreateSensor(app->physics->CreateRectangleSensor(pos.x, pos.y, 2, 24, DYNAMIC), Sensor::LEFT, true);
-	//CreateSensor(app->physics->CreateRectangleSensor(pos.x, pos.y, 2, 24, DYNAMIC), Sensor::RIGHT, true);
+	
 	pbody = new PhysBody();
 	pbody->body = c;
 	c->SetUserData(pbody);
@@ -154,7 +153,7 @@ bool Player::Start()
 	win = false;
 
 
-	//app->physics->CreateWeldJoint(sensors.start->data->sensor, { 0.2f, 0 }, pbody, { 0, 0 }, 0, false, false);
+
 	return ret;
 }
 
