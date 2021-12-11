@@ -1,5 +1,6 @@
 #include "Enemies.h"
 #include "Eagle.h"
+#include "Rat.h"
 #include "App.h"
 #include "Textures.h"
 #include "Render.h"
@@ -22,7 +23,10 @@ bool Enemies::Awake(pugi::xml_node&config)
 
 bool Enemies::Start()
 {
-	tex = app->tex->Load(folder.GetString());
+	SString tmp("%s%s", folder.GetString(), "enemies.png");
+	SString tmp2("%s%s", folder.GetString(), "nav.png");
+	tex = app->tex->Load(tmp.GetString());
+	path = app->tex->Load(tmp2.GetString());
 	return true;
 }
 
@@ -46,16 +50,21 @@ bool Enemies::Update(float dt)
 	{
 		int x, y;
 		e->data->pbody->GetPosition(x, y);
-		app->render->DrawTexture(tex, x, y, &e->data->anim.GetCurrentFrame());
 		e->data->Update();
-		
+		if (e->data->facingLeft)
+			app->render->DrawTexture(tex, x, y, &e->data->anim.GetCurrentFrame());
+		else if (!e->data->facingLeft)
+			app->render->DrawTexture(tex, x, y, &e->data->anim.GetCurrentFrame(), false, 1.0,  SDL_FLIP_HORIZONTAL);
 	}
 	return true;
 }
 
 bool Enemies::PostUpdate()
 {
-	
+	for (ListItem<Enemy*>* e = enemies.start; e != NULL; e = e->next)
+	{
+		e->data->DrawPath(path);
+	}
 	return true;
 }
 
@@ -99,7 +108,14 @@ void Enemies::CreateEnemy(EnemyType type, float x, float y)
 		break;
 	}
 	case RAT:
+	{
+		Rat* r = new Rat();
+		r->SetPos(x - r->w / 2, y - r->h / 2);
+		r->pbody = app->physics->CreateRectangle(r->GetPos().x + r->w / 2, r->GetPos().y + r->h / 2, r->w, r->h, DYNAMIC);
+		r->pbody->listener = this;
+		enemies.Add(r);
 		break;
+	}
 	case MAX:
 		break;
 	default:

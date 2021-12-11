@@ -1,16 +1,18 @@
-#include "Eagle.h"
+#include "Rat.h"
 #include "Physics.h"
 #include "Player.h"
 #include "Pathfinding.h"
 #include "Map.h"
 #include "SDL/include/SDL.h"
 
-Eagle::Eagle() : Enemy()
+Rat::Rat() : Enemy()
 {
-	anim.PushBack({ 0,28,38,42 });
-	anim.PushBack({ 40,31,40,40 });
-	anim.PushBack({ 80,40,32,30 });
-	anim.PushBack({ 117,40,40,30 });
+	anim.PushBack({ 0,3, 28, 25 });
+	anim.PushBack({ 39, 4, 29, 22 });
+	anim.PushBack({ 75, 6, 32, 20 });
+	anim.PushBack({ 111, 6, 35, 20 });
+	anim.PushBack({ 147, 6, 35, 20 });
+	anim.PushBack({ 183, 3, 31, 23 });
 	anim.speed = 0.1f;
 	anim.loop = true;
 	h = 16;
@@ -19,19 +21,19 @@ Eagle::Eagle() : Enemy()
 	range = 5;
 }
 
-Eagle::~Eagle()
+Rat::~Rat()
 {
 }
 
 
-void Eagle::Update()
+void Rat::Update()
 {
 	anim.Update();
 
 	hasTarget = CheckIfHasTarget();
 
 	//The enemy has only to move if it's in range of the player
-	if (hasTarget && health > 0)
+	if (hasTarget && health > 0 && app->player->lives > 0)
 	{
 		ComputePath();
 		MoveToPlayer();
@@ -39,7 +41,7 @@ void Eagle::Update()
 	else
 	{
 		pbody->body->SetLinearVelocity({ 0, 0 });
-		currentPath = nullptr;
+	
 	}
 	if (pbody->body->GetLinearVelocity().x <= 0.1)
 	{
@@ -49,10 +51,9 @@ void Eagle::Update()
 	{
 		facingLeft = false;
 	}
-	
 }
 
-void Eagle::ComputePath()
+void Rat::ComputePath()
 {
 	iPoint origin = { (int)METERS_TO_PIXELS((int)pbody->body->GetPosition().x), (int)METERS_TO_PIXELS((int)pbody->body->GetPosition().y) };
 	iPoint dest = { (int)METERS_TO_PIXELS((int)app->player->pbody->body->GetPosition().x + 12), (int)METERS_TO_PIXELS((int)app->player->pbody->body->GetPosition().y + 12) };
@@ -64,7 +65,7 @@ void Eagle::ComputePath()
 	currentPath = app->pathfinding->GetLastPath();
 }
 
-void Eagle::MoveToPlayer()
+void Rat::MoveToPlayer()
 {
 	if (currentPath->At(1)->x != NULL)
 	{
@@ -78,11 +79,6 @@ void Eagle::MoveToPlayer()
 		printf("\nposx: %i, %i", posX, nextStep.x);
 		printf("\nposy: %i, %i", posY, nextStep.y);
 		if (posX <= nextStep.x) pbody->body->SetLinearVelocity({ speed.x, pbody->body->GetLinearVelocity().y });
-
 		else if (posX > nextStep.x) pbody->body->SetLinearVelocity({ -speed.x, pbody->body->GetLinearVelocity().y });
-
-		if (posY > nextStep.y) pbody->body->SetLinearVelocity({ pbody->body->GetLinearVelocity().x, speed.y });
-		else if (posY <= nextStep.y) pbody->body->SetLinearVelocity({ pbody->body->GetLinearVelocity().x, -speed.y });
 	}
-	
 }

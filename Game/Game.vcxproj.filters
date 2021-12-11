@@ -80,6 +80,9 @@
       <Filter>Source\Modules\Gameplay\Props</Filter>
     </ClCompile>
     <ClCompile Include="Source\Enemy.cpp" />
+    <ClCompile Include="Source\Rat.cpp">
+      <Filter>Source\Modules\Gameplay\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Animation.h">
@@ -183,6 +186,9 @@
     </ClInclude>
     <ClInclude Include="Source\Collectables.h">
       <Filter>Source\Modules\Gameplay\Props</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Rat.h">
+      <Filter>Source\Modules\Gameplay\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

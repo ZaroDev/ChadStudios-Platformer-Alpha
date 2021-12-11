@@ -31,4 +31,5 @@ private:
 	List<Enemy*> enemies;
 	SString folder;
 	SDL_Texture* tex;
+	SDL_Texture* path;
 };

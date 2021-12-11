@@ -362,6 +362,29 @@ bool Map::LoadProps()
 				}
 			}
 		}
+		if (mapLayerItem->data->properties.GetProperty("Rat") == 1)
+		{
+			for (int x = 0; x < mapLayerItem->data->width; x++)
+			{
+				for (int y = 0; y < mapLayerItem->data->height; y++)
+				{
+					int gid = mapLayerItem->data->Get(x, y);
+
+					if (gid > 0) {
+
+						TileSet* tileset = GetTilesetFromTileId(gid);
+
+						SDL_Rect r = tileset->GetTileRect(gid);
+						iPoint pos = MapToWorld(x, y);
+						pos.x += r.w / 2;
+						pos.y += r.h / 2;
+						app->enemies->CreateEnemy(RAT, pos.x, pos.y);
+
+					}
+
+				}
+			}
+		}
 		mapLayerItem = mapLayerItem->next;
 	}
 

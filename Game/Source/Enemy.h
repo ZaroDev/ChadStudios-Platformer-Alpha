@@ -7,6 +7,8 @@
 #include "Animation.h"
 #include "Pathfinding.h"
 #include "Player.h"
+#include "Map.h"
+#include "Render.h"
 
 struct SDL_Texture;
 
@@ -31,7 +33,17 @@ public:
 	{
 		return (value >= a && value <= b);
 	}
-
+	void DrawPath(SDL_Texture* tex)
+	{
+		if (currentPath != nullptr)
+		{
+			for (uint i = 0; i < currentPath->Count(); ++i)
+			{
+				iPoint pos = app->map->MapToWorld(currentPath->At(i)->x, currentPath->At(i)->y);
+				app->render->DrawTexture(tex, pos.x, pos.y);
+			}
+		}
+	}
 
 
 	virtual void Update(){}
@@ -50,6 +62,8 @@ public:
 	const DynArray<iPoint>* currentPath;
 	int range;
 	bool hasTarget = false;
+
+	bool facingLeft;
 
 };
 
