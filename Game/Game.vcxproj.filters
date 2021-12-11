@@ -79,6 +79,7 @@
     <ClCompile Include="Source\Collectables.cpp">
       <Filter>Source\Modules\Gameplay\Props</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Enemy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Animation.h">

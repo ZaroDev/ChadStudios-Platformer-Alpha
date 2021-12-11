@@ -1,3 +1,8 @@
+#ifndef __PLAYER_H__
+#define __PLAYER_H__
+
+
+
 #include "Module.h"
 #include "Point.h"
 #include "Animation.h"
@@ -6,18 +11,6 @@
 #include "List.h"
 struct SDL_Texture;
 
-struct Sensor {
-	enum sensorValue
-	{
-		NONE = -1,
-		LEFT,
-		RIGHT
-	};
-	PhysBody* sensor;
-	sensorValue value;
-	bool isActive;
-	int sensorTimer = 0;
-};
 
 class Player : public Module
 {
@@ -98,3 +91,5 @@ private:
 	Animation abilityAnimR;
 
 };
+
+#endif // !__PLAYER_H__

@@ -5,7 +5,8 @@
 #include "Physics.h"
 #include "Point.h"
 #include "Animation.h"
-
+#include "Pathfinding.h"
+#include "Player.h"
 
 struct SDL_Texture;
 
@@ -21,56 +22,35 @@ public:
 		pos.x = x;
 		pos.y = y;
 	}
-	int DistanceToBody(PhysBody* PhysPos)
+	bool CheckIfHasTarget()
 	{
-		b2Vec2 dist = PhysPos->body->GetPosition() - pbody->body->GetPosition();
-
-		return (abs(dist.x) + abs(dist.y));
+		uint dist = abs(sqrt(pow( pbody->body->GetPosition().x - app->player->pbody->body->GetPosition().x, 2) + pow(pbody->body->GetPosition().y - app->player->pbody->body->GetPosition().y, 2) ));
+		return dist < range;
 	}
 	bool IsBetween(int value, int a, int b)
 	{
 		return (value >= a && value <= b);
 	}
+
+
+
 	virtual void Update(){}
 
 public:
 	bool setPendingToDelete = false;
-
-	bool birdDirection = true;
+	
 	int health;
-	int lastTime = 0;
-	int currentTime = 0;
-	b2Vec2 agroSpeed;
-	b2Vec2 calmSpeed;
-	b2Vec2 currentSpeed;
-	iPoint spawnPosition;
-	iPoint spawnPosMap;
-
-	//navegation AI
-
-	iPoint nextMovePos;
-
-	iPoint currentMapTilePosition;
-	iPoint lastMapTilePosition;
-	bool direction;
-
-	int posCheckTime;
-	int checkTimer;
-	int posCheckTimeAgro;
-	int checkTimerAgro;
-	int startPosMargin;
-
-
-	bool agroTowardsPlayer;
-	int maxDistanceAgroBase;
-	int maxDistanceAgroActive;
-	int maxDistanceAgro;
-	bool inSpawnPos = true;
+	
 	Animation anim;
 	PhysBody* pbody;
 	iPoint pos;
 	int h, w;
+	b2Vec2 speed = { 1.0f, -1.0f };
+
+	const DynArray<iPoint>* currentPath;
 	int range;
+	bool hasTarget = false;
+
 };
 
 #endif

@@ -7,5 +7,6 @@ public:
 	~Eagle();
 
 	void Update();
-
+	void ComputePath();
+	void MoveToPlayer();
 };
