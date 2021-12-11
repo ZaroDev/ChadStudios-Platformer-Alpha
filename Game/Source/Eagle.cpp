@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Pathfinding.h"
 #include "Map.h"
+#include "SDL/include/SDL.h"
 
 Eagle::Eagle() : Enemy()
 {
@@ -16,12 +17,20 @@ Eagle::Eagle() : Enemy()
 	posCheckTimeAgro = 15;
 	maxDistanceAgroBase = 8;
 	maxDistanceAgroActive = 11;
-
+	spawnPosition.x = pos.x;
+	spawnPosition.y = pos.y;
+	spawnPosMap = app->map->WorldToMap(pos.x, pos.y);
 	agroSpeed.x = 3.f;
 	agroSpeed.y = 3.f;
 	calmSpeed.x = 3.f;
 	calmSpeed.y = 3.f;
 	startPosMargin = 48 + 24;
+
+	checkTimer = 0;
+	checkTimerAgro = 0;
+	maxDistanceAgro = 0;
+	currentSpeed.x = 0;
+	currentSpeed.y = 0;
 	h = 30;
 	w = 30;
 	health = 1;
@@ -45,9 +54,14 @@ void Eagle::Update()
 		METERS_TO_PIXELS(app->player->pbody->body->GetPosition().x),
 		METERS_TO_PIXELS(app->player->pbody->body->GetPosition().y)
 	);
+
+	currentTime = SDL_GetTicks();
+
+
+
 	if (agroTowardsPlayer)
 	{
-		if (CheckDistanceToPhysBody(app->player->pbody) <= maxDistanceAgroBase)
+		if (DistanceToBody(app->player->pbody) <= maxDistanceAgroBase)
 		{
 			agroTowardsPlayer = true;
 			maxDistanceAgro = maxDistanceAgroActive;
@@ -59,7 +73,7 @@ void Eagle::Update()
 	}
 	else
 	{
-		if (CheckDistanceToPhysBody(app->player->pbody) <= maxDistanceAgroBase)
+		if (DistanceToBody(app->player->pbody) <= maxDistanceAgroBase)
 		{
 			agroTowardsPlayer = true;
 			maxDistanceAgro = maxDistanceAgroActive;
@@ -89,10 +103,6 @@ void Eagle::Update()
 			//LOG("mypos: %i, %i", myPosMap.x, myPosMap.y);
 			//LOG("playerpos: %i, %i", playerPosMap.x, playerPosMap.y);
 
-
-
-
-
 			checkTimerAgro = 0;
 		}
 		checkTimerAgro++;
@@ -100,7 +110,33 @@ void Eagle::Update()
 		//LOG("target pos: %i, %i", nextMovePos.x, nextMovePos.y);
 
 	}
-	
+	else
+	{
+		if (checkTimer == posCheckTime)
+		{
+			//LOG("timer working");
+			checkTimerAgro = 0;
+
+
+			if (!IsBetween(METERS_TO_PIXELS(pbody->body->GetPosition().x), spawnPosition.x - startPosMargin, spawnPosition.x + startPosMargin)
+				|| !IsBetween(METERS_TO_PIXELS(pbody->body->GetPosition().y), spawnPosition.y - startPosMargin, spawnPosition.y + startPosMargin))
+			{
+				app->pathfinding->CreatePath(myPosMap, spawnPosMap);
+				inSpawnPos = false;
+			}
+			else {
+				inSpawnPos = true;
+
+			}
+
+
+
+			//LOG("mypos: %i, %i", myPosMap.x, myPosMap.y);
+
+			checkTimer = 0;
+		}
+		checkTimer++;
+	}
 
 	const DynArray<iPoint>* tempPath = app->pathfinding->GetLastPath();
 	if (tempPath->Count() > 2)
@@ -137,12 +173,5 @@ void Eagle::Update()
 			currentSpeed.y = 0;
 		}
 	}
-	//LOG("next pos world %i", nextMovePos.y + 24);
-	//LOG("pos, %i", METERS_TO_PIXELS(Hitbox->body->GetPosition().y));
-	//LOG("res: %i", nextMovePos.y + 24 - METERS_TO_PIXELS(Hitbox->body->GetPosition().y));
-	//LOG("res: %i", METERS_TO_PIXELS(direction.y));
-	//LOG("res: %i", METERS_TO_PIXELS(calmSpeed.y));
-	//LOG("res: %i", METERS_TO_PIXELS(currentSpeed.y));
-	//LOG("spawn: %i, %i", nextMovePos.x + 24 - METERS_TO_PIXELS(Hitbox->body->GetPosition().x), nextMovePos.x + 24 - METERS_TO_PIXELS(Hitbox->body->GetPosition().y));
 	pbody->body->SetLinearVelocity(currentSpeed);
 }

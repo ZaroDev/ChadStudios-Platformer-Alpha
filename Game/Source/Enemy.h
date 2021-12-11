@@ -21,16 +21,21 @@ public:
 		pos.x = x;
 		pos.y = y;
 	}
-	int CheckDistanceToPhysBody(PhysBody* PhysPos)
+	int DistanceToBody(PhysBody* PhysPos)
 	{
 		b2Vec2 dist = PhysPos->body->GetPosition() - pbody->body->GetPosition();
 
 		return (abs(dist.x) + abs(dist.y));
 	}
+	bool IsBetween(int value, int a, int b)
+	{
+		return (value >= a && value <= b);
+	}
 	virtual void Update(){}
 
 public:
 	bool setPendingToDelete = false;
+
 	bool birdDirection = true;
 	int health;
 	int lastTime = 0;
@@ -38,6 +43,8 @@ public:
 	b2Vec2 agroSpeed;
 	b2Vec2 calmSpeed;
 	b2Vec2 currentSpeed;
+	iPoint spawnPosition;
+	iPoint spawnPosMap;
 
 	//navegation AI
 
