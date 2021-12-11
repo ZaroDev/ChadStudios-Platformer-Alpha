@@ -23,6 +23,7 @@
    <property name="BoundX" value="5550"/>
    <property name="BoundY" value="1910"/>
    <property name="Draw" value="1"/>
+   <property name="Navigation" type="int" value="1"/>
   </properties>
   <data>
    <tile/>

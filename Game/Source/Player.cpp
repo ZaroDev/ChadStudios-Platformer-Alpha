@@ -355,13 +355,7 @@ bool Player::PostUpdate()
 
 void Player::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
-	if (bodyA->listener == (Module*)app->player && bodyB->listener == (Module*)app->player)
-	{
-		if (bodyA->body->GetPosition().y < bodyB->body->GetPosition().y)
-		{
-			hurt = true;
-		}
-	}
+
 }
 
 bool Player::LoadState(pugi::xml_node&data)

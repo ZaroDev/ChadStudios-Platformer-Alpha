@@ -9,6 +9,7 @@
 #include "Physics.h"
 #include "Player.h"
 #include "FadeToBlack.h"
+#include "Enemies.h"
 #include "UI.h"
 #include "Defs.h"
 #include "Log.h"
@@ -52,25 +53,25 @@ bool Scene::Start()
 	app->map->Enable();
 	app->check->Enable();
 	app->collect->Enable();
+	app->enemies->Enable();
 	app->player->currentScene = 1;
 	if (app->map->Load("map.tmx") == true)
 	{
 		int w, h;
 		uchar* data = NULL;
 
-		if (app->map->CreateWalkabilityMap(w, h, &data)) app->pathfinding->SetMap(w, h, data);
+		if (app->map->CreateWalkabilityMap(w, h, &data))
+		{
+			app->pathfinding->SetMap(w, h, data);
+		}
 
 		RELEASE_ARRAY(data);
 	}
 
 	pathTex = app->tex->Load("Assets/maps/collider.png");
 	originTex = app->tex->Load("Assets/maps/x.png");
-	/*app->check->CreateCheckpoint(app->player->pos.x + 100, app->player->pos.y - 50);
-	app->check->CreateCheckpoint(app->player->pos.x + 200, app->player->pos.y - 50);
-	app->collect->CreateObj(CHERRY, app->player->pos.x + 250, app->player->pos.y - 50);
-	app->collect->CreateObj(GEM, app->player->pos.x + 300, app->player->pos.y - 50);
-	app->collect->CreateObj(GEM, app->player->pos.x + 350, app->player->pos.y - 50);
-	app->collect->CreateObj(CHERRY, app->player->pos.x + 400, app->player->pos.y - 100);*/
+	
+
 	app->LoadGameRequest();
 	return true;
 }
@@ -78,7 +79,7 @@ bool Scene::Start()
 // Called each loop iteration
 bool Scene::PreUpdate()
 {
-	int mouseX, mouseY;
+	/*int mouseX, mouseY;
 	app->input->GetMousePosition(mouseX, mouseY);
 	iPoint p = app->render->ScreenToWorld(mouseX, mouseY);
 	p = app->map->WorldToMap(p.x, p.y);
@@ -95,7 +96,7 @@ bool Scene::PreUpdate()
 			origin = p;
 			originSelected = true;
 		}
-	}
+	}*/
 
 	return true;
 }
@@ -148,18 +149,18 @@ bool Scene::Update(float dt)
 	app->render->DrawTexture(jungle, 0, 284, NULL,false , 0.5f);
 	app->map->Draw();
 
-	int mouseX, mouseY;
-	app->input->GetMousePosition(mouseX, mouseY);
-	iPoint mouseTile = app->map->WorldToMap(mouseX - app->render->camera.x, mouseY - app->render->camera.y);
+	//int mouseX, mouseY;
+	//app->input->GetMousePosition(mouseX, mouseY);
+	//iPoint mouseTile = app->map->WorldToMap(mouseX - app->render->camera.x, mouseY - app->render->camera.y);
 
 
-	// L12b: Debug pathfinding
-	app->input->GetMousePosition(mouseX, mouseY);
-	iPoint p = app->render->ScreenToWorld(mouseX, mouseY);
-	p = app->map->WorldToMap(p.x, p.y);
-	p = app->map->MapToWorld(p.x, p.y);
+	//// L12b: Debug pathfinding
+	//app->input->GetMousePosition(mouseX, mouseY);
+	//iPoint p = app->render->ScreenToWorld(mouseX, mouseY);
+	//p = app->map->WorldToMap(p.x, p.y);
+	//p = app->map->MapToWorld(p.x, p.y);
 
-	app->render->DrawTexture(pathTex, p.x, p.y);
+	//app->render->DrawTexture(pathTex, p.x, p.y);
 
 	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
 

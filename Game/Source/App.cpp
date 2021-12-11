@@ -69,8 +69,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(ui);
 	AddModule(collect);
-	AddModule(enemies);
 	AddModule(check);
+	AddModule(enemies);
 	AddModule(player);
 	// Render last to swap buffer
 	AddModule(render);

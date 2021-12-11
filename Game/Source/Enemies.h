@@ -19,9 +19,12 @@ public:
 
 	bool Awake(pugi::xml_node&);
 	bool Start();
-	bool Update();
+	bool PreUpdate();
+	bool Update(float dt);
 	bool PostUpdate();
 	bool CleanUp();
+
+	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 
 	void CreateEnemy(EnemyType type, float x, float y);
 private:

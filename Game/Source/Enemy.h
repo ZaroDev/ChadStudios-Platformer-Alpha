@@ -21,15 +21,49 @@ public:
 		pos.x = x;
 		pos.y = y;
 	}
+	int CheckDistanceToPhysBody(PhysBody* PhysPos)
+	{
+		b2Vec2 dist = PhysPos->body->GetPosition() - pbody->body->GetPosition();
+
+		return (abs(dist.x) + abs(dist.y));
+	}
 	virtual void Update(){}
-	//virtual void Awale(){}
+
 public:
-	SDL_Texture* tex;
+	bool setPendingToDelete = false;
+	bool birdDirection = true;
+	int health;
+	int lastTime = 0;
+	int currentTime = 0;
+	b2Vec2 agroSpeed;
+	b2Vec2 calmSpeed;
+	b2Vec2 currentSpeed;
+
+	//navegation AI
+
+	iPoint nextMovePos;
+
+	iPoint currentMapTilePosition;
+	iPoint lastMapTilePosition;
+	bool direction;
+
+	int posCheckTime;
+	int checkTimer;
+	int posCheckTimeAgro;
+	int checkTimerAgro;
+	int startPosMargin;
+
+
+	bool agroTowardsPlayer;
+	int maxDistanceAgroBase;
+	int maxDistanceAgroActive;
+	int maxDistanceAgro;
+	bool inSpawnPos = true;
 	Animation anim;
-private:
-	iPoint pos;
 	PhysBody* pbody;
-	
+	iPoint pos;
+	int h, w;
+	int range;
 };
 
 #endif

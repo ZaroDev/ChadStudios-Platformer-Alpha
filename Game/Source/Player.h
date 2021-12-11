@@ -52,9 +52,10 @@ public:
 	bool debug;
 	bool useDownDash;
 	int abilityCD;
-private:
 	//Player's physbody
 	PhysBody* pbody;
+	bool hurt;
+private:
 	//Jump sound
 	int jumpSFX;
 	//Jump SFX folder path
@@ -73,7 +74,6 @@ private:
 	int counterDash;
 
 	int counter;
-	bool hurt;
 	//Player's b2 Body
 	b2Body* c;
 	//Player texture

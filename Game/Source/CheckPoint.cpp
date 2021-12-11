@@ -16,7 +16,7 @@ CheckPoint::~CheckPoint()
 bool CheckPoint::Awake(pugi::xml_node&)
 {
 	name.Create("check");
-	tex = app->tex->Load("Assets/textures/checkpoint.png");
+
 	return true;
 }
 
