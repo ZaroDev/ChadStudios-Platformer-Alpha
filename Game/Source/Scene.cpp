@@ -29,7 +29,7 @@ Scene::~Scene()
 // Called before render is available
 bool Scene::Awake(pugi::xml_node& config)
 {
-	LOG("Loading Scene");
+	LOG("ing Scene");
 	bool ret = true;
 	folder.Create(config.child("folder").child_value());
 	audioFile.Create(config.child("audio").child_value());
@@ -72,7 +72,7 @@ bool Scene::Start()
 	originTex = app->tex->Load("Assets/maps/x.png");
 	
 
-	app->LoadGameRequest();
+	//app->LoadGameRequest();
 	return true;
 }
 

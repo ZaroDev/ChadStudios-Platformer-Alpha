@@ -71,6 +71,32 @@ public:
 		}
 	}
 
+	bool SaveState(pugi::xml_node& data) const
+	{
+		bool ret = true;
+
+		pugi::xml_node values = data.append_child("values");
+		values.append_attribute("x").set_value(pos.x);
+		values.append_attribute("y").set_value(pos.y);
+		values.append_attribute("health").set_value(health);
+		values.append_attribute("type").set_value(type);
+
+		return true;
+	}
+
+	bool LoadState(pugi::xml_node& data)
+	{
+		if (health > 0)
+		{
+			health = data.child("values").attribute("health").as_int();
+			pos.x = data.child("values").attribute("x").as_int();
+			pos.y = data.child("values").attribute("y").as_int();
+			type = data.child("values").attribute("type").as_int();
+			pbody->body->SetTransform({ PIXEL_TO_METERS(pos.x), PIXEL_TO_METERS(pos.y) }, 0.0f);
+		}
+		return true;
+	}
+
 	virtual void Update(float dt){}
 
 public:
@@ -96,7 +122,13 @@ public:
 	int pathIndex;
 
 	bool facingLeft;
-
+	
+	enum TYPE
+	{
+		RAT = -1,
+		EAGLE
+	};
+	TYPE type;
 };
 
 #endif

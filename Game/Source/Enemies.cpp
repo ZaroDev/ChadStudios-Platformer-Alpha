@@ -144,6 +144,7 @@ void Enemies::CreateEnemy(EnemyType type, float x, float y)
 
 bool Enemies::LoadState(pugi::xml_node& data)
 {
+
 	for (ListItem<Enemy*>* e = enemies.start; e != NULL; e = e->next)
 	{
 		e->data->LoadState(data.child("enemy"));

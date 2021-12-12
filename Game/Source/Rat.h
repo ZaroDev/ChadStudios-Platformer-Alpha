@@ -12,7 +12,4 @@ public:
 
 	int counterJump;
 	bool canJump;
-
-	bool SaveState(pugi::xml_node&) const;
-	bool LoadState(pugi::xml_node&);
 };
