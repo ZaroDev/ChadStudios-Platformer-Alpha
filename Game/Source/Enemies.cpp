@@ -85,12 +85,17 @@ void Enemies::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	{
 		if (bodyA == e->data->pbody && bodyB->listener == (Module*)app->player)
 		{
-			if (bodyA->body->GetPosition().y >= bodyB->body->GetPosition().y)
+			float topA = bodyA->body->GetPosition().y - PIXEL_TO_METERS(e->data->h / 2);
+			float botA = bodyA->body->GetPosition().y + PIXEL_TO_METERS(e->data->h / 2);
+			float topB = bodyB->body->GetPosition().y + PIXEL_TO_METERS(12);
+			float botB = bodyB->body->GetPosition().y - PIXEL_TO_METERS(12);
+			printf("\ntopA : %f botB %f", topA, botB);
+			if (topA >= botB)
 			{
 				e->data->health--;
 				if (e->data->health <= 0) e->data->setPendingToDelete = true;
 			}
-			else if (bodyA->body->GetPosition().y < bodyB->body->GetPosition().y)
+			else if (topA < botB && !app->player->hurt)
 			{
 				app->player->hurt = true;
 			}
@@ -106,8 +111,9 @@ void Enemies::CreateEnemy(EnemyType type, float x, float y)
 	{
 		Eagle* e = new Eagle();
 		e->SetPos(x - 20, y - 20);
-		e->pbody = app->physics->CreateRectangle(e->GetPos().x + e->w / 2, e->GetPos().y + e->h / 2, e->w, e->h, KINEMATIC);
+		e->pbody = app->physics->CreateRectangle(e->GetPos().x + e->w / 2, e->GetPos().y + e->h / 2, e->w, e->h, DYNAMIC);
 		e->pbody->listener = this;
+		e->pbody->body->SetFixedRotation(true);
 		enemies.Add(e);
 		break;
 	}
@@ -116,9 +122,8 @@ void Enemies::CreateEnemy(EnemyType type, float x, float y)
 		Rat* r = new Rat();
 		r->SetPos(x - r->w / 2, y - r->h / 2);
 		r->pbody = app->physics->CreateRectangle(r->GetPos().x + r->w / 2, r->GetPos().y + r->h / 2, r->w, r->h, DYNAMIC);
-		r->pbody->body->SetFixedRotation(false);
-		
 		r->pbody->listener = this;
+		r->pbody->body->SetFixedRotation(false);
 		enemies.Add(r);
 		break;
 	}

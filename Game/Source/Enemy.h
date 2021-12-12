@@ -9,7 +9,7 @@
 #include "Player.h"
 #include "Map.h"
 #include "Render.h"
-#include <iostream>
+
 struct SDL_Texture;
 
 
@@ -26,7 +26,7 @@ public:
 	}
 	bool CheckIfHasTarget()
 	{
-		uint dist = abs(sqrt(pow( pbody->body->GetPosition().x - app->player->pbody->body->GetPosition().x, 2) + pow(pbody->body->GetPosition().y - app->player->pbody->body->GetPosition().y, 2) ));
+		uint dist = Distance(app->player->pos.x, app->player->pos.y, pos.x, pos.y);
 		return dist < range;
 	}
 	bool IsBetween(int value, int a, int b)
@@ -48,6 +48,7 @@ public:
 	{
 		return sqrtf(powf(x2 - x1, 2) + powf(y2 - y1, 2));
 	}
+	//Need to be improved Not used atm
 	void ClosestPoint()
 	{
 		uint size = currentPath->Count();

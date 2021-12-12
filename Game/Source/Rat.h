@@ -7,6 +7,9 @@ public:
 	~Rat();
 
 	void Update(float dt);
-	void ComputePath();
-	void MoveToPlayer();
+	void ComputePath(float dt);
+	void MoveToPlayer(iPoint destination, float dt);
+
+	int counterJump;
+	bool canJump;
 };

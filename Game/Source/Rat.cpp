@@ -18,7 +18,10 @@ Rat::Rat() : Enemy()
 	h = 20;
 	w = 20;
 	health = 1;
-	range = 5;
+	
+	range = 500;
+	pathUpdateTime = 1.5f;
+	pathUpdateTimer = pathUpdateTime;
 }
 
 Rat::~Rat()
@@ -31,12 +34,12 @@ void Rat::Update(float dt)
 	anim.Update();
 
 	hasTarget = CheckIfHasTarget();
-
+	pos.x = METERS_TO_PIXELS(pbody->body->GetPosition().x);
+	pos.y = METERS_TO_PIXELS(pbody->body->GetPosition().y);
 	//The enemy has only to move if it's in range of the player
 	if (hasTarget && health > 0 && app->player->lives > 0)
 	{
-		ComputePath();
-		MoveToPlayer();
+		ComputePath(dt);
 	}
 	else
 	{
@@ -53,19 +56,75 @@ void Rat::Update(float dt)
 	}
 }
 
-void Rat::ComputePath()
+void Rat::ComputePath(float dt)
 {
-	iPoint origin = { (int)METERS_TO_PIXELS((int)pbody->body->GetPosition().x), (int)METERS_TO_PIXELS((int)pbody->body->GetPosition().y) };
-	iPoint dest = { (int)METERS_TO_PIXELS((int)app->player->pbody->body->GetPosition().x + 24), (int)METERS_TO_PIXELS((int)app->player->pbody->body->GetPosition().y + 24) };
+	iPoint playerPos = app->player->pos;
+	float dist = Distance(pos.x, pos.y, playerPos.x, playerPos.y);
 
-	origin = app->map->WorldToMap(origin.x, origin.y);
-	dest = app->map->WorldToMap(dest.x, dest.y);
+	pathUpdateTimer += dt;
+	if (dist > range) {
+		return;
+	}
+	else
+	{
+		if (pathUpdateTimer >= pathUpdateTime) {
+			pathUpdateTimer = 0.0f;
+			pathIndex = 0;
 
-	app->pathfinding->CreatePath(origin, dest);
-	currentPath = app->pathfinding->GetLastPath();
+			iPoint origin = app->map->WorldToMap(pos.x, pos.y);
+			iPoint destination = app->map->WorldToMap(app->player->pos.x, app->player->pos.y);
+			int res = app->pathfinding->CreatePath(origin, destination);
+
+			if (res > 0) {
+				currentPath = app->pathfinding->GetLastPath();
+				if (currentPath->Count() > 1) {
+					pathIndex = 1;
+					activeNode = app->map->MapToWorld(currentPath->At(pathIndex)->x, currentPath->At(pathIndex)->y);
+				}
+				else if (currentPath->Count() > 0)
+				{
+					activeNode = app->map->MapToWorld(currentPath->At(0)->x, currentPath->At(0)->y);
+				}
+
+			}
+		}
+
+		if (currentPath->Count() > 0) {
+			if (pos == activeNode) {
+				pathIndex++;
+
+				if (pathIndex < currentPath->Count()) {
+					activeNode = app->map->MapToWorld(currentPath->At(pathIndex)->x, currentPath->At(pathIndex)->y);
+				}
+			}
+
+			if (pathIndex < currentPath->Count()) {
+				MoveToPlayer(activeNode, dt);
+			}
+		}
+	}
+	if (!canJump)
+	{
+		counterJump++;
+		if (counterJump >= 60)
+			canJump = true;
+	}
 }
 
-void Rat::MoveToPlayer()
+void Rat::MoveToPlayer(iPoint destination,float dt)
 {
-	
+	iPoint diff = destination - pos;
+
+	fPoint dir = { (float)diff.x, (float)diff.y };
+	dir.Normalize();
+	dir *= speed * 4;
+
+	fPoint step = { dir.x / dt, dir.y / dt };
+	pbody->body->SetLinearVelocity({ step.x, pbody->body->GetLinearVelocity().y });
+	if (dir.y != 0 && canJump)
+	{
+		pbody->body->SetLinearVelocity({ pbody->body->GetLinearVelocity().x, -2.0f });
+		counterJump = 0;
+		canJump = false;
+	}
 }

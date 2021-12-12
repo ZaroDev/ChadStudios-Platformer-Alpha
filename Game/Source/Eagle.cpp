@@ -13,8 +13,9 @@ Eagle::Eagle() : Enemy()
 	anim.PushBack({ 117,40,40,30 });
 	anim.speed = 0.1f;
 	anim.loop = true;
-	h = 16;
-	w = 16;
+	
+	h = 30;
+	w = 30;
 	health = 1;
 	range = 500;
 	pathUpdateTime = 1.5f;
@@ -35,7 +36,7 @@ void Eagle::Update(float dt)
 	//The enemy has only to move if it's in range of the player
 	pos.x = METERS_TO_PIXELS(pbody->body->GetPosition().x);
 	pos.y = METERS_TO_PIXELS(pbody->body->GetPosition().y);
-	if (hasTarget && health > 0)
+	if (hasTarget && health > 0 && app->player->lives > 0)
 	{
 		printf("\nPos x: %i y %i", pos.x, pos.y);
 		ComputePath(dt);
@@ -63,7 +64,7 @@ void Eagle::ComputePath(float dt)
 
 	pathUpdateTimer += dt;
 	if (dist > range) {
-		
+		return;
 	}
 	else
 	{
@@ -77,10 +78,15 @@ void Eagle::ComputePath(float dt)
 
 			if (res > 0) {
 				currentPath = app->pathfinding->GetLastPath();
+				if (currentPath->Count() > 1) {
+					pathIndex = 1;
+					activeNode = app->map->MapToWorld(currentPath->At(pathIndex)->x, currentPath->At(pathIndex)->y);
+				}
+				else if (currentPath->Count() > 0)
+				{
+					activeNode = app->map->MapToWorld(currentPath->At(0)->x, currentPath->At(0)->y);
+				}
 
-				ClosestPoint();
-				printf("\nIndex %i", pathIndex);
-				activeNode = app->map->MapToWorld(currentPath->At(pathIndex)->x, currentPath->At(pathIndex)->y);
 			}
 		}
 
@@ -107,10 +113,9 @@ void Eagle::MoveToPlayer(iPoint destination, float dt)
 	
 	fPoint dir = { (float)diff.x, (float)diff.y };
 	dir.Normalize();
-	dir *= speed * 2;
+	dir *= speed * 3;
 
 	fPoint step = { dir.x / dt, dir.y / dt };
-	printf("Step x: %f, y: %f", step.x, step.y);
 	pbody->body->SetLinearVelocity({ step.x, step.y });
 	
 }
