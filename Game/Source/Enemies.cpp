@@ -83,6 +83,7 @@ bool Enemies::CleanUp()
 	{
 		app->physics->world->DestroyBody(e->data->pbody->body);
 	}
+	app->tex->UnLoad(tex);
 	enemies.Clear();
 	return true;
 }

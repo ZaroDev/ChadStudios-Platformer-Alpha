@@ -93,6 +93,7 @@ bool Collectables::CleanUp()
 	{
 		app->physics->world->DestroyBody(c->data->body->body);
 	}
+	app->tex->UnLoad(tex);
 	colectables.Clear();
 	return true;
 }

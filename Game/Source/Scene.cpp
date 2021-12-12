@@ -162,5 +162,6 @@ bool Scene::CleanUp()
 	app->enemies->Disable();
 	app->check->Disable();
 	app->collect->Disable();
+	app->physics->Disable();
 	return true;
 }

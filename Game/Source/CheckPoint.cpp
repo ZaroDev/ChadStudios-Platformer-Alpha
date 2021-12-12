@@ -56,6 +56,7 @@ bool CheckPoint::CleanUp()
 	{
 		app->physics->world->DestroyBody(c->data->body->body);
 	}
+	app->tex->UnLoad(tex);
 	checkpoints.Clear();
 	return true;
 }
