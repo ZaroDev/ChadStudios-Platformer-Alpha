@@ -2,9 +2,11 @@
 #include "Textures.h"
 #include "App.h"
 #include "Render.h"
+#include "Audio.h"
 
 CheckPoint::CheckPoint(bool startEnabled) : Module(startEnabled)
 {
+	name.Create("check");
 }
 
 CheckPoint::~CheckPoint()
@@ -13,16 +15,20 @@ CheckPoint::~CheckPoint()
 	checkpoints.Clear();
 }
 
-bool CheckPoint::Awake(pugi::xml_node&)
+bool CheckPoint::Awake(pugi::xml_node& config)
 {
-	name.Create("check");
+	folder.Create(config.child("folder").child_value());
+	sfx.Create(config.child("sfx").child_value());
 
 	return true;
 }
 
 bool CheckPoint::Start()
 {
-	tex = app->tex->Load("Assets/textures/checkpoint.png");
+	SString tmp("%s%s", folder.GetString(), "checkpoint.png");
+	SString tmp2("%s%s", sfx.GetString(), "check.wav");
+	tex = app->tex->Load(tmp.GetString());
+	SFX = app->audio->LoadFx(tmp2.GetString());
 	return true;
 }
 
@@ -54,7 +60,7 @@ void CheckPoint::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		{
 			f->data->isActive = false;
 			
-			
+			app->audio->PlayFx(SFX);
 			app->SaveGameRequest();
 		}
 		

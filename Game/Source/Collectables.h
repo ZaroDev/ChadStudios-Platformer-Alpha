@@ -46,6 +46,9 @@ public:
 
 private:
 	SString folder;
+	SString sfx;
+	int gemSFX;
+	int cherrySFX;
 	SDL_Texture* tex;
 	List<Collectable*> colectables;
 };

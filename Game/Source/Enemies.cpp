@@ -5,6 +5,8 @@
 #include "Textures.h"
 #include "Render.h"
 #include "Player.h"
+#include "Audio.h"
+
 Enemies::Enemies(bool startEnabled) : Module(startEnabled)
 {
 	name.Create("enemies");
@@ -17,7 +19,7 @@ Enemies::~Enemies()
 bool Enemies::Awake(pugi::xml_node&config)
 {
 	folder.Create(config.child("folder").child_value());
-	
+	sfx.Create(config.child("sfx").child_value());
 	return true;
 }
 
@@ -25,6 +27,10 @@ bool Enemies::Start()
 {
 	SString tmp("%s%s", folder.GetString(), "enemies.png");
 	SString tmp2("%s%s", folder.GetString(), "nav.png");
+	SString tmp3("%s%s", sfx.GetString(), "enemy.wav");
+	SString tmp4("%s%s", sfx.GetString(), "playerHurt.wav");
+	hitSFX = app->audio->LoadFx(tmp3.GetString());
+	playerHit = app->audio->LoadFx(tmp4.GetString());
 	tex = app->tex->Load(tmp.GetString());
 	path = app->tex->Load(tmp2.GetString());
 	return true;
@@ -92,14 +98,26 @@ void Enemies::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			if (topA >= botB)
 			{
 				e->data->health--;
+				app->audio->PlayFx(hitSFX);
 				if (e->data->health <= 0) e->data->setPendingToDelete = true;
 			}
 			else if (topA < botB && !app->player->hurt)
 			{
+				app->audio->PlayFx(playerHit);
 				app->player->hurt = true;
 			}
 		}
 	}
+}
+
+bool Enemies::LoadState(pugi::xml_node&)
+{
+	return false;
+}
+
+bool Enemies::SaveState(pugi::xml_node&) const
+{
+	return false;
 }
 
 void Enemies::CreateEnemy(EnemyType type, float x, float y)

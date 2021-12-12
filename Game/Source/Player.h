@@ -51,6 +51,7 @@ public:
 private:
 	//Jump sound
 	int jumpSFX;
+	int superJumpSFX;
 	//Jump SFX folder path
 	SString jumpSFXFile;
 	//Variable for double jump

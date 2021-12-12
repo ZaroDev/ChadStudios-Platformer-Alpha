@@ -26,9 +26,15 @@ public:
 
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 
+	bool LoadState(pugi::xml_node&);
+	bool SaveState(pugi::xml_node&) const;
+
 	void CreateEnemy(EnemyType type, float x, float y);
 private:
 	List<Enemy*> enemies;
+	int hitSFX;
+	int playerHit;
+	SString sfx;
 	SString folder;
 	SDL_Texture* tex;
 	SDL_Texture* path;

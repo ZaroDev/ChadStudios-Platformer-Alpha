@@ -33,5 +33,8 @@ public:
 	void CreateCheckpoint(int x, int y);
 private:
 	SDL_Texture* tex;
+	int SFX;
 	List<Flag*> checkpoints;
+	SString folder;
+	SString sfx;
 };

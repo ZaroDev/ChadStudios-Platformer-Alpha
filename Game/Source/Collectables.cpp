@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Textures.h"
 #include "Render.h"
+#include "Audio.h"
 
 void Collectables::CreateObj(Type type_, float x, float y)
 {
@@ -45,13 +46,19 @@ Collectables::~Collectables()
 
 bool Collectables::Awake(pugi::xml_node& config)
 {
+
 	folder.Create(config.child("folder").child_value());
+	sfx.Create(config.child("sfx").child_value());
 	return true;
 }
 
 bool Collectables::Start()
 {
 	tex = app->tex->Load(folder.GetString());
+	SString tmp("%s%s", sfx.GetString(), "gem.wav");
+	SString tmp2("%s%s", sfx.GetString(), "cherry.wav");
+	gemSFX = app->audio->LoadFx(tmp.GetString());
+	cherrySFX = app->audio->LoadFx(tmp2.GetString());
 	return true;
 }
 
@@ -97,12 +104,17 @@ void Collectables::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 				if (app->player->lives < 3)
 				{
 					app->player->lives++;
-
 				}
+				else
+				{
+					app->player->score += 50;
+				}
+				app->audio->PlayFx(cherrySFX);
 			}
 			if (c->data->type == GEM)
 			{
 				app->player->score += 10;
+				app->audio->PlayFx(gemSFX);
 			}
 			c->data->pendingToDelete = true;
 		}

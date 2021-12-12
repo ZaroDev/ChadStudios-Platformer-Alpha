@@ -123,8 +123,10 @@ bool Player::Start()
 	tex = app->tex->Load(folder.GetString());
 	currentAnimation = &idleAnimR;
 
-
-	jumpSFX = app->audio->LoadFx(jumpSFXFile.GetString());
+	SString tmp("%s%s", jumpSFXFile.GetString(), "jumpSFX.wav");
+	SString tmp2("%s%s", jumpSFXFile.GetString(), "superJump.wav");
+	jumpSFX = app->audio->LoadFx(tmp.GetString());
+	superJumpSFX = app->audio->LoadFx(tmp2.GetString());
 	grounded = true;
 
 	b2BodyDef cbody;
@@ -236,7 +238,7 @@ bool Player::Update(float dt)
 		pbody->body->SetLinearVelocity({ pbody->body->GetLinearVelocity().x, jumpVel });
 		numJumps--;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && grounded)
 	{
 		counterDash++;
 		if (counterDash == 60 && useDownDash == false)
