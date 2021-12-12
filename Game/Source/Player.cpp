@@ -153,7 +153,7 @@ bool Player::Start()
 	die = false;
 	debug = false;
 	win = false;
-
+	god = false;
 
 
 	return ret;
@@ -168,7 +168,8 @@ bool Player::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 		debug = !debug;
-
+	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+		god = !god;
 	if (app->input->GetKey(SDL_SCANCODE_F3))
 	{
 		if(currentScene == 1)
@@ -182,7 +183,7 @@ bool Player::Update(float dt)
 	if (pbody->body->GetLinearVelocity().y == 0)
 		numJumps = 2;
 	
-	if (!debug)
+	if (!god)
 	{
 		//Camera follows the player
 		uint width, height;

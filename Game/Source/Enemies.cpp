@@ -95,20 +95,23 @@ void Enemies::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	{
 		if (bodyA == e->data->pbody && bodyB->listener == (Module*)app->player)
 		{
-			float topA = bodyA->body->GetPosition().y - PIXEL_TO_METERS(e->data->h / 2);
-			float botA = bodyA->body->GetPosition().y + PIXEL_TO_METERS(e->data->h / 2);
-			float topB = bodyB->body->GetPosition().y + PIXEL_TO_METERS(12);
-			float botB = bodyB->body->GetPosition().y - PIXEL_TO_METERS(12);
-			if (topA >= botB)
+			if (!app->player->god)
 			{
-				e->data->health--;
-				app->audio->PlayFx(hitSFX);
-				if (e->data->health <= 0) e->data->setPendingToDelete = true;
-			}
-			else if (topA < botB && !app->player->hurt)
-			{
-				app->audio->PlayFx(playerHit);
-				app->player->hurt = true;
+				float topA = bodyA->body->GetPosition().y - PIXEL_TO_METERS(e->data->h / 2);
+				float botA = bodyA->body->GetPosition().y + PIXEL_TO_METERS(e->data->h / 2);
+				float topB = bodyB->body->GetPosition().y + PIXEL_TO_METERS(12);
+				float botB = bodyB->body->GetPosition().y - PIXEL_TO_METERS(12);
+				if (topA >= botB)
+				{
+					e->data->health--;
+					app->audio->PlayFx(hitSFX);
+					if (e->data->health <= 0) e->data->setPendingToDelete = true;
+				}
+				else if (topA < botB && !app->player->hurt)
+				{
+					app->audio->PlayFx(playerHit);
+					app->player->hurt = true;
+				}
 			}
 		}
 	}

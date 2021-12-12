@@ -43,6 +43,7 @@ public:
 	bool win;
 	bool die;
 	bool debug;
+	bool god;
 	bool useDownDash;
 	int abilityCD;
 	//Player's physbody

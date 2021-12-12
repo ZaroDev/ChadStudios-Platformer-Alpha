@@ -69,6 +69,7 @@ void Eagle::ComputePath(float dt)
 	}
 	else
 	{
+
 		if (pathUpdateTimer >= pathUpdateTime) {
 			pathUpdateTimer = 0.0f;
 			pathIndex = 0;
@@ -78,30 +79,36 @@ void Eagle::ComputePath(float dt)
 			int res = app->pathfinding->CreatePath(origin, destination);
 
 			if (res > 0) {
+
 				currentPath = app->pathfinding->GetLastPath();
-				if (currentPath->Count() > 1) {
-					pathIndex = 1;
-					activeNode = app->map->MapToWorld(currentPath->At(pathIndex)->x, currentPath->At(pathIndex)->y);
-				}
-				else if (currentPath->Count() > 0)
+				if (currentPath != nullptr)
 				{
-					activeNode = app->map->MapToWorld(currentPath->At(0)->x, currentPath->At(0)->y);
-				}
-
-			}
-		}
-
-		if (currentPath->Count() > 0) {
-			if (pos == activeNode) {
-				pathIndex++;
-
-				if (pathIndex < currentPath->Count()) {
-					activeNode = app->map->MapToWorld(currentPath->At(pathIndex)->x, currentPath->At(pathIndex)->y);
+					if (currentPath->Count() > 1)
+					{
+						pathIndex = 1;
+						activeNode = app->map->MapToWorld(currentPath->At(pathIndex)->x, currentPath->At(pathIndex)->y);
+					}
+					else if (currentPath->Count() > 0)
+					{
+						activeNode = app->map->MapToWorld(currentPath->At(0)->x, currentPath->At(0)->y);
+					}
 				}
 			}
+			if (currentPath != nullptr)
+			{
+				if (currentPath->Count() > 0) {
+					if (pos == activeNode) {
+						pathIndex++;
 
-			if (pathIndex < currentPath->Count()) {
-				MoveToPlayer(activeNode, dt);
+						if (pathIndex < currentPath->Count()) {
+							activeNode = app->map->MapToWorld(currentPath->At(pathIndex)->x, currentPath->At(pathIndex)->y);
+						}
+					}
+
+					if (pathIndex < currentPath->Count()) {
+						MoveToPlayer(activeNode, dt);
+					}
+				}
 			}
 		}
 	}
