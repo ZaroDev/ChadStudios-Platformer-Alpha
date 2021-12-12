@@ -386,8 +386,9 @@ bool Map::LoadProps()
 			}
 		}
 		mapLayerItem = mapLayerItem->next;
+		
 	}
-
+	printf("Succesfully loaded props");
 	return ret;
 }
 
@@ -526,8 +527,8 @@ bool Map::Load(const char* filename)
 			layer = layer->next;
 		}
 	}
-	LoadColliders();
 	LoadProps();
+	LoadColliders();
 	mapLoaded = ret;
 
 	return ret;

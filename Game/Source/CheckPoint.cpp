@@ -50,6 +50,16 @@ bool CheckPoint::Update(float dt)
 	return true;
 }
 
+bool CheckPoint::CleanUp()
+{
+	for (ListItem<Flag*>* c = checkpoints.start; c != NULL; c = c->next)
+	{
+		app->physics->world->DestroyBody(c->data->body->body);
+	}
+	checkpoints.Clear();
+	return true;
+}
+
 void CheckPoint::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
 	ListItem<Flag*>* f = checkpoints.start;

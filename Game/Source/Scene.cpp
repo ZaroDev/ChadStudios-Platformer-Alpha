@@ -50,10 +50,10 @@ bool Scene::Start()
 	LOG("%s", tmp.GetString());
 	app->physics->Enable();
 	app->player->Enable();
-	app->map->Enable();
 	app->check->Enable();
 	app->collect->Enable();
 	app->enemies->Enable();
+	app->map->Enable();
 	app->player->currentScene = 1;
 	if (app->map->Load("map.tmx") == true)
 	{
@@ -157,8 +157,8 @@ bool Scene::CleanUp()
 	app->tex->UnLoad(background);
 	app->tex->UnLoad(jungle);
 	app->player->Disable();
-	app->map->Disable();
 	app->map->Unload();
+	app->map->Disable();
 	app->enemies->Disable();
 	app->check->Disable();
 	app->collect->Disable();

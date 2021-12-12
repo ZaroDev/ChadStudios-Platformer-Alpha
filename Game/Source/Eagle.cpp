@@ -17,7 +17,7 @@ Eagle::Eagle() : Enemy()
 	h = 30;
 	w = 30;
 	health = 1;
-	range = 500;
+	range = 300;
 	pathUpdateTime = 1.5f;
 	pathUpdateTimer = pathUpdateTime;
 	type = EAGLE;

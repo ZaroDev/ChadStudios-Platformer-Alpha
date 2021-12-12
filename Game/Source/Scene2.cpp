@@ -47,13 +47,24 @@ bool Scene2::Start()
 	LOG("%s", tmp.GetString());
 	app->physics->Enable();
 	app->player->Enable();
-	app->map->Enable();
-	app->audio->Enable();
-	app->player->currentScene = 2;
-	app->map->Load("map2.tmx");
 	app->enemies->Enable();
 	app->collect->Enable();
 	app->check->Enable();
+	app->map->Enable();
+	app->audio->Enable();
+	app->player->currentScene = 2;
+	if (app->map->Load("map2.tmx") == true)
+	{
+		int w, h;
+		uchar* data = NULL;
+
+		if (app->map->CreateWalkabilityMap(w, h, &data))
+		{
+			app->pathfinding->SetMap(w, h, data);
+		}
+
+		RELEASE_ARRAY(data);
+	}
 
 	if (app->player->hasLost)
 	{
@@ -136,9 +147,8 @@ bool Scene2::CleanUp()
 	app->player->Disable();
 	app->map->Unload();
 	app->map->Disable();
-	app->physics->Disable();
 	app->enemies->Disable();
-	app->collect->Disable();
 	app->check->Disable();
+	app->collect->Disable();
 	return true;
 }

@@ -89,6 +89,10 @@ bool Collectables::Update(float dt)
 
 bool Collectables::CleanUp()
 {
+	for (ListItem<Collectable*>* c = colectables.start; c != NULL; c = c->next)
+	{
+		app->physics->world->DestroyBody(c->data->body->body);
+	}
 	colectables.Clear();
 	return true;
 }

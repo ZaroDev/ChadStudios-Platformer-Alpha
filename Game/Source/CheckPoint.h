@@ -28,6 +28,8 @@ public:
 
 	bool Update(float dt);
 
+	bool CleanUp();
+
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 
 	void CreateCheckpoint(int x, int y);
