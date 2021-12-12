@@ -8,7 +8,9 @@
 #include "Map.h"
 #include "Physics.h"
 #include "Player.h"
-
+#include "Enemies.h"
+#include "CheckPoint.h"
+#include "Collectables.h"
 #include "Defs.h"
 #include "Log.h"
 
@@ -49,7 +51,14 @@ bool Scene2::Start()
 	app->audio->Enable();
 	app->player->currentScene = 2;
 	app->map->Load("map2.tmx");
-	app->LoadGameRequest();
+	app->enemies->Enable();
+	app->collect->Enable();
+	app->check->Enable();
+
+	if (app->player->hasLost)
+	{
+		app->LoadGameRequest();
+	}
 	return true;
 }
 
@@ -128,5 +137,8 @@ bool Scene2::CleanUp()
 	app->map->Unload();
 	app->map->Disable();
 	app->physics->Disable();
+	app->enemies->Disable();
+	app->collect->Disable();
+	app->check->Disable();
 	return true;
 }

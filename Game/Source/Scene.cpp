@@ -67,12 +67,11 @@ bool Scene::Start()
 
 		RELEASE_ARRAY(data);
 	}
-
-	pathTex = app->tex->Load("Assets/maps/collider.png");
-	originTex = app->tex->Load("Assets/maps/x.png");
 	
-
-	//app->LoadGameRequest();
+	if (app->player->hasLost)
+	{
+		app->LoadGameRequest();
+	}
 	return true;
 }
 
@@ -160,5 +159,8 @@ bool Scene::CleanUp()
 	app->player->Disable();
 	app->map->Disable();
 	app->map->Unload();
+	app->enemies->Disable();
+	app->check->Disable();
+	app->collect->Disable();
 	return true;
 }

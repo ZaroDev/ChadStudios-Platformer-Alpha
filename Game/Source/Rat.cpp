@@ -19,7 +19,7 @@ Rat::Rat() : Enemy()
 	w = 20;
 	health = 1;
 	
-	range = 500;
+	range = 200;
 	pathUpdateTime = 1.5f;
 	pathUpdateTimer = pathUpdateTime;
 	type = RAT;
@@ -68,6 +68,7 @@ void Rat::ComputePath(float dt)
 	}
 	else
 	{
+		
 		if (pathUpdateTimer >= pathUpdateTime) {
 			pathUpdateTimer = 0.0f;
 			pathIndex = 0;
@@ -77,36 +78,43 @@ void Rat::ComputePath(float dt)
 			int res = app->pathfinding->CreatePath(origin, destination);
 
 			if (res > 0) {
+
 				currentPath = app->pathfinding->GetLastPath();
-				if (currentPath->Count() > 1) {
-					pathIndex = 1;
-					activeNode = app->map->MapToWorld(currentPath->At(pathIndex)->x, currentPath->At(pathIndex)->y);
-				}
-				else if (currentPath->Count() > 0)
+				if (currentPath != nullptr)
 				{
-					activeNode = app->map->MapToWorld(currentPath->At(0)->x, currentPath->At(0)->y);
+					if (currentPath->Count() > 1)
+					{
+						pathIndex = 1;
+						activeNode = app->map->MapToWorld(currentPath->At(pathIndex)->x, currentPath->At(pathIndex)->y);
+					}
+					else if (currentPath->Count() > 0)
+					{
+						activeNode = app->map->MapToWorld(currentPath->At(0)->x, currentPath->At(0)->y);
+					}
 				}
 			}
-		}
+			if (currentPath != nullptr)
+			{
+				if (currentPath->Count() > 0) {
+					if (pos == activeNode) {
+						pathIndex++;
 
-		if (currentPath->Count() > 0) {
-			if (pos == activeNode) {
-				pathIndex++;
+						if (pathIndex < currentPath->Count()) {
+							activeNode = app->map->MapToWorld(currentPath->At(pathIndex)->x, currentPath->At(pathIndex)->y);
+						}
+					}
 
-				if (pathIndex < currentPath->Count()) {
-					activeNode = app->map->MapToWorld(currentPath->At(pathIndex)->x, currentPath->At(pathIndex)->y);
+					if (pathIndex < currentPath->Count()) {
+						MoveToPlayer(activeNode, dt);
+					}
 				}
-			}
-
-			if (pathIndex < currentPath->Count()) {
-				MoveToPlayer(activeNode, dt);
 			}
 		}
 	}
 	if (!canJump)
 	{
 		counterJump++;
-		if (counterJump >= 60)
+		if (counterJump >= 120)
 			canJump = true;
 	}
 }
