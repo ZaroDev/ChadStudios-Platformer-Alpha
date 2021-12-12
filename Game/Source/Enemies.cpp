@@ -67,9 +67,12 @@ bool Enemies::Update(float dt)
 
 bool Enemies::PostUpdate()
 {
-	for (ListItem<Enemy*>* e = enemies.start; e != NULL; e = e->next)
+	if (app->player->debug)
 	{
-		e->data->DrawPath(path);
+		for (ListItem<Enemy*>* e = enemies.start; e != NULL; e = e->next)
+		{
+			e->data->DrawPath(path);
+		}
 	}
 	return true;
 }

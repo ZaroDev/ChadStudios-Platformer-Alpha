@@ -48,6 +48,7 @@ public:
 	//Player's physbody
 	PhysBody* pbody;
 	bool hurt;
+	bool hasLost = false;
 private:
 	//Jump sound
 	int jumpSFX;
@@ -70,6 +71,7 @@ private:
 	int counter;
 	//Player's b2 Body
 	b2Body* c;
+	
 	//Player texture
 	SDL_Texture* tex;
 	//Animations

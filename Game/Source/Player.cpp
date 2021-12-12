@@ -339,6 +339,11 @@ bool Player::Update(float dt)
 		app->audio->volFX--;
 	}
 
+	if (lives <= 0)
+	{
+		die = true;
+	}
+
 	currentAnimation->Update();
 
 	return ret;
@@ -366,6 +371,8 @@ bool Player::LoadState(pugi::xml_node&data)
 	pos.y = data.child("pos").attribute("y").as_int();
 	pbody->body->SetTransform({ PIXEL_TO_METERS(pos.x), PIXEL_TO_METERS(pos.y) }, 0.0f);
 	currentScene = data.child("start").attribute("value").as_int();
+	lives = data.child("values").attribute("lives").as_int();
+	score = data.child("values").attribute("score").as_int();
 	return ret;
 }
 
@@ -378,6 +385,9 @@ bool Player::SaveState(pugi::xml_node&data) const
 	posN.append_attribute("y").set_value(pos.y);
 	pugi::xml_node currentState = data.append_child("start");
 	currentState.append_attribute("value").set_value(currentScene);
+	pugi::xml_node values = data.append_child("values");
+	values.append_attribute("lives").set_value(lives);
+	values.append_attribute("score").set_value(score);
 	return true;
 }
 
