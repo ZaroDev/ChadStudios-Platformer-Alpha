@@ -395,7 +395,6 @@ bool Player::CleanUp()
 {
 	bool ret = true;
 	app->tex->UnLoad(tex);
-	//app->physics->world->DestroyBody(c);
 	app->ui->Disable();
 
 	return ret;
