@@ -110,7 +110,7 @@ void Enemies::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	}
 }
 
-void Enemies::CreateEnemy(EnemyType type, float x, float y)
+void Enemies::CreateEnemy(EnemyType type, float x, float y, int health)
 {
 	switch (type)
 	{
@@ -121,6 +121,7 @@ void Enemies::CreateEnemy(EnemyType type, float x, float y)
 		e->pbody = app->physics->CreateRectangle(e->GetPos().x + e->w / 2, e->GetPos().y + e->h / 2, e->w, e->h, DYNAMIC);
 		e->pbody->listener = this;
 		e->pbody->body->SetFixedRotation(true);
+		e->health = health;
 		enemies.Add(e);
 		break;
 	}
@@ -131,6 +132,7 @@ void Enemies::CreateEnemy(EnemyType type, float x, float y)
 		r->pbody = app->physics->CreateRectangle(r->GetPos().x + r->w / 2, r->GetPos().y + r->h / 2, r->w, r->h, DYNAMIC);
 		r->pbody->listener = this;
 		r->pbody->body->SetFixedRotation(false);
+		r->health = health;
 		enemies.Add(r);
 		break;
 	}
@@ -142,21 +144,52 @@ void Enemies::CreateEnemy(EnemyType type, float x, float y)
 }
 
 
-bool Enemies::LoadState(pugi::xml_node& data)
+bool Enemies::SaveState(pugi::xml_node& entities_node) const
 {
+	// Clear previous saved entities
+	pugi::xml_node entity_node = entities_node.first_child();
 
-	for (ListItem<Enemy*>* e = enemies.start; e != NULL; e = e->next)
-	{
-		e->data->LoadState(data.child("enemy"));
+	while (entity_node) {
+		entities_node.remove_child(entity_node);
+		entity_node = entities_node.first_child();
+	}
+
+	// Add new entities
+	ListItem<Enemy*>* entity;
+	
+	for (entity = enemies.start; entity != NULL; entity = entity->next) {
+		Enemy* ent = entity->data;
+		if (ent->health >= 1)
+		{
+			entity_node = entities_node.append_child("entity");
+
+			entity_node.append_attribute("type") = ent->type;
+
+			iPoint pos = ent->GetPos();
+			entity_node.append_attribute("x") = pos.x;
+			entity_node.append_attribute("y") = pos.y;
+			entity_node.append_attribute("health") = ent->health;
+		}
+
 	}
 	return true;
 }
 
-bool Enemies::SaveState(pugi::xml_node& data) const
+bool Enemies::LoadState(pugi::xml_node& entities_node)
 {
-	for (ListItem<Enemy*>* e = enemies.start; e != NULL; e = e->next)
-	{
-		e->data->SaveState(data.child("enemy"));
+	pugi::xml_node entity_node = entities_node.first_child();
+	CleanUp();
+	while (entity_node) {
+		EnemyType type = (EnemyType)entity_node.attribute("type").as_int();
+		iPoint pos;
+		pos.x = entity_node.attribute("x").as_int();
+		pos.y = entity_node.attribute("y").as_int();
+
+		int hp = entity_node.attribute("health").as_int();
+
+		CreateEnemy(type, pos.x, pos.y, hp);
+
+		entity_node = entity_node.next_sibling();
 	}
 	return true;
 }

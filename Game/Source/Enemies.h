@@ -5,8 +5,8 @@
 
 enum EnemyType
 {
+	RAT = -1,
 	EAGLE,
-	RAT,
 
 	MAX
 };
@@ -29,7 +29,7 @@ public:
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&) const;
 
-	void CreateEnemy(EnemyType type, float x, float y);
+	void CreateEnemy(EnemyType type, float x, float y, int health);
 private:
 	List<Enemy*> enemies;
 	int hitSFX;

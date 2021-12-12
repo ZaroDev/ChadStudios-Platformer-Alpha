@@ -19,12 +19,32 @@
 	<ui />
 	<collect />
 	<check />
-	<enemies />
+	<enemies>
+		<entity type="0" x="719" y="123" health="1" />
+		<entity type="0" x="750" y="141" health="1" />
+		<entity type="0" x="182" y="514" health="1" />
+		<entity type="0" x="158" y="579" health="1" />
+		<entity type="0" x="1025" y="259" health="1" />
+		<entity type="0" x="1248" y="331" health="1" />
+		<entity type="0" x="1573" y="128" health="1" />
+		<entity type="0" x="1653" y="688" health="1" />
+		<entity type="0" x="1702" y="435" health="1" />
+		<entity type="0" x="2145" y="131" health="1" />
+		<entity type="-1" x="64" y="822" health="1" />
+		<entity type="-1" x="204" y="780" health="1" />
+		<entity type="-1" x="1254" y="357" health="1" />
+		<entity type="-1" x="1461" y="709" health="1" />
+		<entity type="-1" x="1575" y="693" health="1" />
+		<entity type="-1" x="1733" y="549" health="1" />
+		<entity type="-1" x="1942" y="229" health="1" />
+		<entity type="-1" x="1960" y="693" health="1" />
+		<entity type="-1" x="2263" y="485" health="1" />
+	</enemies>
 	<player>
-		<pos x="2400" y="120" />
+		<pos x="94" y="549" />
 		<start value="1" />
 	</player>
 	<render>
-		<camera x="-5530" y="0" />
+		<camera x="0" y="-1197" />
 	</render>
 </game_state>

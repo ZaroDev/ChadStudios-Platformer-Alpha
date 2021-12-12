@@ -355,7 +355,7 @@ bool Map::LoadProps()
 						iPoint pos = MapToWorld(x, y);
 						pos.x += r.w / 2;
 						pos.y += r.h / 2;
-						app->enemies->CreateEnemy(EAGLE, pos.x, pos.y);
+						app->enemies->CreateEnemy(EAGLE, pos.x, pos.y, 1);
 
 					}
 
@@ -378,7 +378,7 @@ bool Map::LoadProps()
 						iPoint pos = MapToWorld(x, y);
 						pos.x += r.w / 2;
 						pos.y += r.h / 2;
-						app->enemies->CreateEnemy(RAT, pos.x, pos.y);
+						app->enemies->CreateEnemy(RAT, pos.x, pos.y, 1);
 
 					}
 
