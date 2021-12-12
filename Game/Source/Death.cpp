@@ -77,7 +77,10 @@ bool Death::Update(float dt)
 	bool ret = true;
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN  )
 	{
-		app->player->hasLost = true;
+		if (app->player->die)
+		{
+			app->player->hasLost = true;
+		}
 		if (app->player->die)
 		{
 			if (app->player->currentScene == 1)

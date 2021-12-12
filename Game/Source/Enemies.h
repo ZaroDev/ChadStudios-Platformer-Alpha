@@ -22,12 +22,14 @@ public:
 	bool PreUpdate();
 	bool Update(float dt);
 	bool PostUpdate();
-	bool CleanUp();
+	bool DestroyEnemies();
+	
 
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&) const;
+	bool CleanUp();
 
 	void CreateEnemy(EnemyType type, float x, float y, int health);
 private:

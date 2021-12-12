@@ -168,6 +168,7 @@ bool Player::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 		debug = !debug;
+
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 		god = !god;
 	if (app->input->GetKey(SDL_SCANCODE_F3))
@@ -282,7 +283,7 @@ bool Player::Update(float dt)
 		{
 			currentAnimation = &hurtAnim;
 		}
-		if (counter == 10)
+		if (counter == 60)
 		{
 			lives--;
 			hurt = false;

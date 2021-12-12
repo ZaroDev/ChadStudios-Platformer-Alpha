@@ -68,44 +68,46 @@ void Rat::ComputePath(float dt)
 	}
 	else
 	{
-		
-		if (pathUpdateTimer >= pathUpdateTime) {
-			pathUpdateTimer = 0.0f;
-			pathIndex = 0;
+		if (!app->player->hurt)
+		{
+			if (pathUpdateTimer >= pathUpdateTime) {
+				pathUpdateTimer = 0.0f;
+				pathIndex = 0;
 
-			iPoint origin = app->map->WorldToMap(pos.x, pos.y);
-			iPoint destination = app->map->WorldToMap(app->player->pos.x, app->player->pos.y);
-			int res = app->pathfinding->CreatePath(origin, destination);
+				iPoint origin = app->map->WorldToMap(pos.x, pos.y);
+				iPoint destination = app->map->WorldToMap(app->player->pos.x, app->player->pos.y);
+				int res = app->pathfinding->CreatePath(origin, destination);
 
-			if (res > 0) {
+				if (res > 0) {
 
-				currentPath = app->pathfinding->GetLastPath();
-				if (currentPath != nullptr)
-				{
-					if (currentPath->Count() > 1)
+					currentPath = app->pathfinding->GetLastPath();
+					if (currentPath != nullptr)
 					{
-						pathIndex = 1;
-						activeNode = app->map->MapToWorld(currentPath->At(pathIndex)->x, currentPath->At(pathIndex)->y);
-					}
-					else if (currentPath->Count() > 0)
-					{
-						activeNode = app->map->MapToWorld(currentPath->At(0)->x, currentPath->At(0)->y);
-					}
-				}
-			}
-			if (currentPath != nullptr)
-			{
-				if (currentPath->Count() > 0) {
-					if (pos == activeNode) {
-						pathIndex++;
-
-						if (pathIndex < currentPath->Count()) {
+						if (currentPath->Count() > 1)
+						{
+							pathIndex = 1;
 							activeNode = app->map->MapToWorld(currentPath->At(pathIndex)->x, currentPath->At(pathIndex)->y);
 						}
+						else if (currentPath->Count() > 0)
+						{
+							activeNode = app->map->MapToWorld(currentPath->At(0)->x, currentPath->At(0)->y);
+						}
 					}
+				}
+				if (currentPath != nullptr)
+				{
+					if (currentPath->Count() > 0) {
+						if (pos == activeNode) {
+							pathIndex++;
 
-					if (pathIndex < currentPath->Count()) {
-						MoveToPlayer(activeNode, dt);
+							if (pathIndex < currentPath->Count()) {
+								activeNode = app->map->MapToWorld(currentPath->At(pathIndex)->x, currentPath->At(pathIndex)->y);
+							}
+						}
+
+						if (pathIndex < currentPath->Count()) {
+							MoveToPlayer(activeNode, dt);
+						}
 					}
 				}
 			}

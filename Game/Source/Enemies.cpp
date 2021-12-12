@@ -77,13 +77,12 @@ bool Enemies::PostUpdate()
 	return true;
 }
 
-bool Enemies::CleanUp()
+bool Enemies::DestroyEnemies()
 {
 	for (ListItem<Enemy*>* e = enemies.start; e != NULL; e = e->next)
 	{
 		app->physics->world->DestroyBody(e->data->pbody->body);
 	}
-	app->tex->UnLoad(tex);
 	enemies.Clear();
 	return true;
 }
@@ -95,24 +94,28 @@ void Enemies::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	{
 		if (bodyA == e->data->pbody && bodyB->listener == (Module*)app->player)
 		{
-			if (!app->player->god)
+			
+			float topA = bodyA->body->GetPosition().y - PIXEL_TO_METERS(e->data->h / 2);
+			float botA = bodyA->body->GetPosition().y + PIXEL_TO_METERS(e->data->h / 2);
+			float topB = bodyB->body->GetPosition().y + PIXEL_TO_METERS(12);
+			float botB = bodyB->body->GetPosition().y - PIXEL_TO_METERS(12);
+
+			if (topA >= botB)
 			{
-				float topA = bodyA->body->GetPosition().y - PIXEL_TO_METERS(e->data->h / 2);
-				float botA = bodyA->body->GetPosition().y + PIXEL_TO_METERS(e->data->h / 2);
-				float topB = bodyB->body->GetPosition().y + PIXEL_TO_METERS(12);
-				float botB = bodyB->body->GetPosition().y - PIXEL_TO_METERS(12);
-				if (topA >= botB)
-				{
-					e->data->health--;
-					app->audio->PlayFx(hitSFX);
-					if (e->data->health <= 0) e->data->setPendingToDelete = true;
-				}
-				else if (topA < botB && !app->player->hurt)
+				e->data->health--;
+				app->audio->PlayFx(hitSFX);
+				if (e->data->health <= 0) e->data->setPendingToDelete = true;
+			}
+
+			else if (topA < botB && !app->player->hurt)
+			{
+				if (!app->player->god)
 				{
 					app->audio->PlayFx(playerHit);
 					app->player->hurt = true;
 				}
 			}
+			
 		}
 	}
 }
@@ -182,10 +185,18 @@ bool Enemies::SaveState(pugi::xml_node& entities_node) const
 	return true;
 }
 
+bool Enemies::CleanUp()
+{
+	DestroyEnemies();
+	app->tex->UnLoad(tex);
+
+	return true;
+}
+
 bool Enemies::LoadState(pugi::xml_node& entities_node)
 {
 	pugi::xml_node entity_node = entities_node.first_child();
-	CleanUp();
+	DestroyEnemies();
 	while (entity_node) {
 		EnemyType type = (EnemyType)entity_node.attribute("type").as_int();
 		iPoint pos;

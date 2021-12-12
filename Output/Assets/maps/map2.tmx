@@ -5631,8 +5631,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="878"/>
-   <tile gid="879"/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -9029,6 +9029,9 @@
   </data>
  </layer>
  <layer id="6" name="props" width="150" height="60">
+  <properties>
+   <property name="Draw" type="int" value="1"/>
+  </properties>
   <data>
    <tile/>
    <tile/>
@@ -18032,7 +18035,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="2" name="Colliders" width="150" height="60">
+ <layer id="2" name="Colliders" width="150" height="60" visible="0">
   <properties>
    <property name="Collider" value="1"/>
    <property name="Draw" value="0"/>
@@ -27040,7 +27043,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="4" name="Cherries" width="150" height="60">
+ <layer id="4" name="Cherries" width="150" height="60" visible="0">
   <properties>
    <property name="Cherries" type="int" value="1"/>
   </properties>
@@ -36047,7 +36050,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="3" name="Gems" width="150" height="60">
+ <layer id="3" name="Gems" width="150" height="60" visible="0">
   <properties>
    <property name="Gems" type="int" value="1"/>
   </properties>
@@ -45054,7 +45057,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="5" name="Checkpoint" width="150" height="60">
+ <layer id="5" name="Checkpoint" width="150" height="60" visible="0">
   <properties>
    <property name="Check" type="int" value="1"/>
   </properties>
@@ -58169,7 +58172,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="708"/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -68541,7 +68544,6 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="708"/>
    <tile/>
    <tile/>
    <tile/>
@@ -68680,7 +68682,6 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="708"/>
    <tile/>
    <tile/>
    <tile/>
@@ -68951,7 +68952,9 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="708"/>
+   <tile/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>

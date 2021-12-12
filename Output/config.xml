@@ -48,9 +48,6 @@
   <enemies>
     <folder>Assets/textures/sprites/</folder>
     <sfx>Assets/audio/fx/</sfx>
-		<enemy>
-			<values x="" y="" health="" type="" />
-		</enemy>
   </enemies>
   <!-- L03: Added maps folder as config option -->
   <map>

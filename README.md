@@ -19,6 +19,7 @@ A simple platformer made with XML and TMXL
  - A -> Move left
  - D -> Move right
  - Space -> Jump / jump twice
+ - Hold S -> Mega jump
 
 DEBUG MODE
 
@@ -28,8 +29,10 @@ DEBUG MODE
  - F5 -> Save game
  - F6 -> Load game
  - F7 -> Win
+ - F8 -> Hurt player
  - F9 -> Collision view
  - F10 -> God mode
+ - F11 -> Disable/Enable 30 FPS
  - Arrow keywords -> Move the camera
 
 ## Developers
