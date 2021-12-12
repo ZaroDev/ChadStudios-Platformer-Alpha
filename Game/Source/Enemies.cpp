@@ -110,16 +110,6 @@ void Enemies::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	}
 }
 
-bool Enemies::LoadState(pugi::xml_node&)
-{
-	return false;
-}
-
-bool Enemies::SaveState(pugi::xml_node&) const
-{
-	return false;
-}
-
 void Enemies::CreateEnemy(EnemyType type, float x, float y)
 {
 	switch (type)
@@ -152,3 +142,20 @@ void Enemies::CreateEnemy(EnemyType type, float x, float y)
 }
 
 
+bool Enemies::LoadState(pugi::xml_node& data)
+{
+	/*Eagle* e = new Eagle();
+	Rat* r = new Rat();
+	e->LoadState(data);
+	r->LoadState(data);*/
+	return true;
+}
+
+bool Enemies::SaveState(pugi::xml_node& data) const
+{
+	/*Eagle* e = new Eagle();
+	Rat* r = new Rat();
+	e->SaveState(data);
+	r->SaveState(data);*/
+	return true;
+}

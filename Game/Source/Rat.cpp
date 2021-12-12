@@ -85,7 +85,6 @@ void Rat::ComputePath(float dt)
 				{
 					activeNode = app->map->MapToWorld(currentPath->At(0)->x, currentPath->At(0)->y);
 				}
-
 			}
 		}
 
@@ -123,8 +122,36 @@ void Rat::MoveToPlayer(iPoint destination,float dt)
 	pbody->body->SetLinearVelocity({ step.x, pbody->body->GetLinearVelocity().y });
 	if (dir.y != 0 && canJump)
 	{
-		pbody->body->SetLinearVelocity({ pbody->body->GetLinearVelocity().x, -2.0f });
+		pbody->body->SetLinearVelocity({ pbody->body->GetLinearVelocity().x, -3.0f });
 		counterJump = 0;
 		canJump = false;
 	}
+}
+
+bool Rat::SaveState(pugi::xml_node& data) const
+{
+	bool ret = true;
+
+	pugi::xml_node alive = data.append_child("alive");
+	alive.append_attribute("value").set_value(health);
+		pugi::xml_node posN = data.append_child("position");
+		posN.append_attribute("x").set_value(pos.x);
+		posN.append_attribute("y").set_value(pos.y);
+	return true;
+}
+
+bool Rat::LoadState(pugi::xml_node& data)
+{
+	if (health > 0)
+	{
+		health = data.child("eagle").attribute("health").as_int();
+		pos.x = data.child("pos").attribute("x").as_int();
+		pos.y = data.child("pos").attribute("y").as_int();
+		//pbody->body->SetTransform({ PIXEL_TO_METERS(pos.x), PIXEL_TO_METERS(pos.y) }, 0.0f);
+	}
+
+	health = data.child("eagle").attribute("health").as_int();
+	pos.x = data.child("pos").attribute("x").as_int();
+	pos.y = data.child("pos").attribute("y").as_int();
+	return true;
 }

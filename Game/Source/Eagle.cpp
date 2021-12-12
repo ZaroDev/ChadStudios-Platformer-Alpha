@@ -119,3 +119,31 @@ void Eagle::MoveToPlayer(iPoint destination, float dt)
 	pbody->body->SetLinearVelocity({ step.x, step.y });
 	
 }
+
+bool Eagle::SaveState(pugi::xml_node&data) const
+{
+	bool ret = true;
+
+	pugi::xml_node alive = data.append_child("alive");
+	alive.append_attribute("value").set_value(health);
+		pugi::xml_node posN = data.append_child("position");
+		posN.append_attribute("x").set_value(pos.x);
+		posN.append_attribute("y").set_value(pos.y);
+	return true;
+}
+
+bool Eagle::LoadState(pugi::xml_node& data)
+{
+	if (health > 0)
+	{
+		health = data.child("eagle").attribute("health").as_int();
+		pos.x = data.child("pos").attribute("x").as_int();
+		pos.y = data.child("pos").attribute("y").as_int();
+		//pbody->body->SetTransform({ PIXEL_TO_METERS(pos.x), PIXEL_TO_METERS(pos.y) }, 0.0f);
+	}
+
+	health = data.child("eagle").attribute("health").as_int();
+	pos.x = data.child("pos").attribute("x").as_int();
+	pos.y = data.child("pos").attribute("y").as_int();
+	return true;
+}

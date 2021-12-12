@@ -21,10 +21,10 @@
 	<check />
 	<enemies />
 	<player>
-		<pos x="565" y="585" />
+		<pos x="286" y="704" />
 		<start value="1" />
 	</player>
 	<render>
-		<camera x="-895" y="-1308" />
+		<camera x="-58" y="-1668" />
 	</render>
 </game_state>
