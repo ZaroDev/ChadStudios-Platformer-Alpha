@@ -12,6 +12,9 @@ A simple platformer made with XML and TMXL
  - Two playable levels
  - Save/Load game
  - Debug mode with various features
+ - Checkpoints
+ - AI enemies
+ - Collectables
  
 ## Controls
 
