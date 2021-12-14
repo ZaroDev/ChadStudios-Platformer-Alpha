@@ -83,6 +83,9 @@
     <ClCompile Include="Source\Rat.cpp">
       <Filter>Source\Modules\Gameplay\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="Source\EntityManager.cpp">
+      <Filter>Source\Modules\Gameplay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Animation.h">
@@ -189,6 +192,12 @@
     </ClInclude>
     <ClInclude Include="Source\Rat.h">
       <Filter>Source\Modules\Gameplay\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Entity.h">
+      <Filter>Source\Modules\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EntityManager.h">
+      <Filter>Source\Modules\Gameplay</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

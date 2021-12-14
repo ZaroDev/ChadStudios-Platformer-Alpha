@@ -95,6 +95,7 @@
     <ClCompile Include="Source\Eagle.cpp" />
     <ClCompile Include="Source\Enemies.cpp" />
     <ClCompile Include="Source\Enemy.cpp" />
+    <ClCompile Include="Source\EntityManager.cpp" />
     <ClCompile Include="Source\Fonts.cpp" />
     <ClCompile Include="Source\Intro.cpp" />
     <ClCompile Include="Source\Main.cpp" />
@@ -122,6 +123,8 @@
     <ClInclude Include="Source\Eagle.h" />
     <ClInclude Include="Source\Enemies.h" />
     <ClInclude Include="Source\Enemy.h" />
+    <ClInclude Include="Source\Entity.h" />
+    <ClInclude Include="Source\EntityManager.h" />
     <ClInclude Include="Source\Fonts.h" />
     <ClInclude Include="Source\Intro.h" />
     <ClInclude Include="Source\Map.h" />

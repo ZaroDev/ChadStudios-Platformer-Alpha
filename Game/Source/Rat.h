@@ -3,7 +3,7 @@
 class Rat : public Enemy
 {
 public:
-	Rat();
+	Rat(iPoint position_);
 	~Rat();
 
 	void Update(float dt);

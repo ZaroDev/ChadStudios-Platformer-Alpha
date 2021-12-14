@@ -5,7 +5,7 @@
 #include "Map.h"
 #include "SDL/include/SDL.h"
 
-Rat::Rat() : Enemy()
+Rat::Rat(iPoint position_) : Enemy(EntityType::ENEMY_RAT, position_)
 {
 	anim.PushBack({ 0,3, 28, 25 });
 	anim.PushBack({ 39, 4, 29, 22 });
@@ -22,7 +22,6 @@ Rat::Rat() : Enemy()
 	range = 200;
 	pathUpdateTime = 1.5f;
 	pathUpdateTimer = pathUpdateTime;
-	type = RAT;
 }
 
 Rat::~Rat()
@@ -35,8 +34,8 @@ void Rat::Update(float dt)
 	anim.Update();
 
 	hasTarget = CheckIfHasTarget();
-	pos.x = METERS_TO_PIXELS(pbody->body->GetPosition().x);
-	pos.y = METERS_TO_PIXELS(pbody->body->GetPosition().y);
+	position.x = METERS_TO_PIXELS(body->body->GetPosition().x);
+	position.y = METERS_TO_PIXELS(body->body->GetPosition().y);
 	//The enemy has only to move if it's in range of the player
 	if (hasTarget && health > 0 && app->player->lives > 0)
 	{
@@ -44,10 +43,10 @@ void Rat::Update(float dt)
 	}
 	else
 	{
-		pbody->body->SetLinearVelocity({ 0, 0 });
+		body->body->SetLinearVelocity({ 0, 0 });
 	
 	}
-	if (pbody->body->GetLinearVelocity().x <= 0.1)
+	if (body->body->GetLinearVelocity().x <= 0.1)
 	{
 		facingLeft = true;
 	}
@@ -60,7 +59,7 @@ void Rat::Update(float dt)
 void Rat::ComputePath(float dt)
 {
 	iPoint playerPos = app->player->pos;
-	float dist = Distance(pos.x, pos.y, playerPos.x, playerPos.y);
+	float dist = Distance(position.x, position.y, playerPos.x, playerPos.y);
 
 	pathUpdateTimer += dt;
 	if (dist > range) {
@@ -74,7 +73,7 @@ void Rat::ComputePath(float dt)
 				pathUpdateTimer = 0.0f;
 				pathIndex = 0;
 
-				iPoint origin = app->map->WorldToMap(pos.x, pos.y);
+				iPoint origin = app->map->WorldToMap(position.x, position.y);
 				iPoint destination = app->map->WorldToMap(app->player->pos.x, app->player->pos.y);
 				int res = app->pathfinding->CreatePath(origin, destination);
 
@@ -97,7 +96,7 @@ void Rat::ComputePath(float dt)
 				if (currentPath != nullptr)
 				{
 					if (currentPath->Count() > 0) {
-						if (pos == activeNode) {
+						if (position == activeNode) {
 							pathIndex++;
 
 							if (pathIndex < currentPath->Count()) {
@@ -123,17 +122,17 @@ void Rat::ComputePath(float dt)
 
 void Rat::MoveToPlayer(iPoint destination,float dt)
 {
-	iPoint diff = destination - pos;
+	iPoint diff = destination - position;
 
 	fPoint dir = { (float)diff.x, (float)diff.y };
 	dir.Normalize();
 	dir *= speed * 4;
 
 	fPoint step = { dir.x / dt, dir.y / dt };
-	pbody->body->SetLinearVelocity({ step.x, pbody->body->GetLinearVelocity().y });
+	body->body->SetLinearVelocity({ step.x, body->body->GetLinearVelocity().y });
 	if (dir.y != 0 && canJump)
 	{
-		pbody->body->SetLinearVelocity({ pbody->body->GetLinearVelocity().x, -3.0f });
+		body->body->SetLinearVelocity({ body->body->GetLinearVelocity().x, -3.0f });
 		counterJump = 0;
 		canJump = false;
 	}
