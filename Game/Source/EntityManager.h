@@ -16,12 +16,17 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
+	
+	bool SaveState(pugi::xml_node& data) const;
+	bool LoadState(pugi::xml_node& data);
 	//Updates all the entities
 	void UpdateAll(float dt, bool doLogic);
 	//Util functions
 	Entity* CreateEntity(EntityType type_, iPoint position_);
 	void DestroyAllEntities();
 	void DestroyEntity(Entity* entity);
+
+
 
 
 private:

@@ -21,13 +21,11 @@ class Audio;
 class Scene;
 class Map;
 class Physics;
-class Player;
 class FadeToBlack;
 class PathFinding;
-class CheckPoint;
+
 class UI;
-class Collectables;
-class Enemies;
+class EntityManager;
 class Fonts;
 class Intro;
 
@@ -109,14 +107,11 @@ public:
 	Audio* audio;
 	Scene* scene;
 	Map* map;
-	Player* player;
 	Physics* physics;
 	FadeToBlack* fadeToBlack;
 	PathFinding* pathfinding;
 	UI* ui;
-	Enemies* enemies;
-	Collectables* collect;
-	CheckPoint* check;
+	EntityManager* entman;
 	Fonts* fonts;
 	Intro* intro;
 	Scene2* scene2;

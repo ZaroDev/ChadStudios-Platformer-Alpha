@@ -3,7 +3,7 @@
 class Eagle : public Enemy
 {
 public:
-	Eagle();
+	Eagle(iPoint position_);
 	~Eagle();
 
 	void Update(float dt);

@@ -3,7 +3,7 @@
 
 
 
-#include "Module.h"
+#include "Entity.h"
 #include "Point.h"
 #include "Animation.h"
 #include "Box2D/Box2D/Box2D.h"
@@ -12,29 +12,17 @@
 struct SDL_Texture;
 
 
-class Player : public Module
+class Player : public Entity
 {
 public:
-	Player(bool startEnabled);
+	Player(iPoint position_);
 	~Player();
 
-	bool Awake(pugi::xml_node&);
+	void Update(float dt);
 
-	bool Start() override;
+	void LoadAnims();
 
-	bool Update(float dt) override;
-
-	bool PostUpdate() override;
-
-	void OnCollision(PhysBody* bodyA, PhysBody* bodyB) override;
-
-	bool LoadState(pugi::xml_node&);
-	bool SaveState(pugi::xml_node&) const;
-
-	bool CleanUp() override;
-
-	iPoint pos;
-
+	void Initialize();
 
 	int currentScene;
 	bool grounded;

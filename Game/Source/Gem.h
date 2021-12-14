@@ -1,12 +1,12 @@
+#pragma once
 #include "Entity.h"
-#include "Animation.h"
 
-class CheckPoint : public Entity
+class Gem : public Entity
 {
 public:
-	CheckPoint();
-	CheckPoint(iPoint position_);
-	~CheckPoint();
+	Gem();
+	Gem(iPoint position_);
+	~Gem();
 
 	bool IsActivated();
 	void Activate();

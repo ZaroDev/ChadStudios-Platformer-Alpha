@@ -6,13 +6,11 @@
 #include "Player.h"
 #include "CheckPoint.h"
 #include "Eagle.h"
+#include "Cherry.h"
+#include "Gem.h"
 
 class Player;
-class CheckPoint;
-class Eagle;
-class Rat;
-class Gem;
-class Cherry;
+
 
 EntityManager::EntityManager(bool startEnabled) : Module(startEnabled)
 {
@@ -83,6 +81,20 @@ bool EntityManager::CleanUp()
 	return true;
 }
 
+void EntityManager::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
+{
+}
+
+bool EntityManager::SaveState(pugi::xml_node& data) const
+{
+	return false;
+}
+
+bool EntityManager::LoadState(pugi::xml_node& data)
+{
+	return false;
+}
+
 Entity* EntityManager::CreateEntity(EntityType type, iPoint position)
 {
 	Entity* ret = nullptr;
@@ -101,7 +113,7 @@ Entity* EntityManager::CreateEntity(EntityType type, iPoint position)
 
 void EntityManager::DestroyEntity(Entity* entity)
 {
-	app->physics->world->DestroyBody(entity->body->body);
+	app->physics->world->DestroyBody(entity->pbody->body);
 	entities.Del(entities.At(entities.Find(entity)));
 }
 void EntityManager::DestroyAllEntities()

@@ -34,8 +34,8 @@ void Rat::Update(float dt)
 	anim.Update();
 
 	hasTarget = CheckIfHasTarget();
-	position.x = METERS_TO_PIXELS(body->body->GetPosition().x);
-	position.y = METERS_TO_PIXELS(body->body->GetPosition().y);
+	position.x = METERS_TO_PIXELS(pbody->body->GetPosition().x);
+	position.y = METERS_TO_PIXELS(pbody->body->GetPosition().y);
 	//The enemy has only to move if it's in range of the player
 	if (hasTarget && health > 0 && app->player->lives > 0)
 	{
@@ -43,10 +43,10 @@ void Rat::Update(float dt)
 	}
 	else
 	{
-		body->body->SetLinearVelocity({ 0, 0 });
+		pbody->body->SetLinearVelocity({ 0, 0 });
 	
 	}
-	if (body->body->GetLinearVelocity().x <= 0.1)
+	if (pbody->body->GetLinearVelocity().x <= 0.1)
 	{
 		facingLeft = true;
 	}
@@ -129,10 +129,10 @@ void Rat::MoveToPlayer(iPoint destination,float dt)
 	dir *= speed * 4;
 
 	fPoint step = { dir.x / dt, dir.y / dt };
-	body->body->SetLinearVelocity({ step.x, body->body->GetLinearVelocity().y });
+	pbody->body->SetLinearVelocity({ step.x, pbody->body->GetLinearVelocity().y });
 	if (dir.y != 0 && canJump)
 	{
-		body->body->SetLinearVelocity({ body->body->GetLinearVelocity().x, -3.0f });
+		pbody->body->SetLinearVelocity({ pbody->body->GetLinearVelocity().x, -3.0f });
 		counterJump = 0;
 		canJump = false;
 	}

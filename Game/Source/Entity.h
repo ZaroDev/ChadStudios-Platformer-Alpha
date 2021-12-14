@@ -18,6 +18,7 @@ class EntityManager;
 class Entity
 {
 public:
+	Entity(){}
 	Entity(EntityType type_, iPoint position_) : type(type_), position(position_){}
 
 	virtual void Update(float dt){}
@@ -29,7 +30,7 @@ protected:
 	bool setPendingToDelete;
 	iPoint position;
 	SDL_Texture* sprite;
-	PhysBody* body;
+	PhysBody* pbody;
 	Animation anim;
 	int health;
 };

@@ -70,14 +70,8 @@
     <ClCompile Include="Source\CheckPoint.cpp">
       <Filter>Source\Modules\Gameplay\Props</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Enemies.cpp">
-      <Filter>Source\Modules\Gameplay\Enemies</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Eagle.cpp">
       <Filter>Source\Modules\Gameplay\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Collectables.cpp">
-      <Filter>Source\Modules\Gameplay\Props</Filter>
     </ClCompile>
     <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\Rat.cpp">
@@ -85,6 +79,13 @@
     </ClCompile>
     <ClCompile Include="Source\EntityManager.cpp">
       <Filter>Source\Modules\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gem.cpp">
+      <Filter>Source\Modules\Gameplay\Props</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Entity.cpp" />
+    <ClCompile Include="Source\Cherry.cpp">
+      <Filter>Source\Modules\Gameplay\Props</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -181,14 +182,8 @@
     <ClInclude Include="Source\Enemy.h">
       <Filter>Source\Modules\Gameplay\Enemies</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Enemies.h">
-      <Filter>Source\Modules\Gameplay\Enemies</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Eagle.h">
       <Filter>Source\Modules\Gameplay\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Collectables.h">
-      <Filter>Source\Modules\Gameplay\Props</Filter>
     </ClInclude>
     <ClInclude Include="Source\Rat.h">
       <Filter>Source\Modules\Gameplay\Enemies</Filter>
@@ -198,6 +193,12 @@
     </ClInclude>
     <ClInclude Include="Source\EntityManager.h">
       <Filter>Source\Modules\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gem.h">
+      <Filter>Source\Modules\Gameplay\Props</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Cherry.h">
+      <Filter>Source\Modules\Gameplay\Props</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

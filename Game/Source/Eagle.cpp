@@ -5,7 +5,7 @@
 #include "Map.h"
 #include "SDL/include/SDL.h"
 
-Eagle::Eagle() : Enemy()
+Eagle::Eagle(iPoint position_) : Enemy(EntityType::ENEMY_EAGLE, position_)
 {
 	anim.PushBack({ 0,28,38,42 });
 	anim.PushBack({ 40,31,40,40 });
@@ -20,7 +20,6 @@ Eagle::Eagle() : Enemy()
 	range = 300;
 	pathUpdateTime = 1.5f;
 	pathUpdateTimer = pathUpdateTime;
-	type = EAGLE;
 }
 
 Eagle::~Eagle()
@@ -35,11 +34,10 @@ void Eagle::Update(float dt)
 	hasTarget = CheckIfHasTarget();
 
 	//The enemy has only to move if it's in range of the player
-	pos.x = METERS_TO_PIXELS(pbody->body->GetPosition().x);
-	pos.y = METERS_TO_PIXELS(pbody->body->GetPosition().y);
+	position.x = METERS_TO_PIXELS(pbody->body->GetPosition().x);
+	position.y = METERS_TO_PIXELS(pbody->body->GetPosition().y);
 	if (hasTarget && health > 0 && app->player->lives > 0)
 	{
-		printf("\nPos x: %i y %i", pos.x, pos.y);
 		ComputePath(dt);
 	}
 	else
@@ -61,7 +59,7 @@ void Eagle::Update(float dt)
 void Eagle::ComputePath(float dt)
 {
 	iPoint playerPos = app->player->pos;
-	float dist = Distance(pos.x, pos.y, playerPos.x, playerPos.y);
+	float dist = Distance(position.x, position.y, playerPos.x, playerPos.y);
 	
 	pathUpdateTimer += dt;
 	if (dist > range) {
@@ -75,7 +73,7 @@ void Eagle::ComputePath(float dt)
 				pathUpdateTimer = 0.0f;
 				pathIndex = 0;
 
-				iPoint origin = app->map->WorldToMap(pos.x, pos.y);
+				iPoint origin = app->map->WorldToMap(position.x, position.y);
 				iPoint destination = app->map->WorldToMap(app->player->pos.x, app->player->pos.y);
 				int res = app->pathfinding->CreatePath(origin, destination);
 
@@ -98,7 +96,7 @@ void Eagle::ComputePath(float dt)
 				if (currentPath != nullptr)
 				{
 					if (currentPath->Count() > 0) {
-						if (pos == activeNode) {
+						if (position == activeNode) {
 							pathIndex++;
 
 							if (pathIndex < currentPath->Count()) {
@@ -119,7 +117,7 @@ void Eagle::ComputePath(float dt)
 
 void Eagle::MoveToPlayer(iPoint destination, float dt)
 {
-	iPoint diff = destination - pos;
+	iPoint diff = destination - position;
 	
 	fPoint dir = { (float)diff.x, (float)diff.y };
 	dir.Normalize();

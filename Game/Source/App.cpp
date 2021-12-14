@@ -8,16 +8,13 @@
 #include "Scene.h"
 #include "Death.h"
 #include "Map.h"
-#include "Player.h"
 #include "Physics.h"
 #include "Intro.h"
 #include "FadeToBlack.h"
 #include "Pathfinding.h"
 #include "UI.h"
-#include "Enemies.h"
-#include "CheckPoint.h"
+#include "EntityManager.h"
 #include "Fonts.h"
-#include "Collectables.h"
 #include "Scene2.h"
 #include "Defs.h"
 #include "Log.h"
@@ -42,12 +39,9 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	death = new Death(false);
 	pathfinding = new PathFinding(false);
 	map = new Map(true);
-	check = new CheckPoint(false);
 	fonts = new Fonts(true);
 	ui = new UI(false);
-	enemies = new Enemies(false);
-	collect = new Collectables(false);
-	player = new Player(false);
+	entman = new EntityManager(true);
 	physics = new Physics(true);
 	scene2 = new Scene2(false);
 
@@ -68,10 +62,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(fonts);
 	AddModule(map);
 	AddModule(ui);
-	AddModule(collect);
-	AddModule(check);
-	AddModule(enemies);
-	AddModule(player);
+	AddModule(entman);
 	// Render last to swap buffer
 	AddModule(render);
 
