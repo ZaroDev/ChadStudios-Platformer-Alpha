@@ -4,6 +4,7 @@
 #include "SString.h"
 
 #include "PugiXml/src/pugixml.hpp"
+#include "Optick/include/optick.h"
 
 class PhysBody;
 class App;

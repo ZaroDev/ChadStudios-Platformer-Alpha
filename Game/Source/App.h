@@ -98,7 +98,12 @@ private:
 	bool SaveGame() const;
 
 public:
-
+	// Settings
+	bool debug = false;
+	bool hasLost = false;
+	bool win_ = false;
+	bool die = false;
+	int currentScene = 1;
 	// Modules
 	Window* win;
 	Input* input;

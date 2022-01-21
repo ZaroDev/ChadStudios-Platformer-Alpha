@@ -1,8 +1,9 @@
 #include "UI.h"
 #include "Textures.h"
-#include "Player.h"
+#include "EntityManager.h"
 #include "Render.h"
 #include "Fonts.h"
+#include "Player.h"
 
 UI::UI(bool startEnabled) : Module(startEnabled)
 {
@@ -66,24 +67,24 @@ bool UI::PostUpdate()
 	heartAnim.Update();
 	gemAnim.Update();
 	abAnim.Update();
-	if (app->player->lives == 3)
+	if (app->entman->currentPlayer->GetHealth() == 3)
 	{
 		app->render->DrawTexture(heart, 115, 10, &heartAnim.GetCurrentFrame(), true);
 	}
-	if (app->player->lives >= 2)
+	if (app->entman->currentPlayer->GetHealth() >= 2)
 	{
 		app->render->DrawTexture(heart, 60, 10, &heartAnim.GetCurrentFrame(), true);
 	}
-	if (app->player->lives >= 1)
+	if (app->entman->currentPlayer->GetHealth() >= 1)
 	{
 		app->render->DrawTexture(heart, 5, 10, &heartAnim.GetCurrentFrame(), true);
 	}
-	SString tmp("%4d", app->player->score);
-	SString tmp2("%d", (360 - app->player->abilityCD) / app->framesPerSecond);
+	SString tmp("%4d", app->entman->currentPlayer->score);
+	SString tmp2("%d", (360 - app->entman->currentPlayer->abilityCD) / app->framesPerSecond);
 
 	app->render->DrawTexture(gem, 1550, 10, &gemAnim.GetCurrentFrame(), true);
 	app->fonts->BlitText(480, 5, font, tmp.GetString()); 
-	if (app->player->abilityCD != 0)
+	if (app->entman->currentPlayer->abilityCD != 0)
 	{
 		app->fonts->BlitText(480, 270, font, tmp2.GetString());
 	}

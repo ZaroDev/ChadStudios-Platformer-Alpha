@@ -17,33 +17,8 @@
 	<:anonymous />
 	<map />
 	<ui />
-	<collect />
-	<check />
-	<enemies>
-		<entity type="0" x="867" y="224" health="1" />
-		<entity type="0" x="914" y="224" health="1" />
-		<entity type="0" x="963" y="588" health="1" />
-		<entity type="0" x="995" y="784" health="1" />
-		<entity type="0" x="1187" y="352" health="1" />
-		<entity type="0" x="1411" y="460" health="1" />
-		<entity type="0" x="1683" y="240" health="1" />
-		<entity type="0" x="1827" y="672" health="1" />
-		<entity type="0" x="1875" y="496" health="1" />
-		<entity type="0" x="2307" y="224" health="1" />
-		<entity type="-1" x="1255" y="357" health="1" />
-		<entity type="-1" x="1456" y="705" health="1" />
-		<entity type="-1" x="1576" y="693" health="1" />
-		<entity type="-1" x="1733" y="549" health="1" />
-		<entity type="-1" x="1942" y="229" health="1" />
-		<entity type="-1" x="1960" y="693" health="1" />
-		<entity type="-1" x="2262" y="485" health="1" />
-	</enemies>
-	<player>
-		<pos x="565" y="630" />
-		<start value="1" />
-		<values lives="3" score="230" />
-	</player>
+	<entities />
 	<render>
-		<camera x="-895" y="-1446" />
+		<camera x="0" y="0" />
 	</render>
 </game_state>

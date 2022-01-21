@@ -4,12 +4,13 @@
 class Gem : public Entity
 {
 public:
-	Gem();
 	Gem(iPoint position_);
-	~Gem();
+
 
 	bool IsActivated();
 	void Activate();
+
+	void Use();
 
 	void Update(float dt);
 private:

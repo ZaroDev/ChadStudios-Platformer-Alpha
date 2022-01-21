@@ -1,8 +1,7 @@
 #include "Entity.h"
 #include "Module.h"
 #include "List.h"
-
-
+class Player;
 class EntityManager : public Module
 {
 public:
@@ -25,14 +24,21 @@ public:
 	Entity* CreateEntity(EntityType type_, iPoint position_);
 	void DestroyAllEntities();
 	void DestroyEntity(Entity* entity);
+	void SetPlayer(Player* player);
 
 
-
-
+public:
+	Player* currentPlayer = nullptr;
 private:
+	int hitSFX;
+	int playerHit;
 	List<Entity*> entities;
 	float accumulatedTime;
 	float updateMsCycle;
 	bool doLogic;
-
+	SDL_Texture* playerTex;
+	SDL_Texture* collectTex;
+	SDL_Texture* checkTex;
+	SDL_Texture* enemiesTex;
+	SString folder;
 };

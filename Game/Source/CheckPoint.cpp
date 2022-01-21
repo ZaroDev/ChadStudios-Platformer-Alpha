@@ -1,12 +1,9 @@
 #include "CheckPoint.h"
-#include "Textures.h"
+
 #include "App.h"
 #include "Render.h"
 #include "Audio.h"
 
-CheckPoint::CheckPoint()
-{
-}
 
 CheckPoint::CheckPoint(iPoint position_) : Entity(EntityType::CHECKPOINT, position_)
 {
@@ -15,10 +12,11 @@ CheckPoint::CheckPoint(iPoint position_) : Entity(EntityType::CHECKPOINT, positi
 	anim.PushBack({ 0, 0, 32, 53 });
 	anim.speed = 0.1f;
 	anim.loop = false;
-}
-
-CheckPoint::~CheckPoint()
-{
+	this->w = 32;
+	this->h = 53;
+	pbody = app->physics->CreateRectangle(position.x, position.y, w, h, STATIC);
+	pbody->eListener = this;
+	currentAnimation = &anim;
 }
 
 bool CheckPoint::IsActivated()
@@ -31,15 +29,15 @@ void CheckPoint::Activate()
 	activated = true;
 }
 
-
-
-
-
-
 void CheckPoint::Update(float dt)
 {
 	if (activated && !anim.HasFinished())
 		anim.Update();
+}
+
+void CheckPoint::Use()
+{
+	this->Activate();
 }
 
 

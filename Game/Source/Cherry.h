@@ -4,15 +4,14 @@
 class Cherry : public Entity
 {
 public:
-	Cherry();
 	Cherry(iPoint position_);
-	~Cherry();
+
 
 	bool IsActivated();
 	void Activate();
 
 	void Update(float dt);
-
+	void Use();
 private:
 	bool activated = false;
 };

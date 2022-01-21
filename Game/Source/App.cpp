@@ -41,9 +41,9 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	map = new Map(true);
 	fonts = new Fonts(true);
 	ui = new UI(false);
-	entman = new EntityManager(true);
 	physics = new Physics(true);
 	scene2 = new Scene2(false);
+	entman = new EntityManager(true);
 
 
 	// Ordered for awake / Start / Update
@@ -193,6 +193,7 @@ pugi::xml_node App::LoadConfig(pugi::xml_document& configFile) const
 // ---------------------------------------------
 void App::PrepareUpdate()
 {
+	OPTICK_EVENT();
 	frameCount++;
 	lastSecFrameCount++;
 
@@ -210,6 +211,7 @@ void App::PrepareUpdate()
 // ---------------------------------------------
 void App::FinishUpdate()
 {
+	OPTICK_EVENT();
 	// L02: DONE 1: This is a good place to call Load / Save methods
 	if (loadGameRequested == true) LoadGame();
 	if (saveGameRequested == true) SaveGame();
@@ -244,6 +246,7 @@ void App::FinishUpdate()
 // Call modules before each loop iteration
 bool App::PreUpdate()
 {
+	OPTICK_EVENT();
 	bool ret = true;
 	ListItem<Module*>* item;
 	item = modules.start;
@@ -266,6 +269,7 @@ bool App::PreUpdate()
 // Call modules on each loop iteration
 bool App::DoUpdate()
 {
+	OPTICK_EVENT();
 	bool ret = true;
 	ListItem<Module*>* item;
 	item = modules.start;
@@ -281,13 +285,13 @@ bool App::DoUpdate()
 		if (item->data->IsEnabled())
 			ret = item->data->Update(dt);
 	}
-
 	return ret;
 }
 
 // Call modules after each loop iteration
 bool App::PostUpdate()
 {
+	OPTICK_EVENT();
 	bool ret = true;
 	ListItem<Module*>* item;
 	Module* pModule = NULL;

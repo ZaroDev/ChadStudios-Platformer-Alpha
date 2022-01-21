@@ -3,8 +3,8 @@
 class Eagle : public Enemy
 {
 public:
-	Eagle(iPoint position_);
-	~Eagle();
+	Eagle(iPoint position_, Entity* target_);
+
 
 	void Update(float dt);
 	void ComputePath(float dt);

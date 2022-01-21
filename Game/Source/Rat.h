@@ -3,8 +3,7 @@
 class Rat : public Enemy
 {
 public:
-	Rat(iPoint position_);
-	~Rat();
+	Rat(iPoint position_, Entity* target);
 
 	void Update(float dt);
 	void ComputePath(float dt);

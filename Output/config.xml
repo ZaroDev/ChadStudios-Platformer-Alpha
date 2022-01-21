@@ -23,32 +23,13 @@
     <music value="5" />
     <fx value="5" />
   </audio>
-  <check>
-    <folder>Assets/textures/</folder>
-    <sfx>Assets/audio/fx/</sfx>
-  </check>
-  <collect>
-    <folder>Assets/textures/sprites/collect.png</folder>
-    <sfx>Assets/audio/fx/</sfx>
-  </collect>
-  <player>
-    <folder>Assets/textures/sprites/player.png</folder>
-    <jump_SFX>Assets/audio/fx/</jump_SFX>
-    <num_jumps value="2"/>
-    <min_vel value="2.5f"/>
-    <max_vel value="5.0f"/>
-    <jump_vel value="-5.0f"/>
-    <start value="1"/>
-    <scene1 x="23" y="837" />
-    <scene2 x="20" y="100" />
-  </player>
   <ui>
     <folder>Assets/textures/UI/</folder>
   </ui>
-  <enemies>
+  <entities>
     <folder>Assets/textures/sprites/</folder>
     <sfx>Assets/audio/fx/</sfx>
-  </enemies>
+  </entities>
   <!-- L03: Added maps folder as config option -->
   <map>
     <folder>Assets/maps/</folder>

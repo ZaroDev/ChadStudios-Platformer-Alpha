@@ -1,40 +1,39 @@
 #include "Cherry.h"
 
-Cherry::Cherry() : Entity()
-{
-	anim.PushBack({ 0, 14, 16, 16 });
-	anim.PushBack({ 22, 14, 16, 16 });
-	anim.PushBack({ 44, 14, 16, 16 });
-	anim.PushBack({ 67, 14, 16, 16 });
-	anim.loop = true;
-	anim.speed = 0.1f;
-}
 
 Cherry::Cherry(iPoint position_) : Entity(EntityType::CHERRY, position_)
 {
-	anim.PushBack({ 0, 14, 16, 16 });
-	anim.PushBack({ 22, 14, 16, 16 });
-	anim.PushBack({ 44, 14, 16, 16 });
-	anim.PushBack({ 67, 14, 16, 16 });
-	anim.loop = true;
-	anim.speed = 0.1f;
-}
-
-Cherry::~Cherry()
-{
+	this->anim.PushBack({ 0, 14, 16, 16 });
+	this->anim.PushBack({ 22, 14, 16, 16 });
+	this->anim.PushBack({ 44, 14, 16, 16 });
+	this->anim.PushBack({ 67, 14, 16, 16 });
+	this->anim.loop = true;
+	this->anim.speed = 0.1f;
+	this->w = 16;
+	this->h = 16;
+	pbody = app->physics->CreateRectangle(position.x, position.y, w, h, STATIC);
+	pbody->eListener = this;
+	currentAnimation = &anim;
 }
 
 bool Cherry::IsActivated()
 {
-	return activated;
+	return this->activated;
 }
 
 void Cherry::Activate()
 {
-	activated = true;
+	this->activated = true;
 }
 
 void Cherry::Update(float dt)
 {
 	anim.Update();
+	if (this->IsActivated())
+		this->setPendingToDelete = true;
+}
+
+void Cherry::Use()
+{
+	this->Activate();
 }

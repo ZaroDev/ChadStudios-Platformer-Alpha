@@ -17,7 +17,7 @@ struct SDL_Texture;
 class Enemy : public Entity
 {
 public:
-	Enemy(EntityType type, iPoint position_) : Entity(type, position_){}
+	Enemy(EntityType type, iPoint position_, Entity* target_) : Entity(type, position_), target(target_){}
 
 	iPoint GetPos() { return position; }
 	void SetPos(float x, float y)
@@ -25,10 +25,15 @@ public:
 		position.x = x;
 		position.y = y;
 	}
+
 	bool CheckIfHasTarget()
 	{
-		uint dist = Distance(app->player->pos.x, app->player->pos.y, position.x, position.y);
+		if (target == nullptr)
+			return false;
+
+		uint dist = Distance(target->GetPos().x, target->GetPos().y, position.x, position.y);
 		return dist < range;
+
 	}
 	bool IsBetween(int value, int a, int b)
 	{
@@ -75,9 +80,8 @@ public:
 	virtual void Update(float dt){}
 
 public:
-	int h, w;
 	int speed = 10;
-
+	Entity* target;
 	const DynArray<iPoint>* currentPath;
 	int range;
 	bool hasTarget = false;

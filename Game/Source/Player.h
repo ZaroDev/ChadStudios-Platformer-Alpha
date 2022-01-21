@@ -16,28 +16,20 @@ class Player : public Entity
 {
 public:
 	Player(iPoint position_);
-	~Player();
 
 	void Update(float dt);
-
+	void Use();
 	void LoadAnims();
 
 	void Initialize();
 
 	int currentScene;
 	bool grounded;
-	int lives;
 	int score;
-	bool win;
-	bool die;
-	bool debug;
 	bool god;
 	bool useDownDash;
 	int abilityCD;
-	//Player's physbody
-	PhysBody* pbody;
 	bool hurt;
-	bool hasLost = false;
 private:
 	//Jump sound
 	int jumpSFX;
@@ -51,7 +43,7 @@ private:
 	float maxVel;
 	float jumpVel;
 	//Sprite sheet folder path
-	SString folder;
+	
 	//Positions where the player should spawn in diferent levels
 	iPoint scene1;
 	iPoint scene2;
@@ -64,7 +56,6 @@ private:
 	//Player texture
 	SDL_Texture* tex;
 	//Animations
-	Animation* currentAnimation = nullptr;
 
 	Animation idleAnimL;
 	Animation idleAnimR;

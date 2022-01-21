@@ -8,9 +8,9 @@
 #include "Map.h"
 #include "Physics.h"
 #include "Player.h"
-#include "Enemies.h"
+#include "Pathfinding.h"
 #include "CheckPoint.h"
-#include "Collectables.h"
+#include "EntityManager.h"
 #include "Defs.h"
 #include "Log.h"
 
@@ -46,13 +46,10 @@ bool Scene2::Start()
 	jungle = app->tex->Load(tmp2.GetString());
 	LOG("%s", tmp.GetString());
 	app->physics->Enable();
-	app->player->Enable();
-	app->enemies->Enable();
-	app->collect->Enable();
-	app->check->Enable();
+
 	app->map->Enable();
 	app->audio->Enable();
-	app->player->currentScene = 2;
+	app->currentScene = 2;
 	if (app->map->Load("map2.tmx") == true)
 	{
 		int w, h;
@@ -66,7 +63,7 @@ bool Scene2::Start()
 		RELEASE_ARRAY(data);
 	}
 
-	if (app->player->hasLost)
+	if (app->hasLost)
 	{
 		app->LoadGameRequest();
 	}
@@ -90,10 +87,10 @@ bool Scene2::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		app->SaveGameRequest();
 
-	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN || app->player->die)
+	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN || app->die)
 		app->fadeToBlack->MFadeToBlack(this, (Module*)app->death);
 
-	if (app->player->debug)
+	if (app->debug)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 			app->render->camera.y += 30;
@@ -108,13 +105,13 @@ bool Scene2::Update(float dt)
 			app->render->camera.x -= 30;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN || app->player->currentScene == 1)
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN || app->currentScene == 1)
 		app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene);
 	
-	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN ||app->player->pos.x == winX)
+	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN ||app->entman->currentPlayer->GetPos().x == winX)
 	{
 		app->fadeToBlack->MFadeToBlack(this, (Module*)app->death);
-		app->player->win = true;
+		app->win_ = true;
 	}
 
 	// Draw map
@@ -144,12 +141,9 @@ bool Scene2::CleanUp()
 	LOG("Freeing scene");
 	app->tex->UnLoad(background);
 	app->tex->UnLoad(jungle);
-	app->player->Disable();
+	app->entman->DestroyAllEntities();
 	app->map->Unload();
 	app->map->Disable();
-	app->enemies->Disable();
-	app->check->Disable();
-	app->collect->Disable();
 	app->physics->Disable();
 	return true;
 }

@@ -5,7 +5,7 @@
 #include "Map.h"
 #include "SDL/include/SDL.h"
 
-Rat::Rat(iPoint position_) : Enemy(EntityType::ENEMY_RAT, position_)
+Rat::Rat(iPoint position_, Entity* target) : Enemy(EntityType::ENEMY_RAT, position_, target)
 {
 	anim.PushBack({ 0,3, 28, 25 });
 	anim.PushBack({ 39, 4, 29, 22 });
@@ -18,26 +18,31 @@ Rat::Rat(iPoint position_) : Enemy(EntityType::ENEMY_RAT, position_)
 	h = 20;
 	w = 20;
 	health = 1;
-	
+	pbody = app->physics->CreateRectangle(position.x, position.y, w, h, DYNAMIC);
+	pbody->eListener = this;
+	currentAnimation = &anim;
 	range = 200;
 	pathUpdateTime = 1.5f;
 	pathUpdateTimer = pathUpdateTime;
 }
 
-Rat::~Rat()
-{
-}
 
 
 void Rat::Update(float dt)
 {
-	anim.Update();
+	if (this->health <= 0)
+	{
+		this->setPendingToDelete = true;
+		return;
+	}
 
+	anim.Update();
+	
 	hasTarget = CheckIfHasTarget();
 	position.x = METERS_TO_PIXELS(pbody->body->GetPosition().x);
 	position.y = METERS_TO_PIXELS(pbody->body->GetPosition().y);
 	//The enemy has only to move if it's in range of the player
-	if (hasTarget && health > 0 && app->player->lives > 0)
+	if (hasTarget && health > 0 && target->GetHealth() > 0)
 	{
 		ComputePath(dt);
 	}
@@ -58,7 +63,8 @@ void Rat::Update(float dt)
 
 void Rat::ComputePath(float dt)
 {
-	iPoint playerPos = app->player->pos;
+	if (target == nullptr) return;
+	iPoint playerPos = target->GetPos();
 	float dist = Distance(position.x, position.y, playerPos.x, playerPos.y);
 
 	pathUpdateTimer += dt;
@@ -67,14 +73,14 @@ void Rat::ComputePath(float dt)
 	}
 	else
 	{
-		if (!app->player->hurt)
+		if (target->GetState() != EntityState::HURT)
 		{
 			if (pathUpdateTimer >= pathUpdateTime) {
 				pathUpdateTimer = 0.0f;
 				pathIndex = 0;
 
 				iPoint origin = app->map->WorldToMap(position.x, position.y);
-				iPoint destination = app->map->WorldToMap(app->player->pos.x, app->player->pos.y);
+				iPoint destination = app->map->WorldToMap(target->GetPos().x, target->GetPos().y);
 				int res = app->pathfinding->CreatePath(origin, destination);
 
 				if (res > 0) {

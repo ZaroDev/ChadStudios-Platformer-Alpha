@@ -6,9 +6,7 @@
 #include "Render.h"
 #include "Window.h"
 #include "FadeToBlack.h"
-#include "Player.h"
-
-
+#include "EntityManager.h"
 #include "Defs.h"
 #include "Log.h"
 
@@ -77,25 +75,25 @@ bool Death::Update(float dt)
 	bool ret = true;
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN  )
 	{
-		if (app->player->die)
+		if (app->die)
 		{
-			app->player->hasLost = true;
+			app->hasLost = true;
 		}
-		if (app->player->die)
+		if (app->die)
 		{
-			if (app->player->currentScene == 1)
+			if (app->currentScene == 1)
 			{
 				app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene);
 
 			}
-			if (app->player->currentScene == 2)
+			if (app->currentScene == 2)
 			{
 				app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene2);
 			}
 		}
 		else
 		{
-			app->player->currentScene = 1;
+			app->currentScene = 1;
 			app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene);
 		}
 	}
@@ -105,7 +103,7 @@ bool Death::Update(float dt)
 		ret = false;
 
 	app->render->camera.x = app->render->camera.y = 0;
-	if (app->player->die)
+	if (app->die)
 	{
 		deathAnim.Update();
 		app->render->DrawTexture(backgroundDeath, 0, 0, NULL, 1.0f);
@@ -113,7 +111,7 @@ bool Death::Update(float dt)
 		app->render->DrawTexture(deathImg, 91, 181, &rect);
 		app->render->DrawTexture(deathImg, 416, 181, &rect);
 	}
-	if (app->player->win)
+	if (app->win)
 	{
 		winAnim.Update();	
 		app->render->DrawTexture(backgroundWin, 0, 0, NULL);

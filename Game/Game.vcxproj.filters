@@ -73,7 +73,6 @@
     <ClCompile Include="Source\Eagle.cpp">
       <Filter>Source\Modules\Gameplay\Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\Rat.cpp">
       <Filter>Source\Modules\Gameplay\Enemies</Filter>
     </ClCompile>
@@ -83,8 +82,10 @@
     <ClCompile Include="Source\Gem.cpp">
       <Filter>Source\Modules\Gameplay\Props</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Entity.cpp" />
     <ClCompile Include="Source\Cherry.cpp">
+      <Filter>Source\Modules\Gameplay\Props</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Door.cpp">
       <Filter>Source\Modules\Gameplay\Props</Filter>
     </ClCompile>
   </ItemGroup>
@@ -198,6 +199,9 @@
       <Filter>Source\Modules\Gameplay\Props</Filter>
     </ClInclude>
     <ClInclude Include="Source\Cherry.h">
+      <Filter>Source\Modules\Gameplay\Props</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Door.h">
       <Filter>Source\Modules\Gameplay\Props</Filter>
     </ClInclude>
   </ItemGroup>

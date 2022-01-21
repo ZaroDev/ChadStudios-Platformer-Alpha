@@ -1,29 +1,57 @@
 #include "Player.h"
 #include "Physics.h"
 #include "Input.h"
-#include "Textures.h"
+#include "Audio.h"
 #include "App.h"
 #include "Render.h"
-#include "Log.h"
-#include "Window.h"
-#include "Audio.h"
 #include "Map.h"
 #include "UI.h"
-#include "Scene.h"
-#include "Scene2.h"
+#include "Textures.h"
+#include "Log.h"
 
 
 Player::Player(iPoint position_) : Entity(EntityType::PLAYER, position_)
 {
+	maxVel = 5;
+	minVel = 2.5;
+
+	currentAnimation = &idleAnimR;
+	grounded = true;
+	position.x = 23;
+	position.y = 800;
+	LOG("Player spawned at x%f, y%f \n", position.x, position.y);
+	this->w = 27;
+	this->h = 27;
+	this->pbody = app->physics->CreateRectangle(position.x, position.y, this->w, this->h, DYNAMIC);
+	/*b2BodyDef cbody;
+	cbody.type = b2_dynamicBody;
+	cbody.position.Set(PIXEL_TO_METERS(position.x), PIXEL_TO_METERS(position.y));
+	cbody.fixedRotation = true;
+	c = app->physics->world->CreateBody(&cbody);
+	b2CircleShape circle;
+	circle.m_radius = PIXEL_TO_METERS(12);
+	b2FixtureDef fixturec;
+	fixturec.shape = &circle;
+	fixturec.density = 20.0f;
+	fixturec.friction = 100.0f;
+	c->ResetMassData();
+	c->CreateFixture(&fixturec);
+
+	this->pbody = new PhysBody();
+	this->pbody->body = c;
+	c->SetUserData(pbody);
+	pbody->width = 24 * 0.5f;
+	pbody->height = 27 * 0.5f;*/
+	useDownDash = false;
+	god = false;
+	this->health = 3;
+	//Initialize();
 	LoadAnims();
-	Initialize();
 }
-
-Player::~Player()
+void Player::Use()
 {
+
 }
-
-
 
 void Player::Update(float dt)
 {
@@ -31,9 +59,6 @@ void Player::Update(float dt)
 
 
 	grounded = false;
-
-	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
-		debug = !debug;
 
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 		god = !god;
@@ -50,26 +75,7 @@ void Player::Update(float dt)
 	if (pbody->body->GetLinearVelocity().y == 0)
 		numJumps = 2;
 	
-	if (!god)
-	{
-		//Camera follows the player
-		uint width, height;
-		app->win->GetWindowSize(width, height);
-		app->render->camera.x = -((position.x * (int)app->win->GetScale()) - ((int)width) / 2 + pbody->width / 2);
-		app->render->camera.y = -((position.y * (int)app->win->GetScale()) - ((int)height) / 2 + pbody->height / 2);
-		//Camera bounds
-		if (app->render->camera.x > 0)
-			app->render->camera.x = 0;
-		if (app->render->camera.y > 0)
-			app->render->camera.y = 0;
-		if (-app->render->camera.x > app->map->bounds.x)
-			app->render->camera.x = -app->map->bounds.x;
-		if (-app->render->camera.y > app->map->bounds.y)
-			app->render->camera.y = -app->map->bounds.y;
-		//Die state
-		if (pbody->body->GetPosition().y > PIXEL_TO_METERS( 1049))
-			die = true;
-	}
+	
 
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
@@ -151,7 +157,7 @@ void Player::Update(float dt)
 		}
 		if (counter == 60)
 		{
-			lives--;
+			this->health--;
 			hurt = false;
 		}
 	}
@@ -195,23 +201,15 @@ void Player::Update(float dt)
 				currentAnimation = &downAnimR;
 	}
 
-
-	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+	if (this->health <= 0)
 	{
-		app->audio->volMusic++;
-		app->audio->volFX++;
+		app->die = true;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
-	{
-		app->audio->volMusic--;
-		app->audio->volFX--;
-	}
+	position.x = pbody->body->GetPosition().x;
+	position.y = pbody->body->GetPosition().y;
 
-	if (lives <= 0)
-	{
-		die = true;
-	}
-
+	LOG("pos x%f y%f\n", position.x, position.y);
+	LOG("pb x%f y%f\n", pbody->body->GetPosition().x, pbody->body->GetPosition().y);
 	currentAnimation->Update();
 
 }
@@ -290,21 +288,17 @@ void Player::Initialize()
 	scene2.x = config.child("scene2").attribute("x").as_int();
 	scene2.y = config.child("scene2").attribute("y").as_int();*/
 
+	maxVel = 5;
+	minVel = 2.5;
 
-	app->ui->Enable();
-	lives = 3;
-	tex = app->tex->Load(folder.GetString());
 	currentAnimation = &idleAnimR;
-
-	SString tmp("%s%s", jumpSFXFile.GetString(), "jumpSFX.wav");
-	SString tmp2("%s%s", jumpSFXFile.GetString(), "superJump.wav");
-	jumpSFX = app->audio->LoadFx(tmp.GetString());
-	superJumpSFX = app->audio->LoadFx(tmp2.GetString());
 	grounded = true;
-
+	position.x = 23;
+	position.y = 800;
 	b2BodyDef cbody;
 	cbody.type = b2_dynamicBody;
 	cbody.position.Set(PIXEL_TO_METERS(position.x), PIXEL_TO_METERS(position.y));
+	LOG("Player spawned at x%f, y%f \n", cbody.position.x, cbody.position.y);
 	cbody.fixedRotation = true;
 	c = app->physics->world->CreateBody(&cbody);
 	b2CircleShape circle;
@@ -316,16 +310,16 @@ void Player::Initialize()
 	c->ResetMassData();
 	c->CreateFixture(&fixturec);
 
-	pbody = new PhysBody();
+	this->pbody = new PhysBody();
 	pbody->body = c;
 	c->SetUserData(pbody);
 	pbody->width = 24 * 0.5f;
 	pbody->height = 27 * 0.5f;
 	useDownDash = false;
-	die = false;
-	debug = false;
-	win = false;
 	god = false;
+	this->w = 27;
+	this->h = 27;
+	this->health = 3;
 }
 
 

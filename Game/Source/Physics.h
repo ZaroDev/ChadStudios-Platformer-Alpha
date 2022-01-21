@@ -1,6 +1,5 @@
 #pragma once
 #include "Module.h"
-
 #include "Box2D/Box2D/Box2D.h"
 
 #define GRAVITY_X 0.0f
@@ -15,14 +14,13 @@
 #define PIXEL_TO_METERS(p)  ((float) METER_PER_PIXEL * p)
 #define RAD_TO_DEG(r) ((float) RAD_PER_DEG * r)
 #define DEG_TO_RAD(r) ((float) DEG_PER_RAD * r)
-
 // types of bodies
 enum bodyType {
 	DYNAMIC,
 	STATIC,
 	KINEMATIC
 };
-
+class Entity;
 // Small class to return to other modules to track position and rotation of physics bodies
 class PhysBody
 {
@@ -38,6 +36,7 @@ public:
 public:
 	int width, height;
 	b2Body* body;
+	Entity* eListener;
 	Module* listener;
 };
 

@@ -5,7 +5,7 @@
 #include "Map.h"
 #include "SDL/include/SDL.h"
 
-Eagle::Eagle(iPoint position_) : Enemy(EntityType::ENEMY_EAGLE, position_)
+Eagle::Eagle(iPoint position_, Entity* target) : Enemy(EntityType::ENEMY_EAGLE, position_, target)
 {
 	anim.PushBack({ 0,28,38,42 });
 	anim.PushBack({ 40,31,40,40 });
@@ -13,22 +13,25 @@ Eagle::Eagle(iPoint position_) : Enemy(EntityType::ENEMY_EAGLE, position_)
 	anim.PushBack({ 117,40,40,30 });
 	anim.speed = 0.1f;
 	anim.loop = true;
-	
-	h = 30;
-	w = 30;
+	this->h = 30;
+	this->w = 30;
+	pbody = app->physics->CreateRectangle(position.x, position.y, w, h, STATIC);
+	pbody->eListener = this;
+	currentAnimation = &anim;
 	health = 1;
 	range = 300;
 	pathUpdateTime = 1.5f;
 	pathUpdateTimer = pathUpdateTime;
 }
 
-Eagle::~Eagle()
-{
-}
-
-
 void Eagle::Update(float dt)
 {
+	if (this->health <= 0)
+	{
+		this->setPendingToDelete = true;
+		return;
+	}
+
 	anim.Update();
 
 	hasTarget = CheckIfHasTarget();
@@ -36,7 +39,7 @@ void Eagle::Update(float dt)
 	//The enemy has only to move if it's in range of the player
 	position.x = METERS_TO_PIXELS(pbody->body->GetPosition().x);
 	position.y = METERS_TO_PIXELS(pbody->body->GetPosition().y);
-	if (hasTarget && health > 0 && app->player->lives > 0)
+	if (hasTarget && health > 0 && target->GetHealth() > 0)
 	{
 		ComputePath(dt);
 	}
@@ -58,7 +61,8 @@ void Eagle::Update(float dt)
 
 void Eagle::ComputePath(float dt)
 {
-	iPoint playerPos = app->player->pos;
+	if (target == nullptr) return;
+	iPoint playerPos = target->GetPos();
 	float dist = Distance(position.x, position.y, playerPos.x, playerPos.y);
 	
 	pathUpdateTimer += dt;
@@ -67,14 +71,14 @@ void Eagle::ComputePath(float dt)
 	}
 	else
 	{
-		if (!app->player->hurt)
+		if (target->GetState() != EntityState::HURT)
 		{
 			if (pathUpdateTimer >= pathUpdateTime) {
 				pathUpdateTimer = 0.0f;
 				pathIndex = 0;
 
 				iPoint origin = app->map->WorldToMap(position.x, position.y);
-				iPoint destination = app->map->WorldToMap(app->player->pos.x, app->player->pos.y);
+				iPoint destination = app->map->WorldToMap(target->GetPos().x, target->GetPos().y);
 				int res = app->pathfinding->CreatePath(origin, destination);
 
 				if (res > 0) {
@@ -125,5 +129,4 @@ void Eagle::MoveToPlayer(iPoint destination, float dt)
 
 	fPoint step = { dir.x / dt, dir.y / dt };
 	pbody->body->SetLinearVelocity({ step.x, step.y });
-	
 }
