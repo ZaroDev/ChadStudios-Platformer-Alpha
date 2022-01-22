@@ -48,8 +48,10 @@ bool Scene::Start()
 	LOG("%s", tmp.GetString());
 	app->physics->Enable();
 	app->map->Enable();
-	app->entman->CreateEntity(PLAYER, iPoint{ 23, 800 });
-	//app->ui->Enable();
+	app->pathfinding->Enable();
+	app->ui->Enable();
+	Player* player = (Player*)app->entman->CreateEntity(PLAYER, iPoint{ 50, 800 });
+	app->entman->SetPlayer(player);
 	if (app->map->Load("map.tmx") == true)
 	{
 		int w, h;
@@ -62,7 +64,6 @@ bool Scene::Start()
 
 		RELEASE_ARRAY(data);
 	}
-
 	if (app->hasLost)
 	{
 		app->LoadGameRequest();
@@ -146,7 +147,7 @@ bool Scene::CleanUp()
 	app->tex->UnLoad(jungle);
 	app->map->Unload();
 	app->map->Disable();
-
+	app->entman->DestroyAllEntities();
 	app->physics->Disable();
 	return true;
 }

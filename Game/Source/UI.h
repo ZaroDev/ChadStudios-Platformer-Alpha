@@ -19,12 +19,13 @@ public:
 
 	bool CleanUp();
 
-
+	void AddScore(int score);
 private:
 	SDL_Texture* heart;
 	SDL_Texture* gem;
 	SDL_Texture* anim;
 	
+	int score = 0;
 	int font;
 
 	Animation heartAnim;

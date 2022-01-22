@@ -39,17 +39,7 @@ public:
 	{
 		return (value >= a && value <= b);
 	}
-	void DrawPath(SDL_Texture* tex)
-	{
-		if (currentPath != nullptr)
-		{
-			for (uint i = 0; i < currentPath->Count(); ++i)
-			{
-				iPoint pos = app->map->MapToWorld(currentPath->At(i)->x, currentPath->At(i)->y);
-				app->render->DrawTexture(tex, pos.x, pos.y);
-			}
-		}
-	}
+
 	int Distance(int x1, int y1, int x2, int y2)
 	{
 		return sqrtf(powf(x2 - x1, 2) + powf(y2 - y1, 2));
@@ -76,8 +66,16 @@ public:
 			}
 		}
 	}
-
 	virtual void Update(float dt){}
+
+	void SetTarget(Entity* target)
+	{
+		this->target = target;
+	}
+	Entity* GetTarget()
+	{
+		return target;
+	}
 
 public:
 	int speed = 10;

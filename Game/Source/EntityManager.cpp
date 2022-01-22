@@ -12,6 +12,7 @@
 #include "Window.h"
 #include "Render.h"
 #include "Log.h"
+#include "UI.h"
 #include "Textures.h"
 
 EntityManager::EntityManager(bool startEnabled) : Module(startEnabled)
@@ -38,10 +39,12 @@ bool EntityManager::Start()
 	SString pathEnemies("%s%s", folder.GetString(), "enemies.png");
 	SString pathCollect("%s%s", folder.GetString(), "collect.png");
 	SString pathCheck("%s%s", folder.GetString(), "checkpoint.png");
+	SString pathPath("%s%s", folder.GetString(), "nav.png");
 	playerTex = app->tex->Load(pathPlayer.GetString());
 	enemiesTex = app->tex->Load(pathEnemies.GetString());
 	checkTex = app->tex->Load(pathCheck.GetString());
 	collectTex = app->tex->Load(pathCollect.GetString());
+	path = app->tex->Load(pathPath.GetString());
 
 	return true;
 }
@@ -50,24 +53,22 @@ bool EntityManager::PreUpdate()
 {
 	for (ListItem<Entity*>* ent = entities.start; ent != nullptr; ent = ent->next)
 	{
-		if (ent->data->setPendingToDelete) DestroyEntity(ent->data);
-		if (ent->data->type == EntityType::PLAYER && currentPlayer != (Player*)ent->data)
+		if (ent->data->setPendingToDelete)
 		{
-			LOG("\nCurrentPlayer Updated");
-			currentPlayer = (Player*)ent->data;
+			DestroyEntity(ent->data);
+			break;
 		}
-		if (ent->data->type == EntityType::ENEMY_EAGLE || ent->data->type == EntityType::ENEMY_RAT);
-
-		if (ent->data->type == EntityType::PLAYER) LOG("\n Player Located");
+		if ((ent->data->type == EntityType::ENEMY_EAGLE || ent->data->type == EntityType::ENEMY_RAT) && ent->data->GetTarget() == nullptr)
+		{
+			LOG("Target Set to an Enemy\n");
+			ent->data->SetTarget(currentPlayer);
+		}
 	}
 	OPTICK_CATEGORY("PreUpdate EntityManager", Optick::Category::AI);
 	return true;
 }
-void EntityManager::UpdateAll(float dt, bool doLogic)
+void EntityManager::UpdateAll(float dt)
 {
-	if (!doLogic)
-		return;
-
 	for (ListItem<Entity*>* ent = entities.start; ent != nullptr; ent = ent->next)
 	{
 		ent->data->Update(dt);
@@ -76,14 +77,8 @@ void EntityManager::UpdateAll(float dt, bool doLogic)
 }
 bool EntityManager::Update(float dt)
 {
-	accumulatedTime += dt;
-	if (accumulatedTime >= updateMsCycle) doLogic = true;
-	UpdateAll(dt, doLogic);
-	if (doLogic == true)
-	{
-		accumulatedTime = 0.0f;
-		doLogic = false;
-	}
+	UpdateAll(dt);
+
 	if (currentPlayer != nullptr)
 	{
 		if (!currentPlayer->god)
@@ -116,13 +111,17 @@ bool EntityManager::PostUpdate()
 	{
 		switch (ent->data->type)
 		{
-		case EntityType::PLAYER: app->render->DrawTexture(playerTex, ent->data->GetPos().x, ent->data->GetPos().y, &ent->data->currentAnimation->GetCurrentFrame()); break;
+		case EntityType::PLAYER: app->render->DrawTexture(playerTex, ent->data->GetPos().x - (ent->data->w / 2), ent->data->GetPos().y - (ent->data->h / 2), &ent->data->currentAnimation->GetCurrentFrame()); break;
 		case EntityType::ENEMY_EAGLE:app->render->DrawTexture(enemiesTex, ent->data->GetPos().x - (ent->data->w / 2), ent->data->GetPos().y - (ent->data->h / 2), &ent->data->currentAnimation->GetCurrentFrame()); break;
 		case EntityType::ENEMY_RAT: app->render->DrawTexture(enemiesTex, ent->data->GetPos().x - (ent->data->w / 2), ent->data->GetPos().y - (ent->data->h / 2), &ent->data->currentAnimation->GetCurrentFrame()); break;
 		case EntityType::GEM: app->render->DrawTexture(collectTex, ent->data->GetPos().x - (ent->data->w / 2), ent->data->GetPos().y - (ent->data->h / 2), &ent->data->currentAnimation->GetCurrentFrame()); break;
 		case EntityType::CHERRY: app->render->DrawTexture(collectTex, ent->data->GetPos().x - (ent->data->w / 2), ent->data->GetPos().y - (ent->data->h / 2), &ent->data->currentAnimation->GetCurrentFrame()); break;
 		case EntityType::CHECKPOINT: app->render->DrawTexture(checkTex, ent->data->GetPos().x - (ent->data->w / 2), ent->data->GetPos().y - (ent->data->h / 2), &ent->data->currentAnimation->GetCurrentFrame()); break;
 		}
+	}
+	if (app->debug)
+	{
+		DrawPath(path);
 	}
 	OPTICK_CATEGORY("PostUpdate EntityManager", Optick::Category::AI);
 
@@ -137,9 +136,9 @@ bool EntityManager::CleanUp()
 
 void EntityManager::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
-	if (bodyA->eListener->type == PLAYER)
+	if (bodyA->eListener->type == PLAYER && bodyB->listener == this && bodyA->listener == this)
 	{
-		if (bodyB->eListener->type == ENEMY_EAGLE)
+		if (bodyB->eListener->type == ENEMY_EAGLE || bodyB->eListener->type == ENEMY_RAT)
 		{
 
 			float topA = bodyA->body->GetPosition().y - PIXEL_TO_METERS(bodyA->eListener->h / 2);
@@ -147,25 +146,47 @@ void EntityManager::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			float topB = bodyB->body->GetPosition().y + PIXEL_TO_METERS(12);
 			float botB = bodyB->body->GetPosition().y - PIXEL_TO_METERS(12);
 
-			if (topA >= botB)
+			if (topA <= botB)
 			{
 				bodyB->eListener->health--;
 				app->audio->PlayFx(hitSFX);
 
 			}
 
-			else if (topA < botB && !currentPlayer->hurt)
+			else if (topA > botB && currentPlayer->GetState() != EntityState::HURT)
 			{
 				if (!currentPlayer->god)
 				{
 					app->audio->PlayFx(playerHit);
-					currentPlayer->hurt = true;
+					currentPlayer->SetState(EntityState::HURT);
 				}
 			}
+			return;
 		}
-		else
+		else if (bodyB->eListener->type == CHERRY)
+		{
+			if (bodyA->eListener->health < 3)
+			{
+				bodyA->eListener->health++;	
+			}
+			else
+			{
+				app->ui->AddScore(50);
+			}
+			bodyB->eListener->Use();
+			return;
+		}
+		else if (bodyB->eListener->type == GEM)
 		{
 			bodyB->eListener->Use();
+			app->ui->AddScore(100);
+			return;
+		}
+		else if (bodyB->eListener->type == CHECKPOINT)
+		{
+			app->SaveGameRequest();
+			bodyB->eListener->Use();
+			return;
 		}
 	}
 }
@@ -192,7 +213,12 @@ Entity* EntityManager::CreateEntity(EntityType type, iPoint position)
 		case EntityType::CHERRY	: ret = new Cherry(position); break;
 		case EntityType::CHECKPOINT: ret = new CheckPoint(position); break;
 	}
-	if (ret != nullptr) entities.Add(ret);
+
+	if (ret != nullptr)
+	{
+		ret->pbody->listener = this;
+		entities.Add(ret);
+	}
 	return ret;
 }
 
@@ -207,8 +233,17 @@ void EntityManager::SetPlayer(Player* player)
 }
 void EntityManager::DestroyAllEntities()
 {
-	for (ListItem<Entity*>* ent = entities.start; ent != nullptr; ent = ent->next)
+	entities.Clear();
+}
+void EntityManager::DrawPath(SDL_Texture* tex)
+{
+	const DynArray<iPoint>* currentPath = app->pathfinding->GetLastPath();
+	if (currentPath != nullptr)
 	{
-		DestroyEntity(ent->data);
+		for (uint i = 0; i < currentPath->Count(); ++i)
+		{
+			iPoint pos = app->map->MapToWorld(currentPath->At(i)->x, currentPath->At(i)->y);
+			app->render->DrawTexture(tex, pos.x, pos.y);
+		}
 	}
 }

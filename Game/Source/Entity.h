@@ -38,7 +38,10 @@ public:
 	iPoint GetPos() { return position; }
 	int GetHealth() { return health; }
 	EntityState GetState() { return currentState; }
+	void SetState(EntityState state) { currentState = state; }
 
+	virtual void SetTarget(Entity* target) {};
+	virtual Entity* GetTarget() { return nullptr; };
 	friend class EntityManager;
 
 protected:

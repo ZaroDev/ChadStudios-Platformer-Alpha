@@ -15,8 +15,9 @@ Eagle::Eagle(iPoint position_, Entity* target) : Enemy(EntityType::ENEMY_EAGLE, 
 	anim.loop = true;
 	this->h = 30;
 	this->w = 30;
-	pbody = app->physics->CreateRectangle(position.x, position.y, w, h, STATIC);
+	pbody = app->physics->CreateRectangle(position.x, position.y, w, h, KINEMATIC);
 	pbody->eListener = this;
+	pbody->body->SetFixedRotation(true);
 	currentAnimation = &anim;
 	health = 1;
 	range = 300;
@@ -125,7 +126,7 @@ void Eagle::MoveToPlayer(iPoint destination, float dt)
 	
 	fPoint dir = { (float)diff.x, (float)diff.y };
 	dir.Normalize();
-	dir *= speed * 3;
+	dir *= speed * 4;
 
 	fPoint step = { dir.x / dt, dir.y / dt };
 	pbody->body->SetLinearVelocity({ step.x, step.y });

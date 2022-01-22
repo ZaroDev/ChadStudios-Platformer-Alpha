@@ -79,7 +79,7 @@ bool UI::PostUpdate()
 	{
 		app->render->DrawTexture(heart, 5, 10, &heartAnim.GetCurrentFrame(), true);
 	}
-	SString tmp("%4d", app->entman->currentPlayer->score);
+	SString tmp("%4d", score);
 	SString tmp2("%d", (360 - app->entman->currentPlayer->abilityCD) / app->framesPerSecond);
 
 	app->render->DrawTexture(gem, 1550, 10, &gemAnim.GetCurrentFrame(), true);
@@ -104,4 +104,9 @@ bool UI::CleanUp()
 	app->tex->UnLoad(gem);
 	app->fonts->UnLoad(font);
 	return true;
+}
+
+void UI::AddScore(int score)
+{
+	this->score += score;
 }

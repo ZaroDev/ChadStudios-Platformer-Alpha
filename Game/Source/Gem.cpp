@@ -12,7 +12,7 @@ Gem::Gem(iPoint position_) : Entity(EntityType::GEM, position_)
 	this->anim.speed = 0.1f;
 	this->w = 13;
 	this->h = 11;
-	pbody = app->physics->CreateRectangle(position.x, position.y, w, h, STATIC);
+	pbody = app->physics->CreateRectangleSensor(position.x, position.y, w, h, STATIC);
 	pbody->eListener = this;
 	currentAnimation = &anim;
 }

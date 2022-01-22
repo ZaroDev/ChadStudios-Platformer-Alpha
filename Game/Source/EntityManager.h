@@ -19,13 +19,13 @@ public:
 	bool SaveState(pugi::xml_node& data) const;
 	bool LoadState(pugi::xml_node& data);
 	//Updates all the entities
-	void UpdateAll(float dt, bool doLogic);
+	void UpdateAll(float dt);
 	//Util functions
 	Entity* CreateEntity(EntityType type_, iPoint position_);
 	void DestroyAllEntities();
 	void DestroyEntity(Entity* entity);
 	void SetPlayer(Player* player);
-
+	void DrawPath(SDL_Texture* tex);
 
 public:
 	Player* currentPlayer = nullptr;
@@ -40,5 +40,6 @@ private:
 	SDL_Texture* collectTex;
 	SDL_Texture* checkTex;
 	SDL_Texture* enemiesTex;
+	SDL_Texture* path;
 	SString folder;
 };

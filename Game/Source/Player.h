@@ -25,7 +25,6 @@ public:
 
 	int currentScene;
 	bool grounded;
-	int score;
 	bool god;
 	bool useDownDash;
 	int abilityCD;
@@ -45,13 +44,11 @@ private:
 	//Sprite sheet folder path
 	
 	//Positions where the player should spawn in diferent levels
-	iPoint scene1;
-	iPoint scene2;
 	int counterDash;
 
 	int counter;
 	//Player's b2 Body
-	b2Body* c;
+	b2Body* c = nullptr;
 	
 	//Player texture
 	SDL_Texture* tex;

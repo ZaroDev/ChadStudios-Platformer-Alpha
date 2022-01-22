@@ -14,7 +14,7 @@ CheckPoint::CheckPoint(iPoint position_) : Entity(EntityType::CHECKPOINT, positi
 	anim.loop = false;
 	this->w = 32;
 	this->h = 53;
-	pbody = app->physics->CreateRectangle(position.x, position.y, w, h, STATIC);
+	pbody = app->physics->CreateRectangleSensor(position.x, position.y, w, h, STATIC);
 	pbody->eListener = this;
 	currentAnimation = &anim;
 }

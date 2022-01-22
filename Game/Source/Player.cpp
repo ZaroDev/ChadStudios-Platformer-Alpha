@@ -12,41 +12,21 @@
 
 Player::Player(iPoint position_) : Entity(EntityType::PLAYER, position_)
 {
+	LoadAnims();
 	maxVel = 5;
 	minVel = 2.5;
-
+	jumpVel = -5;
 	currentAnimation = &idleAnimR;
 	grounded = true;
-	position.x = 23;
-	position.y = 800;
 	LOG("Player spawned at x%f, y%f \n", position.x, position.y);
-	this->w = 27;
-	this->h = 27;
-	this->pbody = app->physics->CreateRectangle(position.x, position.y, this->w, this->h, DYNAMIC);
-	/*b2BodyDef cbody;
-	cbody.type = b2_dynamicBody;
-	cbody.position.Set(PIXEL_TO_METERS(position.x), PIXEL_TO_METERS(position.y));
-	cbody.fixedRotation = true;
-	c = app->physics->world->CreateBody(&cbody);
-	b2CircleShape circle;
-	circle.m_radius = PIXEL_TO_METERS(12);
-	b2FixtureDef fixturec;
-	fixturec.shape = &circle;
-	fixturec.density = 20.0f;
-	fixturec.friction = 100.0f;
-	c->ResetMassData();
-	c->CreateFixture(&fixturec);
-
-	this->pbody = new PhysBody();
-	this->pbody->body = c;
-	c->SetUserData(pbody);
-	pbody->width = 24 * 0.5f;
-	pbody->height = 27 * 0.5f;*/
+	this->w = 20;
+	this->h = 26;
+	pbody = app->physics->CreateRectangle(position.x, position.y, w, h, DYNAMIC);
+	pbody->body->SetFixedRotation(true);
+	this->pbody->eListener = this;
 	useDownDash = false;
 	god = false;
 	this->health = 3;
-	//Initialize();
-	LoadAnims();
 }
 void Player::Use()
 {
@@ -56,7 +36,8 @@ void Player::Use()
 void Player::Update(float dt)
 {
 	bool ret = true;
-
+	position.x = METERS_TO_PIXELS(pbody->body->GetPosition().x);
+	position.y = METERS_TO_PIXELS(pbody->body->GetPosition().y);
 
 	grounded = false;
 
@@ -64,10 +45,10 @@ void Player::Update(float dt)
 		god = !god;
 	if (app->input->GetKey(SDL_SCANCODE_F3))
 	{
-		if(currentScene == 1)
+		/*if(currentScene == 1)
 			pbody->body->SetTransform({ PIXEL_TO_METERS(scene1.x), PIXEL_TO_METERS(scene1.y) }, 0.0f);
 		if(currentScene == 2)
-			pbody->body->SetTransform({ PIXEL_TO_METERS(scene2.x), PIXEL_TO_METERS(scene2.y) }, 0.0f);
+			pbody->body->SetTransform({ PIXEL_TO_METERS(scene2.x), PIXEL_TO_METERS(scene2.y) }, 0.0f);*/
 	}
 	if (pbody->body->GetLinearVelocity().y < 0.1f && pbody->body->GetLinearVelocity().y > -0.1f)
 		grounded = true;
@@ -148,7 +129,7 @@ void Player::Update(float dt)
 		}
 	}
 
-	if (hurt)
+	if (currentState == EntityState::HURT)
 	{
 		counter++;
 		if (currentAnimation != &hurtAnim)
@@ -158,16 +139,16 @@ void Player::Update(float dt)
 		if (counter == 60)
 		{
 			this->health--;
-			hurt = false;
+			currentState = NONE;
 		}
 	}
-	if (!hurt)
+	if (currentState != EntityState::HURT)
 	{
 		counter = 0;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
 	{
-		hurt = true;
+		currentState = HURT;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE 
 		&& app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE)
@@ -205,11 +186,7 @@ void Player::Update(float dt)
 	{
 		app->die = true;
 	}
-	position.x = pbody->body->GetPosition().x;
-	position.y = pbody->body->GetPosition().y;
-
-	LOG("pos x%f y%f\n", position.x, position.y);
-	LOG("pb x%f y%f\n", pbody->body->GetPosition().x, pbody->body->GetPosition().y);
+	
 	currentAnimation->Update();
 
 }

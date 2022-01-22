@@ -20,6 +20,7 @@ Rat::Rat(iPoint position_, Entity* target) : Enemy(EntityType::ENEMY_RAT, positi
 	health = 1;
 	pbody = app->physics->CreateRectangle(position.x, position.y, w, h, DYNAMIC);
 	pbody->eListener = this;
+	pbody->body->SetFixedRotation(true);
 	currentAnimation = &anim;
 	range = 200;
 	pathUpdateTime = 1.5f;
@@ -132,7 +133,7 @@ void Rat::MoveToPlayer(iPoint destination,float dt)
 
 	fPoint dir = { (float)diff.x, (float)diff.y };
 	dir.Normalize();
-	dir *= speed * 4;
+	dir *= speed * 3;
 
 	fPoint step = { dir.x / dt, dir.y / dt };
 	pbody->body->SetLinearVelocity({ step.x, pbody->body->GetLinearVelocity().y });
