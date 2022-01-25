@@ -6,7 +6,7 @@
 #include "Window.h"
 #include "Intro.h"
 #include "FadeToBlack.h"
-
+#include "GuiManager.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -55,6 +55,13 @@ bool Intro::Start()
 	logoImg = app->tex->Load(tmp2.GetString());
 	enterImg = app->tex->Load(tmp3.GetString());
 
+	//GUI
+	uint x;
+	uint y;
+	app->win->GetWindowSize(x,y);
+	btn1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Test1", { ((int)x / 2) - 300, (int)y / 10, 160, 40}, this);
+	btn2 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Test2", { ((int)x / 2) + 300, (int)y / 10, 160, 40 }, this);
+
 	return true;
 }
 
@@ -75,6 +82,8 @@ bool Intro::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		app->SaveGameRequest();
 	logoAnim.Update();
+
+	app->guiManager->Draw();
 
 	return true;
 }
@@ -99,6 +108,34 @@ bool Intro::PostUpdate()
 
 	return ret;
 }
+
+bool Intro::OnGuiMouseClickEvent(GuiControl* control)
+{
+
+	switch (control->type)
+	{
+	case GuiControlType::BUTTON:
+	{
+		//Checks the GUI element ID
+		if (control->id == 1)
+		{
+			LOG("Click on button 1");
+		}
+
+		if (control->id == 2)
+		{
+			LOG("Click on button 2");
+		}
+
+	}
+	//Other cases here
+
+	default: break;
+	}
+
+	return true;
+}
+
 
 // Called before quitting
 bool Intro::CleanUp()

@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "Animation.h"
+#include "GuiButton.h"
 struct SDL_Texture;
 
 class Intro : public Module
@@ -32,6 +33,9 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	// Define multiple Gui Event methods
+	bool OnGuiMouseClickEvent(GuiControl* control);
+
 
 private:
 	SDL_Texture* logoImg;
@@ -41,6 +45,9 @@ private:
 	int frames = 0;
 	SString folder;
 	SString audioFile;
+
+	GuiButton* btn1;
+	GuiButton* btn2;
 };
 
 #endif // __SCENE_H__

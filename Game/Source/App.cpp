@@ -18,6 +18,7 @@
 #include "Scene2.h"
 #include "Defs.h"
 #include "Log.h"
+#include "GuiManager.h"
 
 
 #include <iostream>
@@ -44,6 +45,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	physics = new Physics(true);
 	scene2 = new Scene2(false);
 	entman = new EntityManager(true);
+	guiManager = new GuiManager(true);
 
 
 	// Ordered for awake / Start / Update
@@ -63,6 +65,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(ui);
 	AddModule(entman);
+	AddModule(guiManager);
 	// Render last to swap buffer
 	AddModule(render);
 
