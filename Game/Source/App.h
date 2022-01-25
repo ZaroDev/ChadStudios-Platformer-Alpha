@@ -24,6 +24,7 @@ class Physics;
 class FadeToBlack;
 class PathFinding;
 
+class GuiManager;
 class UI;
 class EntityManager;
 class Fonts;
@@ -116,6 +117,7 @@ public:
 	FadeToBlack* fadeToBlack;
 	PathFinding* pathfinding;
 	UI* ui;
+	GuiManager* guiManager;
 	EntityManager* entman;
 	Fonts* fonts;
 	Intro* intro;
