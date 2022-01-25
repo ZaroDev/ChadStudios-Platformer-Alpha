@@ -19,6 +19,6 @@
 	<ui />
 	<entities />
 	<render>
-		<camera x="-1089" y="-1482" />
+		<camera x="-1092" y="-1482" />
 	</render>
 </game_state>

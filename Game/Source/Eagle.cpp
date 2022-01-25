@@ -13,8 +13,8 @@ Eagle::Eagle(iPoint position_, Entity* target) : Enemy(EntityType::ENEMY_EAGLE, 
 	anim.PushBack({ 117,40,40,30 });
 	anim.speed = 0.1f;
 	anim.loop = true;
-	this->h = 30;
-	this->w = 30;
+	this->h = 25;
+	this->w = 25;
 	pbody = app->physics->CreateRectangle(position.x, position.y, w, h, KINEMATIC);
 	pbody->eListener = this;
 	pbody->body->SetFixedRotation(true);

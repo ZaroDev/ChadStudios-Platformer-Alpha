@@ -138,7 +138,6 @@ void Player::Update(float dt)
 		}
 		if (counter == 60)
 		{
-			this->health--;
 			currentState = NONE;
 		}
 	}

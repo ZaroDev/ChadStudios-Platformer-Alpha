@@ -60,7 +60,6 @@ bool EntityManager::PreUpdate()
 		}
 		if ((ent->data->type == EntityType::ENEMY_EAGLE || ent->data->type == EntityType::ENEMY_RAT) && ent->data->GetTarget() == nullptr)
 		{
-			LOG("Target Set to an Enemy\n");
 			ent->data->SetTarget(currentPlayer);
 		}
 	}
@@ -143,20 +142,20 @@ void EntityManager::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 			float topA = bodyA->body->GetPosition().y - PIXEL_TO_METERS(bodyA->eListener->h / 2);
 			float botA = bodyA->body->GetPosition().y + PIXEL_TO_METERS(bodyA->eListener->h / 2);
-			float topB = bodyB->body->GetPosition().y + PIXEL_TO_METERS(12);
-			float botB = bodyB->body->GetPosition().y - PIXEL_TO_METERS(12);
+			float topB = bodyB->body->GetPosition().y + PIXEL_TO_METERS(bodyB->eListener->h / 2);
+			float botB = bodyB->body->GetPosition().y - PIXEL_TO_METERS(bodyB->eListener->h / 2);
 
 			if (topA <= botB)
 			{
 				bodyB->eListener->health--;
 				app->audio->PlayFx(hitSFX);
-
 			}
 
 			else if (topA > botB && currentPlayer->GetState() != EntityState::HURT)
 			{
 				if (!currentPlayer->god)
 				{
+					bodyA->eListener->health--;
 					app->audio->PlayFx(playerHit);
 					currentPlayer->SetState(EntityState::HURT);
 				}

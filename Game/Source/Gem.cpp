@@ -29,7 +29,7 @@ void Gem::Activate()
 
 void Gem::Use()
 {
-	this->Activate();
+	setPendingToDelete = true;
 }
 
 void Gem::Update(float dt)

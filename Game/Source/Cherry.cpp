@@ -29,11 +29,10 @@ void Cherry::Activate()
 void Cherry::Update(float dt)
 {
 	anim.Update();
-	if (this->IsActivated())
-		this->setPendingToDelete = true;
+	
 }
 
 void Cherry::Use()
 {
-	this->Activate();
+	setPendingToDelete = true;
 }

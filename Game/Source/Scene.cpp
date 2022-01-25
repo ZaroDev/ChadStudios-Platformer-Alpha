@@ -52,6 +52,7 @@ bool Scene::Start()
 	app->ui->Enable();
 	Player* player = (Player*)app->entman->CreateEntity(PLAYER, iPoint{ 50, 800 });
 	app->entman->SetPlayer(player);
+	app->die = false;
 	if (app->map->Load("map.tmx") == true)
 	{
 		int w, h;
