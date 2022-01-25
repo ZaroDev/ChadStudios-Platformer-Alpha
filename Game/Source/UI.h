@@ -32,6 +32,8 @@ private:
 	SDL_Texture* gem;
 	SDL_Texture* anim;
 	int counter = 0;
+	float seconds = 0;
+	int minutes = 0;
 	int score = 0;
 	int font;
 	int scoreMult = 1;

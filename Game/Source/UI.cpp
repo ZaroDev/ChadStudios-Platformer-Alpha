@@ -66,6 +66,14 @@ bool UI::PostUpdate()
 {
 	if (app->currentScene == 1 || app->currentScene == 2)
 	{
+		seconds += app->dt / 1000;
+
+		if (seconds >= 60)
+		{
+			seconds = 0;
+			minutes++;
+		}
+
 		heartAnim.Update();
 		gemAnim.Update();
 		abAnim.Update();
@@ -83,9 +91,11 @@ bool UI::PostUpdate()
 		}
 		SString tmp("%4d", score);
 		SString tmp2("%d", (360 - app->entman->currentPlayer->abilityCD) / app->framesPerSecond);
+		SString tmp3("%d.%f",minutes, seconds);
 		scoreMult = app->entman->currentPlayer->GetHealth();
 		app->render->DrawTexture(gem, 1550, 10, &gemAnim.GetCurrentFrame(), true);
 		app->fonts->BlitText(480, 5, font, tmp.GetString());
+		app->fonts->BlitText(400, 5, font, tmp3.GetString());
 		if (app->entman->currentPlayer->abilityCD != 0)
 		{
 			app->fonts->BlitText(480, 270, font, tmp2.GetString());
