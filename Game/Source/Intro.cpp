@@ -59,8 +59,8 @@ bool Intro::Start()
 	uint x;
 	uint y;
 	app->win->GetWindowSize(x,y);
-	btn1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Test1", { ((int)x / 2) - 300, (int)y / 10, 160, 40}, this);
-	btn2 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Test2", { ((int)x / 2) + 300, (int)y / 10, 160, 40 }, this);
+	btn1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Test1", { ((int)x / 2) - 700, (int)y / 10, 160, 40}, this);
+	btn2 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Test2", { ((int)x / 2) -400, (int)y / 10, 160, 40 }, this);
 
 	return true;
 }
@@ -82,9 +82,6 @@ bool Intro::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		app->SaveGameRequest();
 	logoAnim.Update();
-
-	app->guiManager->Draw();
-
 	return true;
 }
 
@@ -105,6 +102,9 @@ bool Intro::PostUpdate()
 	{
 		app->render->DrawTexture(enterImg, 152, 154, NULL);
 	}
+
+	//Draw GUI
+	app->guiManager->Draw();
 
 	return ret;
 }
