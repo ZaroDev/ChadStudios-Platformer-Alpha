@@ -8,6 +8,7 @@
 #include "Eagle.h"
 #include "Cherry.h"
 #include "Gem.h"
+#include "Door.h"
 #include "Audio.h"
 #include "Window.h"
 #include "Render.h"
@@ -149,6 +150,7 @@ void EntityManager::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			{
 				bodyB->eListener->health--;
 				app->audio->PlayFx(hitSFX);
+				app->ui->AddScore(150);
 			}
 
 			else if (topA > botB && currentPlayer->GetState() != EntityState::HURT)
@@ -211,6 +213,7 @@ Entity* EntityManager::CreateEntity(EntityType type, iPoint position)
 		case EntityType::GEM: ret = new Gem(position); break;
 		case EntityType::CHERRY	: ret = new Cherry(position); break;
 		case EntityType::CHECKPOINT: ret = new CheckPoint(position); break;
+		case EntityType::DOOR: ret = new Door(position); break;
 	}
 
 	if (ret != nullptr)

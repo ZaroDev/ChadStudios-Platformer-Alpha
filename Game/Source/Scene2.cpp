@@ -49,6 +49,10 @@ bool Scene2::Start()
 
 	app->map->Enable();
 	app->audio->Enable();
+
+	Player* player = (Player*)app->entman->CreateEntity(PLAYER, iPoint{ 23, 170 });
+	app->entman->SetPlayer(player);
+	app->die = false;
 	app->currentScene = 2;
 	if (app->map->Load("map2.tmx") == true)
 	{
@@ -144,6 +148,7 @@ bool Scene2::CleanUp()
 	app->entman->DestroyAllEntities();
 	app->map->Unload();
 	app->map->Disable();
+
 	app->physics->Disable();
 	return true;
 }

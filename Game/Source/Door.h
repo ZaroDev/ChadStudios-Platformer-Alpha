@@ -9,6 +9,8 @@ public:
 	bool IsActivated();
 	void Activate();
 
+	void Use();
+
 	void Update(float dt);
 private:
 	bool activated = false;

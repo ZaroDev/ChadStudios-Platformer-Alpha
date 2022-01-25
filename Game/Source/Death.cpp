@@ -9,6 +9,8 @@
 #include "EntityManager.h"
 #include "Defs.h"
 #include "Log.h"
+#include "Fonts.h"
+
 
 Death::Death(bool startEnabled) : Module(startEnabled)
 {
@@ -118,6 +120,7 @@ bool Death::Update(float dt)
 		SDL_Rect rect = winAnim.GetCurrentFrame();
 		app->render->DrawTexture(winImg, 137, 172, &rect);
 		app->render->DrawTexture(winImg, 370, 172, &rect);
+
 	}
 
 	return ret;

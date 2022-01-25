@@ -14,7 +14,7 @@
 //#pragma comment(lib, "../Game/Source/External/SDL/libx86/SDL2main.lib")
 
 #ifdef _DEBUG
-#pragma comment(lib, "../Game/Source/External/Optick/lib/debug/OptickCore.lib")
+#pragma comment(lib, "../Game/Source/External/Optick/lib/_debug/OptickCore.lib")
 #else
 #pragma comment(lib, "../Game/Source/External/Optick/lib/release/OptickCore.lib")
 

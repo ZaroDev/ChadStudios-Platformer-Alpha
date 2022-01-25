@@ -46,6 +46,7 @@ bool Scene::Start()
 	background = app->tex->Load(tmp.GetString());
 	jungle = app->tex->Load(tmp2.GetString());
 	LOG("%s", tmp.GetString());
+	app->currentScene = 1;
 	app->physics->Enable();
 	app->map->Enable();
 	app->pathfinding->Enable();
