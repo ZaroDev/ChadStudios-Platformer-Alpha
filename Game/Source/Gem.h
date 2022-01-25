@@ -4,7 +4,7 @@
 class Gem : public Entity
 {
 public:
-	Gem(iPoint position_);
+	Gem(iPoint position_, int ID);
 
 
 	bool IsActivated();
@@ -13,6 +13,4 @@ public:
 	void Use();
 
 	void Update(float dt);
-private:
-	bool activated = false;
 };

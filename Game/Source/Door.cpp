@@ -1,7 +1,9 @@
 #include "Door.h"
 
-Door::Door(iPoint position_) : Entity(EntityType::DOOR, position_)
+Door::Door(iPoint position_, int ID_) : Entity(EntityType::DOOR, position_)
 {
+	this->ID = ID_;
+	name.Create("door%i", ID);
 	this->w = 16;
 	this->h = 32;
 	pbody = app->physics->CreateRectangleSensor(position.x, position.y, w, h, STATIC);
@@ -16,14 +18,15 @@ bool Door::IsActivated()
 
 void Door::Activate()
 {
-	this->activated = true;
 }
 
 void Door::Use()
 {
-	app->currentScene++;
+	setPendingToDelete = true;
 }
 
 void Door::Update(float dt)
 {
 }
+
+

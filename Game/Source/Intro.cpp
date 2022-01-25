@@ -50,7 +50,7 @@ bool Intro::Start()
 	SString tmp3("%s%s", folder.GetString(), "enter.png");
 	SString tmp4("%s%s", audioFile.GetString(), "music/intro.wav");
 	app->audio->PlayMusic(tmp4.GetString());
-
+	app->currentScene = 0;
 	background = app->tex->Load(tmp.GetString());
 	logoImg = app->tex->Load(tmp2.GetString());
 	enterImg = app->tex->Load(tmp3.GetString());

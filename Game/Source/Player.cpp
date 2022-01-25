@@ -12,6 +12,7 @@
 
 Player::Player(iPoint position_) : Entity(EntityType::PLAYER, position_)
 {
+	name.Create("player");
 	LoadAnims();
 	maxVel = 5;
 	minVel = 2.5;
@@ -36,6 +37,13 @@ void Player::Use()
 void Player::Update(float dt)
 {
 	bool ret = true;
+
+	if (this->health <= 0 || this->position.y >= 1000)
+	{
+		app->die = true;
+		return;
+	}
+
 	position.x = METERS_TO_PIXELS(pbody->body->GetPosition().x);
 	position.y = METERS_TO_PIXELS(pbody->body->GetPosition().y);
 
@@ -181,10 +189,7 @@ void Player::Update(float dt)
 				currentAnimation = &downAnimR;
 	}
 
-	if (this->health <= 0)
-	{
-		app->die = true;
-	}
+	
 	
 	currentAnimation->Update();
 
@@ -300,29 +305,25 @@ void Player::Initialize()
 
 
 
-/*bool Player::LoadState(pugi::xml_node& data)
+bool Player::LoadState(pugi::xml_node& data)
 {
 	bool ret = true;
-	pos.x = data.child("pos").attribute("x").as_int();
-	pos.y = data.child("pos").attribute("y").as_int();
-	pbody->body->SetTransform({ PIXEL_TO_METERS(pos.x), PIXEL_TO_METERS(pos.y) }, 0.0f);
-	currentScene = data.child("start").attribute("value").as_int();
-	lives = data.child("values").attribute("lives").as_int();
-	score = data.child("values").attribute("score").as_int();
+	position.x = data.child("pos").attribute("x").as_int();
+	position.y = data.child("pos").attribute("y").as_int();
+	pbody->body->SetTransform({ PIXEL_TO_METERS(position.x), PIXEL_TO_METERS(position.y) }, 0.0f);
+	health = data.child("values").attribute("lives").as_int();
+	
 	return ret;
 }
 
 
-bool Player::SaveState(pugi::xml_node&data) const
+bool Player::SaveState(pugi::xml_node&data) 
 {
 	bool ret = true;
 	pugi::xml_node posN = data.append_child("pos");
 	posN.append_attribute("x").set_value(position.x);
-	posN.append_attribute("y").set_value(pos.y);
-	pugi::xml_node currentState = data.append_child("start");
-	currentState.append_attribute("value").set_value(currentScene);
+	posN.append_attribute("y").set_value(position.y);
 	pugi::xml_node values = data.append_child("values");
-	values.append_attribute("lives").set_value(lives);
-	values.append_attribute("score").set_value(score);
+	values.append_attribute("lives").set_value(health);
 	return true;
-}*/
+}

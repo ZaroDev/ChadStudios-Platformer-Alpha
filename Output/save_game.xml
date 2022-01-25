@@ -17,8 +17,8 @@
 	<:anonymous />
 	<map />
 	<ui />
-	<entities />
+	<entities currentScene="3" />
 	<render>
-		<camera x="0" y="-1910" />
+		<camera x="-1068" y="-1482" />
 	</render>
 </game_state>

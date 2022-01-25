@@ -30,7 +30,8 @@ bool Scene2::Awake(pugi::xml_node& config)
 	bool ret = true;
 	folder.Create(config.child("folder").child_value());
 	audioFile.Create(config.child("audio").child_value());
-	winX = config.child("winX").attribute("value").as_int();
+	startX = config.child("startX").attribute("value").as_int();
+	startY = config.child("startY").attribute("value").as_int();
 	LOG("%s", folder.GetString());
 	return ret;
 }
@@ -49,11 +50,11 @@ bool Scene2::Start()
 
 	app->map->Enable();
 	app->audio->Enable();
+	app->currentScene = 2;
 
-	Player* player = (Player*)app->entman->CreateEntity(PLAYER, iPoint{ 23, 170 });
+	Player* player = (Player*)app->entman->CreateEntity(PLAYER, iPoint{ startX, startY });
 	app->entman->SetPlayer(player);
 	app->die = false;
-	app->currentScene = 2;
 	if (app->map->Load("map2.tmx") == true)
 	{
 		int w, h;
@@ -86,10 +87,10 @@ bool Scene2::Update(float dt)
 
 
 	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
-		app->LoadGameRequest();
+		app->SaveGameRequest();
 
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
-		app->SaveGameRequest();
+		app->LoadGameRequest();
 
 	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN || app->die)
 		app->fadeToBlack->MFadeToBlack(this, (Module*)app->death);
@@ -112,7 +113,7 @@ bool Scene2::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN || app->currentScene == 1)
 		app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene);
 	
-	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN ||app->entman->currentPlayer->GetPos().x == winX)
+	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN || app->currentScene == 3)
 	{
 		app->fadeToBlack->MFadeToBlack(this, (Module*)app->death);
 		app->win_ = true;

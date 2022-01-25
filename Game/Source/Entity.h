@@ -39,14 +39,32 @@ public:
 	int GetHealth() { return health; }
 	EntityState GetState() { return currentState; }
 	void SetState(EntityState state) { currentState = state; }
+	virtual bool LoadState(pugi::xml_node& data)	
+	{
+		bool ret = true;
+		active = data.attribute("active").as_bool();
 
+		return ret;
+	}
+
+	virtual bool SaveState(pugi::xml_node& data)
+	{
+		bool ret = true;
+		
+		data.append_attribute("active").set_value(active);
+
+		return ret;
+	}
 	virtual void SetTarget(Entity* target) {};
 	virtual Entity* GetTarget() { return nullptr; };
 	friend class EntityManager;
 
 protected:
+	int ID;
+	SString name;
 	PhysBody* pbody;
 	EntityType type;
+	bool active = true;
 	bool setPendingToDelete;
 	iPoint position;
 	Animation* currentAnimation;

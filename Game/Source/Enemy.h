@@ -76,7 +76,28 @@ public:
 	{
 		return target;
 	}
+	bool LoadState(pugi::xml_node& data)
+	{
+		bool ret = true;
+		position.x = data.child("pos").attribute("x").as_int();
+		position.y = data.child("pos").attribute("y").as_int();
+		pbody->body->SetTransform({ PIXEL_TO_METERS(position.x), PIXEL_TO_METERS(position.y) }, 0.0f);
+		health = data.child("values").attribute("lives").as_int();
 
+		return ret;
+	}
+
+
+	bool SaveState(pugi::xml_node& data)
+	{
+		bool ret = true;
+		pugi::xml_node posN = data.append_child("pos");
+		posN.append_attribute("x").set_value(position.x);
+		posN.append_attribute("y").set_value(position.y);
+		pugi::xml_node values = data.append_child("values");
+		values.append_attribute("lives").set_value(health);
+		return true;
+	}
 public:
 	int speed = 10;
 	Entity* target;

@@ -23,12 +23,15 @@ public:
 
 	void Initialize();
 
-	int currentScene;
 	bool grounded;
 	bool god;
 	bool useDownDash;
 	int abilityCD;
 	bool hurt;
+
+	bool LoadState(pugi::xml_node&);
+	
+	bool SaveState(pugi::xml_node&);
 private:
 	//Jump sound
 	int jumpSFX;

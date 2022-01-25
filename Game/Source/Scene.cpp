@@ -31,7 +31,8 @@ bool Scene::Awake(pugi::xml_node& config)
 	bool ret = true;
 	folder.Create(config.child("folder").child_value());
 	audioFile.Create(config.child("audio").child_value());
-	winX = config.child("winX").attribute("value").as_int();
+	startX = config.child("startX").attribute("value").as_int();
+	startY = config.child("startY").attribute("value").as_int();
 	LOG("%s", folder.GetString());
 	return ret;
 }
@@ -51,7 +52,7 @@ bool Scene::Start()
 	app->map->Enable();
 	app->pathfinding->Enable();
 	app->ui->Enable();
-	Player* player = (Player*)app->entman->CreateEntity(PLAYER, iPoint{ 50, 800 });
+	Player* player = (Player*)app->entman->CreateEntity(PLAYER, iPoint{ startX, startY });
 	app->entman->SetPlayer(player);
 	app->die = false;
 	if (app->map->Load("map.tmx") == true)
@@ -83,7 +84,7 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	
+	LOG("%i\n", app->currentScene);
 
 	if(app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		app->SaveGameRequest();
@@ -107,7 +108,6 @@ bool Scene::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN || app->currentScene == 2)
 	{
 		app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene2);
-		app->currentScene = 2;
 	}
 	
 	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN || app->die)

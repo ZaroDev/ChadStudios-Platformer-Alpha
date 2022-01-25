@@ -42,4 +42,11 @@ private:
 	SDL_Texture* enemiesTex;
 	SDL_Texture* path;
 	SString folder;
+
+	int numRat = 0;
+	int numEagle = 0;
+	int numGem = 0;
+	int numDoor = 0;
+	int numCheckPoint = 0;
+	int numCherry = 0;
 };

@@ -20,18 +20,25 @@ public:
 	bool CleanUp();
 
 	void AddScore(int score);
+
+	void ResetScore();
+
+	bool LoadState(pugi::xml_node&);
+
+	bool SaveState(pugi::xml_node&);
+
 private:
 	SDL_Texture* heart;
 	SDL_Texture* gem;
 	SDL_Texture* anim;
-	
+	int counter = 0;
 	int score = 0;
 	int font;
-
+	int scoreMult = 1;
 	Animation heartAnim;
 	Animation gemAnim;
 	Animation abAnim;
-
+	int highScore = 0;
 	SString folder;
 };
 

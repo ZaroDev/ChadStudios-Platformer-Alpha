@@ -1,8 +1,10 @@
 #include "Gem.h"
 
 
-Gem::Gem(iPoint position_) : Entity(EntityType::GEM, position_)
+Gem::Gem(iPoint position_, int ID_) : Entity(EntityType::GEM, position_)
 {
+	this->ID = ID_;
+	name.Create("gem%i", ID);
 	this->anim.PushBack({ 0, 1, 13, 11 });
 	this->anim.PushBack({ 15, 1, 13, 11 });
 	this->anim.PushBack({ 30, 1, 13, 11 });
@@ -19,16 +21,17 @@ Gem::Gem(iPoint position_) : Entity(EntityType::GEM, position_)
 
 bool Gem::IsActivated()
 {
-	return this->activated;
+	return this->active;
 }
 
 void Gem::Activate()
 {
-	this->activated = true;
+	active = true;
 }
 
 void Gem::Use()
 {
+	active = false;
 	setPendingToDelete = true;
 }
 
@@ -36,6 +39,7 @@ void Gem::Update(float dt)
 {
 	anim.Update();
 
-	if (this->IsActivated())
+	if (!this->IsActivated())
 		this->setPendingToDelete = true;
 }
+

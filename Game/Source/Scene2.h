@@ -39,7 +39,8 @@ private:
 	SDL_Texture* jungle;
 	SString folder;
 	SString audioFile;
-	int winX;
+	int startX;
+	int startY;
 };
 
 #endif // __SCENE_H__

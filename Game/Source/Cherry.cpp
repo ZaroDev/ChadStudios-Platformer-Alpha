@@ -1,8 +1,10 @@
 #include "Cherry.h"
 
 
-Cherry::Cherry(iPoint position_) : Entity(EntityType::CHERRY, position_)
+Cherry::Cherry(iPoint position_, int ID_) : Entity(EntityType::CHERRY, position_)
 {
+	this->ID = ID_;
+	name.Create("cherry%i", ID);
 	this->anim.PushBack({ 0, 14, 16, 16 });
 	this->anim.PushBack({ 22, 14, 16, 16 });
 	this->anim.PushBack({ 44, 14, 16, 16 });
@@ -18,21 +20,26 @@ Cherry::Cherry(iPoint position_) : Entity(EntityType::CHERRY, position_)
 
 bool Cherry::IsActivated()
 {
-	return this->activated;
+	return this->active;
 }
 
 void Cherry::Activate()
 {
-	this->activated = true;
+	this->active = true;
 }
 
 void Cherry::Update(float dt)
 {
 	anim.Update();
+	if (!this->IsActivated())
+		setPendingToDelete = true;
 	
 }
 
 void Cherry::Use()
 {
+	active = false;
 	setPendingToDelete = true;
 }
+
+

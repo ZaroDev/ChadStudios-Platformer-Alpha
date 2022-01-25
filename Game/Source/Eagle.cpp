@@ -5,8 +5,10 @@
 #include "Map.h"
 #include "SDL/include/SDL.h"
 
-Eagle::Eagle(iPoint position_, Entity* target) : Enemy(EntityType::ENEMY_EAGLE, position_, target)
+Eagle::Eagle(iPoint position_, Entity* target, int ID_) : Enemy(EntityType::ENEMY_EAGLE, position_, target)
 {
+	this->ID = ID_;
+	name.Create("eagle%i", ID);
 	anim.PushBack({ 0,28,38,42 });
 	anim.PushBack({ 40,31,40,40 });
 	anim.PushBack({ 80,40,32,30 });

@@ -189,17 +189,55 @@ void EntityManager::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			bodyB->eListener->Use();
 			return;
 		}
+		else if (bodyB->eListener->type == DOOR)
+		{
+			if (app->currentScene == 2)
+			{
+				app->win_ = true;
+				app->currentScene = 3;
+			}
+			else
+			{
+				app->currentScene = 2;
+			}
+			app->SaveGameRequest();
+			bodyB->eListener->Use();
+			return;
+		}
 	}
 }
 
 bool EntityManager::SaveState(pugi::xml_node& data) const
 {
-	return false;
+	bool ret = true;
+
+	ListItem<Entity*>* item;
+	item = entities.start;
+
+	while (item != NULL && ret == true)
+	{
+		data.append_child(item->data->name.GetString());
+		ret = item->data->SaveState(data.child(item->data->name.GetString()));
+		item = item->next;
+	}
+	data.append_attribute("currentScene").set_value(app->currentScene);
+	return ret;
 }
 
 bool EntityManager::LoadState(pugi::xml_node& data)
 {
-	return false;
+	bool ret = true;
+
+	ListItem<Entity*>* item;
+	item = entities.start;
+
+	while (item != NULL && ret == true)
+	{
+		ret = item->data->LoadState(data.child(item->data->name.GetString()));
+		item = item->next;
+	}
+	app->currentScene = data.attribute("currentScene").as_int();
+	return ret;
 }
 
 Entity* EntityManager::CreateEntity(EntityType type, iPoint position)
@@ -207,13 +245,37 @@ Entity* EntityManager::CreateEntity(EntityType type, iPoint position)
 	Entity* ret = nullptr;
 	switch (type)
 	{
-		case EntityType::PLAYER: ret = new Player(position); break;
-		case EntityType::ENEMY_EAGLE: ret = new Eagle(position, currentPlayer); break;
-		case EntityType::ENEMY_RAT: ret = new Rat(position, currentPlayer); break;
-		case EntityType::GEM: ret = new Gem(position); break;
-		case EntityType::CHERRY	: ret = new Cherry(position); break;
-		case EntityType::CHECKPOINT: ret = new CheckPoint(position); break;
-		case EntityType::DOOR: ret = new Door(position); break;
+		case EntityType::PLAYER:ret = new Player(position); break;
+		case EntityType::ENEMY_EAGLE:
+		{
+			ret = new Eagle(position, currentPlayer, numEagle);
+			numEagle++;
+		}break;
+		case EntityType::ENEMY_RAT:
+		{
+			ret = new Rat(position, currentPlayer, numRat);
+			numRat++;
+		}break;
+		case EntityType::GEM:
+		{
+			ret = new Gem(position, numGem);
+			numGem++;
+		}break;
+		case EntityType::CHERRY	:
+		{
+			ret = new Cherry(position, numCherry);
+			numCherry++;
+		}break;
+		case EntityType::CHECKPOINT:
+		{
+			ret = new CheckPoint(position, numCheckPoint);
+			numCheckPoint++;
+		}break;
+		case EntityType::DOOR:
+		{
+			ret = new Door(position, numDoor);
+			numDoor++;
+		}break;
 	}
 
 	if (ret != nullptr)

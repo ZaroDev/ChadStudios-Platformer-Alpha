@@ -64,34 +64,84 @@ bool UI::Start()
 
 bool UI::PostUpdate()
 {
-	heartAnim.Update();
-	gemAnim.Update();
-	abAnim.Update();
-	if (app->entman->currentPlayer->GetHealth() == 3)
+	if (app->currentScene == 1 || app->currentScene == 2)
 	{
-		app->render->DrawTexture(heart, 115, 10, &heartAnim.GetCurrentFrame(), true);
+		heartAnim.Update();
+		gemAnim.Update();
+		abAnim.Update();
+		if (app->entman->currentPlayer->GetHealth() == 3)
+		{
+			app->render->DrawTexture(heart, 115, 10, &heartAnim.GetCurrentFrame(), true);
+		}
+		if (app->entman->currentPlayer->GetHealth() >= 2)
+		{
+			app->render->DrawTexture(heart, 60, 10, &heartAnim.GetCurrentFrame(), true);
+		}
+		if (app->entman->currentPlayer->GetHealth() >= 1)
+		{
+			app->render->DrawTexture(heart, 5, 10, &heartAnim.GetCurrentFrame(), true);
+		}
+		SString tmp("%4d", score);
+		SString tmp2("%d", (360 - app->entman->currentPlayer->abilityCD) / app->framesPerSecond);
+		scoreMult = app->entman->currentPlayer->GetHealth();
+		app->render->DrawTexture(gem, 1550, 10, &gemAnim.GetCurrentFrame(), true);
+		app->fonts->BlitText(480, 5, font, tmp.GetString());
+		if (app->entman->currentPlayer->abilityCD != 0)
+		{
+			app->fonts->BlitText(480, 270, font, tmp2.GetString());
+		}
+		else
+		{
+			app->render->DrawTexture(anim, 1420, 790, &abAnim.GetCurrentFrame(), true);
+		}
 	}
-	if (app->entman->currentPlayer->GetHealth() >= 2)
+	else if (app->currentScene == 3)
 	{
-		app->render->DrawTexture(heart, 60, 10, &heartAnim.GetCurrentFrame(), true);
-	}
-	if (app->entman->currentPlayer->GetHealth() >= 1)
-	{
-		app->render->DrawTexture(heart, 5, 10, &heartAnim.GetCurrentFrame(), true);
-	}
-	SString tmp("%4d", score);
-	SString tmp2("%d", (360 - app->entman->currentPlayer->abilityCD) / app->framesPerSecond);
+		SString tmp("score %4d", score);
+		SString tmp2("score mult %i", scoreMult);
+		SString tmp3("total score %4d", scoreMult * score);
+		SString tmp4;
+		counter++;
+		if (highScore < scoreMult * score)
+		{
+			highScore = scoreMult * score;
+			tmp4.Create("high score %4d", highScore);
+		}
+		else
+		{
+			tmp4.Create("new high score %4d", highScore);
+		}
+		if (counter <= 120)
+		{
+			if ((counter / 60) % 2 == 0)
+				app->fonts->BlitText(100, 50, font, tmp.GetString());
+		}
+		else
+			app->fonts->BlitText(100, 50, font, tmp.GetString());
 
-	app->render->DrawTexture(gem, 1550, 10, &gemAnim.GetCurrentFrame(), true);
-	app->fonts->BlitText(480, 5, font, tmp.GetString()); 
-	if (app->entman->currentPlayer->abilityCD != 0)
-	{
-		app->fonts->BlitText(480, 270, font, tmp2.GetString());
-	}
-	else
-	{
-		
-		app->render->DrawTexture(anim, 1420, 790, &abAnim.GetCurrentFrame(), true);
+		if (counter <= 180)
+		{
+			if ((counter / 60) % 2 == 0)
+			app->fonts->BlitText(100, 100, font, tmp2.GetString());
+		}
+		else
+			app->fonts->BlitText(100, 100, font, tmp2.GetString());
+
+		if (counter <= 240)
+		{
+			if ((counter / 60) % 2 == 0)
+				app->fonts->BlitText(100, 150, font, tmp3.GetString());
+		}
+		else
+			app->fonts->BlitText(100, 150, font, tmp3.GetString());
+
+		if (counter <= 300)
+		{
+			if ((counter / 60) % 2 == 0)
+				app->fonts->BlitText(100, 200, font, tmp4.GetString());
+		}
+		else
+			app->fonts->BlitText(100, 200, font, tmp4.GetString());
 	}
 	return true;
 }
@@ -109,4 +159,26 @@ bool UI::CleanUp()
 void UI::AddScore(int score)
 {
 	this->score += score;
+}
+
+void UI::ResetScore()
+{
+	score = 0;
+}
+
+bool UI::LoadState(pugi::xml_node&data)
+{
+	score = data.child("score").attribute("value").as_int();
+	highScore = data.child("highscore").attribute("value").as_int();
+
+	return true;
+}
+
+bool UI::SaveState(pugi::xml_node&data)
+{
+	pugi::xml_node scr = data.append_child("score");
+	scr.append_attribute("value").set_value(score);
+	pugi::xml_node hscr = data.append_child("highscore");
+	hscr.append_attribute("value").set_value(highScore);
+	return true;
 }

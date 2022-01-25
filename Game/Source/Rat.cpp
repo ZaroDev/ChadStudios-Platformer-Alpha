@@ -5,8 +5,10 @@
 #include "Map.h"
 #include "SDL/include/SDL.h"
 
-Rat::Rat(iPoint position_, Entity* target) : Enemy(EntityType::ENEMY_RAT, position_, target)
+Rat::Rat(iPoint position_, Entity* target, int ID_) : Enemy(EntityType::ENEMY_RAT, position_, target)
 {
+	this->ID = ID_;
+	name.Create("rat%i", ID);
 	anim.PushBack({ 0,3, 28, 25 });
 	anim.PushBack({ 39, 4, 29, 22 });
 	anim.PushBack({ 75, 6, 32, 20 });

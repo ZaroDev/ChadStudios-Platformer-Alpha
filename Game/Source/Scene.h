@@ -43,7 +43,8 @@ private:
 	
 	SString folder;
 	SString audioFile;
-	int winX;
+	int startX;
+	int startY;
 
 	iPoint origin;
 	bool originSelected = false;

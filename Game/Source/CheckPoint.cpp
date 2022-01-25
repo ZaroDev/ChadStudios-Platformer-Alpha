@@ -5,8 +5,10 @@
 #include "Audio.h"
 
 
-CheckPoint::CheckPoint(iPoint position_) : Entity(EntityType::CHECKPOINT, position_)
+CheckPoint::CheckPoint(iPoint position_, int ID_) : Entity(EntityType::CHECKPOINT, position_)
 {
+	this->ID = ID_;
+	name.Create("checkpoint%i", ID);
 	anim.PushBack({ 64, 0, 32, 53 });
 	anim.PushBack({ 32, 0, 32, 53 });
 	anim.PushBack({ 0, 0, 32, 53 });
@@ -16,22 +18,23 @@ CheckPoint::CheckPoint(iPoint position_) : Entity(EntityType::CHECKPOINT, positi
 	this->h = 53;
 	pbody = app->physics->CreateRectangleSensor(position.x, position.y, w, h, STATIC);
 	pbody->eListener = this;
+	this->active = false;
 	currentAnimation = &anim;
 }
 
 bool CheckPoint::IsActivated()
 {
-	return activated;
+	return active;
 }
 
 void CheckPoint::Activate()
 {
-	activated = true;
+	active = true;
 }
 
 void CheckPoint::Update(float dt)
 {
-	if (activated && !anim.HasFinished())
+	if (this->IsActivated() && !anim.HasFinished())
 		anim.Update();
 }
 
@@ -39,6 +42,8 @@ void CheckPoint::Use()
 {
 	this->Activate();
 }
+
+
 
 
 

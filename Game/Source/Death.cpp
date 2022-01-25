@@ -10,6 +10,7 @@
 #include "Defs.h"
 #include "Log.h"
 #include "Fonts.h"
+#include "UI.h"
 
 
 Death::Death(bool startEnabled) : Module(startEnabled)
@@ -53,14 +54,13 @@ bool Death::Start()
 	SString tmp3("%s%s", audioFile.GetString(), "music/end.wav");
 	SString tmp4("%s%s", folder.GetString(), "win.png");
 	SString tmp5("%s%s", folder.GetString(), "gem.png");
+	app->currentScene = 3;
 	app->audio->PlayMusic(tmp3.GetString());
-
 	backgroundDeath = app->tex->Load(tmp.GetString());
 	deathImg = app->tex->Load(tmp2.GetString());
 	backgroundWin = app->tex->Load(tmp4.GetString());
 	winImg = app->tex->Load(tmp5.GetString());
 	app->tex->Enable();
-
 	app->render->camera.x = app->render->camera.y = 0;
 	return true;
 }
@@ -80,9 +80,7 @@ bool Death::Update(float dt)
 		if (app->die)
 		{
 			app->hasLost = true;
-		}
-		if (app->die)
-		{
+		
 			if (app->currentScene == 1)
 			{
 				app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene);
@@ -96,6 +94,7 @@ bool Death::Update(float dt)
 		else
 		{
 			app->currentScene = 1;
+			app->ui->ResetScore();
 			app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene);
 		}
 	}
@@ -113,7 +112,7 @@ bool Death::Update(float dt)
 		app->render->DrawTexture(deathImg, 91, 181, &rect);
 		app->render->DrawTexture(deathImg, 416, 181, &rect);
 	}
-	if (app->win)
+	if (app->win_)
 	{
 		winAnim.Update();	
 		app->render->DrawTexture(backgroundWin, 0, 0, NULL);
