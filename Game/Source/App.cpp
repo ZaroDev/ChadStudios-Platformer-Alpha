@@ -397,6 +397,8 @@ bool App::LoadGame()
 
 	loadGameRequested = false;
 
+	hasloaded = gameStateFile.child("hasloaded").attribute("value").as_bool();
+
 	return ret;
 }
 
@@ -407,6 +409,8 @@ bool App::SaveGame() const
 
 	pugi::xml_document* saveDoc = new pugi::xml_document();
 	pugi::xml_node saveStateNode = saveDoc->append_child("game_state");
+
+	saveStateNode.append_child("hasloaded").append_attribute("value").set_value(hasloaded);
 
 	ListItem<Module*>* item;
 	item = modules.start;
@@ -419,7 +423,6 @@ bool App::SaveGame() const
 	ret = saveDoc->save_file("save_game.xml");
 
 	saveGameRequested = false;
-
 	return ret;
 }
 

@@ -1,4 +1,5 @@
 #include "App.h"
+#include "EntityManager.h"
 #include "Input.h"
 #include "Textures.h"
 #include "Audio.h"
@@ -59,8 +60,11 @@ bool Intro::Start()
 	uint x;
 	uint y;
 	app->win->GetWindowSize(x,y);
-	btn1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Test1", { ((int)x / 2) - 700, (int)y / 10, 160, 40}, this);
-	btn2 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Test2", { ((int)x / 2) -400, (int)y / 10, 160, 40 }, this);
+	btn1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Test1", { ((int)x / 2) - 625, (int)y / 10, 160, 40}, this);
+	btn2 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Test2", { ((int)x / 2) - 625, ((int)y / 10) + 50, 160, 40 }, this);
+	btn3 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "Test3", { ((int)x / 2) - 625, ((int)y / 10) + 100, 160, 40 }, this);
+	btn4 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "Test4", { ((int)x / 2) - 625, ((int)y / 10) + 150, 160, 40 }, this);
+	btn5 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "Test5", { ((int)x / 2) - 400, ((int)y / 10) + 150, 75, 30 }, this);
 
 	return true;
 }
@@ -81,6 +85,15 @@ bool Intro::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		app->SaveGameRequest();
+	if (load) 
+	{
+		app->LoadGameRequest();
+		load = false;
+		if (app->hasloaded == false)
+		{
+			btn2->state = GuiControlState::DISABLED;
+		}
+	}
 	logoAnim.Update();
 	return true;
 }
@@ -119,10 +132,26 @@ bool Intro::OnGuiMouseClickEvent(GuiControl* control)
 		//Checks the GUI element ID
 		if (control->id == 1)
 		{
-			LOG("Click on button 1");
+			app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene);
 		}
 
 		if (control->id == 2)
+		{
+			//checkear archivo cargado
+			app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene);
+		}
+		
+		if (control->id == 3)
+		{
+			LOG("Click on button 2");
+		}
+		
+		if (control->id == 4)
+		{
+			LOG("Click on button 2");
+		}
+		
+		if (control->id == 5)
 		{
 			LOG("Click on button 2");
 		}
