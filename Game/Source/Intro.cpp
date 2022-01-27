@@ -74,10 +74,11 @@ bool Intro::Start()
 	btn4 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, GuiButtonType::EXIT, 4, "Test4", { ((int)x / 2) - 600, ((int)y / 10) + 150, 97, 42 }, this);
 
 	btn5 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, GuiButtonType::CREDITS, 5, "Test5", { ((int)x / 2) - 400, ((int)y / 10) + 150, 97, 42 }, this);
-
-
-
 	
+	btn6 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, GuiButtonType::CLOSE, 6, "Test6", { ((int)x / 2) - 350, ((int)y / 10) - 65, 97, 42 }, this);
+
+
+	btn6->state = GuiControlState::DISABLED;
 
 	settingsShow = false;
 	creditShow = false;
@@ -135,8 +136,6 @@ bool Intro::PostUpdate()
 	app->render->DrawTexture(logoImg, 0, 0, &rect);
 
 	//Draw GUI
-	app->guiManager->Draw();
-
 	if (creditShow == true)
 	{
 		app->render->DrawTexture(credits, 75, 25, NULL);
@@ -145,6 +144,10 @@ bool Intro::PostUpdate()
 	{
 		app->render->DrawTexture(settings, 75, 25, NULL);
 	}
+
+	app->guiManager->Draw();
+
+	
 	return ret;
 }
 
@@ -179,6 +182,7 @@ bool Intro::OnGuiMouseClickEvent(GuiControl* control)
 			btn3->state = GuiControlState::DISABLED;
 			btn4->state = GuiControlState::DISABLED;
 			btn5->state = GuiControlState::DISABLED;
+			btn6->state = GuiControlState::NORMAL;
 		}
 		
 		if (control->id == 4)
@@ -194,8 +198,20 @@ bool Intro::OnGuiMouseClickEvent(GuiControl* control)
 			btn3->state = GuiControlState::DISABLED;
 			btn4->state = GuiControlState::DISABLED;
 			btn5->state = GuiControlState::DISABLED;
+			btn6->state = GuiControlState::NORMAL;
 		}
 
+		if (control->id == 6)
+		{
+			creditShow = false;
+			settingsShow = false;
+			btn1->state = GuiControlState::NORMAL;
+			btn2->state = GuiControlState::NORMAL;
+			btn3->state = GuiControlState::NORMAL;
+			btn4->state = GuiControlState::NORMAL;
+			btn5->state = GuiControlState::NORMAL;
+			btn6->state = GuiControlState::DISABLED;
+		}
 	}
 	//Other cases here
 

@@ -22,6 +22,7 @@ bool GuiManager::Start()
 	creditsTex = app->tex->Load("Assets/textures/GUI/credits.png");
 	resumeTex = app->tex->Load("Assets/textures/GUI/resume.png");
 	bttTex = app->tex->Load("Assets/textures/GUI/backToTitle.png");
+	closeTex = app->tex->Load("Assets/textures/GUI/close.png");
 	return true;
 }
 
@@ -124,6 +125,9 @@ bool GuiManager::Draw() {
 			break;		
 		case GuiButtonType::BACKTOTILE:
 			control->data->Draw(app->render, bttTex);
+			break;	
+		case GuiButtonType::CLOSE:
+			control->data->Draw(app->render, closeTex);
 			break;		
 		}
 
@@ -153,6 +157,7 @@ bool GuiManager::CleanUp()
 	app->tex->UnLoad(creditsTex);
 	app->tex->UnLoad(resumeTex);
 	app->tex->UnLoad(bttTex);
+	app->tex->UnLoad(closeTex);
 
 	return true;
 }
