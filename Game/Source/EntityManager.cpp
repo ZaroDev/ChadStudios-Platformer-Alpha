@@ -185,10 +185,10 @@ void EntityManager::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		}
 		else if (bodyB->eListener->type == CHECKPOINT)
 		{
-			app->SaveConfigRequest();
+
 			app->SaveGameRequest();
 			bodyB->eListener->Use();
-			app->hasLoaded = true;
+
 			return;
 		}
 		else if (bodyB->eListener->type == DOOR)
@@ -202,8 +202,7 @@ void EntityManager::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			{
 				app->currentScene = 2;
 			}
-			app->hasLoaded = true;
-			app->SaveConfigRequest();
+			
 			bodyB->eListener->Use();
 			return;
 		}
@@ -213,7 +212,8 @@ void EntityManager::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 bool EntityManager::SaveState(pugi::xml_node& data) const
 {
 	bool ret = true;
-
+	if (!this->IsEnabled())
+		return ret;
 	ListItem<Entity*>* item;
 	item = entities.start;
 
@@ -230,7 +230,8 @@ bool EntityManager::SaveState(pugi::xml_node& data) const
 bool EntityManager::LoadState(pugi::xml_node& data)
 {
 	bool ret = true;
-
+	if (!this->IsEnabled())
+		return ret;
 	ListItem<Entity*>* item;
 	item = entities.start;
 
@@ -301,6 +302,12 @@ void EntityManager::SetPlayer(Player* player)
 void EntityManager::DestroyAllEntities()
 {
 	entities.Clear();
+	numCherry = 0;
+	numCheckPoint = 0;
+	numRat = 0;
+	numEagle = 0;
+	numDoor = 0;
+	numGem = 0;
 }
 void EntityManager::DrawPath(SDL_Texture* tex)
 {

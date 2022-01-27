@@ -1,57 +1,53 @@
-<!-- Config file for the game -->
-<!-- L01: DONE 1: Create configuration file-->
+<?xml version="1.0"?>
 <config>
-  <app>
-    <title>Sunny Land 2D</title>
-    <organization>UPC</organization>
-    <frcap value = "16"/>
-  </app>
-
-  <render>
-    <vsync value="false"/>
-  </render>
-
-  <window>
-    <resolution width="1600" height="900" scale="3"/>
-    <fullscreen value="false"/>
-    <borderless value="false"/>
-    <resizable value="false"/>
-    <fullscreen_window value="false"/>
-    <folder>Assets/Icon.png</folder>
-  </window>
-  <audio>
-    <music value="5" />
-    <fx value="5" />
-  </audio>
-  <ui>
-    <folder>Assets/textures/UI/</folder>
-  </ui>
-  <entities>
-    <folder>Assets/textures/sprites/</folder>
-    <sfx>Assets/audio/fx/</sfx>
-  </entities>
-  <!-- L03: Added maps folder as config option -->
-  <map>
-    <folder>Assets/maps/</folder>
-  </map>
-  <intro>
-    <audio>Assets/audio/</audio>
-    <folder>Assets/maps/</folder>
-  </intro>
-  <scene>
-    <audio>Assets/audio/</audio>
-    <folder>Assets/maps/</folder>
-    <startX value="23"></startX>
-    <startY value="830"></startY>
-  </scene>
-  <scene2>
-    <audio>Assets/audio/</audio>
-    <folder>Assets/maps/</folder>
-    <startX value="23"></startX>
-    <startY value="170"></startY>
-  </scene2>
-  <death>
-    <audio>Assets/audio/</audio>
-    <folder>Assets/maps/</folder>
-  </death>
+	<app>
+		<title>Sunny Land 2D</title>
+		<organization>UPC</organization>
+		<frcap value="16" />
+	</app>
+	<render>
+		<vsync value="false" />
+	</render>
+	<window>
+		<resolution width="1600" height="900" scale="3" />
+		<fullscreen value="false" />
+		<borderless value="false" />
+		<resizable value="false" />
+		<fullscreen_window value="false" />
+		<folder>Assets/Icon.png</folder>
+	</window>
+	<audio>
+		<music value="5" />
+		<fx value="5" />
+	</audio>
+	<ui>
+		<folder>Assets/textures/UI/</folder>
+	</ui>
+	<entities>
+		<folder>Assets/textures/sprites/</folder>
+		<sfx>Assets/audio/fx/</sfx>
+	</entities>
+	<map>
+		<folder>Assets/maps/</folder>
+	</map>
+	<intro>
+		<audio>Assets/audio/</audio>
+		<folder>Assets/maps/</folder>
+	</intro>
+	<scene>
+		<audio>Assets/audio/</audio>
+		<folder>Assets/maps/</folder>
+		<startX value="23" />
+		<startY value="830" />
+	</scene>
+	<scene2>
+		<audio>Assets/audio/</audio>
+		<folder>Assets/maps/</folder>
+		<startX value="23" />
+		<startY value="170" />
+	</scene2>
+	<death>
+		<audio>Assets/audio/</audio>
+		<folder>Assets/maps/</folder>
+	</death>
 </config>

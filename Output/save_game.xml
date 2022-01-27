@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <game_state>
+	<hasloaded value="true" />
 	<window />
 	<input />
 	<textures />
@@ -7,102 +8,23 @@
 		<music value="128" />
 		<fx value="128" />
 	</audio>
-	<:anonymous />
-	<:anonymous />
+	<fadetoblack />
+	<physics />
 	<pathfinding />
 	<intro />
 	<death />
 	<scene />
 	<scene2 />
-	<:anonymous />
+	<fonts />
 	<map />
 	<ui />
-	<entities currentScene="1">
+	<entities currentScene="2">
 		<player>
-			<pos x="627" y="642" />
+			<pos x="262" y="914" />
 			<values lives="3" />
 		</player>
-		<door0 active="true" />
-		<door1 active="true" />
-		<eagle1>
-			<pos x="872" y="168" />
-			<values lives="1" />
-		</eagle1>
-		<eagle2>
-			<pos x="920" y="200" />
-			<values lives="1" />
-		</eagle2>
-		<eagle3>
-			<pos x="967" y="423" />
-			<values lives="1" />
-		</eagle3>
-		<eagle4>
-			<pos x="1000" y="696" />
-			<values lives="1" />
-		</eagle4>
-		<eagle5>
-			<pos x="1192" y="232" />
-			<values lives="1" />
-		</eagle5>
-		<eagle6>
-			<pos x="1416" y="296" />
-			<values lives="1" />
-		</eagle6>
-		<eagle7>
-			<pos x="1687" y="183" />
-			<values lives="1" />
-		</eagle7>
-		<eagle8>
-			<pos x="1832" y="648" />
-			<values lives="1" />
-		</eagle8>
-		<eagle9>
-			<pos x="1879" y="376" />
-			<values lives="1" />
-		</eagle9>
-		<eagle10>
-			<pos x="2312" y="119" />
-			<values lives="1" />
-		</eagle10>
-		<rat0>
-			<pos x="378" y="773" />
-			<values lives="1" />
-		</rat0>
-		<rat1>
-			<pos x="1240" y="357" />
-			<values lives="1" />
-		</rat1>
-		<rat2>
-			<pos x="1461" y="709" />
-			<values lives="1" />
-		</rat2>
-		<rat3>
-			<pos x="1575" y="693" />
-			<values lives="1" />
-		</rat3>
-		<rat4>
-			<pos x="1734" y="549" />
-			<values lives="1" />
-		</rat4>
-		<rat5>
-			<pos x="1942" y="229" />
-			<values lives="1" />
-		</rat5>
-		<rat6>
-			<pos x="1974" y="693" />
-			<values lives="1" />
-		</rat6>
-		<rat7>
-			<pos x="2296" y="469" />
-			<values lives="1" />
-		</rat7>
-		<gem1 active="true" />
-		<gem2 active="true" />
 		<gem3 active="true" />
 		<gem4 active="true" />
-		<gem5 active="true" />
-		<gem6 active="true" />
-		<gem7 active="true" />
 		<gem8 active="true" />
 		<gem9 active="true" />
 		<gem10 active="true" />
@@ -134,16 +56,59 @@
 		<gem36 active="true" />
 		<gem37 active="true" />
 		<gem38 active="true" />
-		<cherry0 active="true" />
-		<cherry2 active="true" />
-		<cherry3 active="true" />
-		<cherry4 active="true" />
-		<cherry5 active="true" />
+		<gem39 active="true" />
+		<gem40 active="true" />
+		<gem41 active="true" />
+		<gem42 active="true" />
+		<gem43 active="true" />
+		<gem44 active="true" />
+		<gem45 active="true" />
+		<gem46 active="true" />
+		<gem47 active="true" />
+		<gem48 active="true" />
 		<checkpoint0 active="true" />
 		<checkpoint1 active="false" />
+		<door0 active="true" />
+		<door1 active="true" />
+		<eagle1>
+			<pos x="1128" y="760" />
+			<values lives="1" />
+		</eagle1>
+		<eagle2>
+			<pos x="1288" y="200" />
+			<values lives="1" />
+		</eagle2>
+		<eagle3>
+			<pos x="2248" y="583" />
+			<values lives="1" />
+		</eagle3>
+		<eagle4>
+			<pos x="2280" y="616" />
+			<values lives="1" />
+		</eagle4>
+		<rat1>
+			<pos x="934" y="245" />
+			<values lives="1" />
+		</rat1>
+		<rat2>
+			<pos x="1014" y="245" />
+			<values lives="1" />
+		</rat2>
+		<rat3>
+			<pos x="2038" y="693" />
+			<values lives="1" />
+		</rat3>
+		<rat4>
+			<pos x="2118" y="693" />
+			<values lives="1" />
+		</rat4>
+		<rat5>
+			<pos x="2198" y="693" />
+			<values lives="1" />
+		</rat5>
 	</entities>
 	<guiManager />
 	<render>
-		<camera x="-1086" y="-1482" />
+		<camera x="0" y="-1910" />
 	</render>
 </game_state>

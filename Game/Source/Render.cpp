@@ -71,7 +71,7 @@ bool Render::PreUpdate()
 
 bool Render::Update(float dt)
 {
-	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 		app->debug = !app->debug;
 	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
 		app->fpsCap = !app->fpsCap;

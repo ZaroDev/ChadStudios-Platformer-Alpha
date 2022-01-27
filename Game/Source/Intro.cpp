@@ -45,6 +45,7 @@ bool Intro::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool Intro::Start()
 {
+	
 	// L03: DONE: Load map
 	SString tmp("%s%s", folder.GetString(), "intro.png");
 	SString tmp2("%s%s", folder.GetString(), "logoAnim.png");
@@ -68,7 +69,6 @@ bool Intro::Start()
 
 	btn2->state = GuiControlState::DISABLED;
 
-	app->entman->Disable();
 
 	return true;
 }
@@ -76,6 +76,8 @@ bool Intro::Start()
 // Called each loop iteration
 bool Intro::PreUpdate()
 {
+	app->render->camera.x = 0;
+	app->render->camera.y = 0;
 	return true;
 }
 
@@ -102,8 +104,8 @@ bool Intro::PostUpdate()
 
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
+	bool draw = app->render->DrawTexture(background, 0, 0, NULL);
 
-	app->render->DrawTexture(background, 0, 0, NULL);
 	SDL_Rect rect = logoAnim.GetCurrentFrame();
 	app->render->DrawTexture(logoImg, 0, 0, &rect);
 	
@@ -114,10 +116,14 @@ bool Intro::PostUpdate()
 
 	//Draw GUI
 	app->guiManager->Draw();
+	if (load)
+	{
+		app->LoadGameRequest();
+		load = false;
+	}
 	if (app->hasLoaded)
 	{
 		btn2->state = GuiControlState::NORMAL;
-		//app->hasloaded = false;
 	}
 	return ret;
 }
@@ -139,7 +145,10 @@ bool Intro::OnGuiMouseClickEvent(GuiControl* control)
 		{
 			//checkear archivo cargado
 			app->canContinue = true;
-			app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene);
+			if(app->currentScene == 1)
+				app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene);
+			else
+				app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene2);
 		}
 		
 		if (control->id == 3)
@@ -163,6 +172,16 @@ bool Intro::OnGuiMouseClickEvent(GuiControl* control)
 	default: break;
 	}
 
+	return true;
+}
+
+bool Intro::SaveState(pugi::xml_node& data) const
+{
+	return true;
+}
+
+bool Intro::LoadState(pugi::xml_node& data)
+{
 	return true;
 }
 

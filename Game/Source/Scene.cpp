@@ -77,6 +77,7 @@ bool Scene::Start()
 	if (app->hasLoaded && app->canContinue)
 	{
 		app->LoadGameRequest();
+		app->canContinue = false;
 	}
 
 	return true;

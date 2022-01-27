@@ -44,7 +44,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	ui = new UI(false);
 	physics = new Physics(true);
 	scene2 = new Scene2(false);
-	entman = new EntityManager(false);
+	entman = new EntityManager(true);
 	guiManager = new GuiManager(true);
 
 
@@ -193,20 +193,7 @@ pugi::xml_node App::LoadConfig(pugi::xml_document& configFile) const
 	return ret;
 }
 
-bool App::SaveConfig() const
-{
-	bool ret = true;
 
-	pugi::xml_document* saveDoc = new pugi::xml_document();
-	pugi::xml_node saveStateNode = saveDoc->append_child("config");
-
-	saveStateNode.append_child("hasloaded").append_attribute("value").set_value(hasLoaded);
-
-	ret = saveDoc->save_file(CONFIG_FILENAME);
-
-	saveGameRequested = false;
-	return ret;
-}
 
 // ---------------------------------------------
 void App::PrepareUpdate()
@@ -233,7 +220,7 @@ void App::FinishUpdate()
 	// L02: DONE 1: This is a good place to call Load / Save methods
 	if (loadGameRequested == true) LoadGame();
 	if (saveGameRequested == true) SaveGame();
-	if (saveConfigRequested == true) SaveConfig();
+
 
 
 	float secondsSinceStartup = startupTime.ReadSec();
@@ -387,10 +374,7 @@ void App::SaveGameRequest() const
 	saveGameRequested = true;
 }
 
-void App::SaveConfigRequest() const
-{
-	saveConfigRequested = true;
-}
+
 
 // ---------------------------------------
 // L02: DONE 5: Create a method to actually load an xml file
@@ -406,15 +390,14 @@ bool App::LoadGame()
 		LOG("Could not load map xml file config.xml. pugi error: %s", result.description());
 		ret = false;
 	}
+	hasLoaded = gameStateFile.child("game_state").child("hasloaded").attribute("value").as_bool();
 
 	ListItem<Module*>* item;
 	item = modules.start;
 
 	while (item != NULL && ret == true)
 	{
-		if (item->data->IsEnabled()) {
-			ret = item->data->LoadState(gameStateFile.child("game_state").child(item->data->name.GetString()));
-		}
+		ret = item->data->LoadState(gameStateFile.child("game_state").child(item->data->name.GetString()));
 		item = item->next;
 	}
 
@@ -432,7 +415,7 @@ bool App::SaveGame() const
 	pugi::xml_document* saveDoc = new pugi::xml_document();
 	pugi::xml_node saveStateNode = saveDoc->append_child("game_state");
 
-	
+	saveStateNode.append_child("hasloaded").append_attribute("value").set_value(true);
 
 	ListItem<Module*>* item;
 	item = modules.start;

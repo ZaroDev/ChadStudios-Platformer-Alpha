@@ -47,9 +47,9 @@ bool Scene2::Start()
 	jungle = app->tex->Load(tmp2.GetString());
 	LOG("%s", tmp.GetString());
 	app->physics->Enable();
-
 	app->map->Enable();
 	app->audio->Enable();
+
 	app->currentScene = 2;
 
 	Player* player = (Player*)app->entman->CreateEntity(PLAYER, iPoint{ startX, startY });
@@ -75,6 +75,7 @@ bool Scene2::Start()
 	if (app->hasLoaded && app->canContinue)
 	{
 		app->LoadGameRequest();
+		app->canContinue = false;
 	}
 	return true;
 }
