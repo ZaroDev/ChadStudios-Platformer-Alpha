@@ -104,7 +104,8 @@ public:
 	bool hasLost = false;
 	bool win_ = false;
 	bool die = false;
-	bool hasloaded = false;
+	bool hasLoaded = false;
+	bool canContinue = false;
 	int currentScene = 1;
 	// Modules
 	Window* win;

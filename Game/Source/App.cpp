@@ -44,7 +44,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	ui = new UI(false);
 	physics = new Physics(true);
 	scene2 = new Scene2(false);
-	entman = new EntityManager(true);
+	entman = new EntityManager(false);
 	guiManager = new GuiManager(true);
 
 
@@ -379,7 +379,7 @@ bool App::LoadGame()
 	bool ret = true;
 
 	pugi::xml_parse_result result = gameStateFile.load_file("save_game.xml");
-	hasloaded = gameStateFile.child("game_state").child("hasloaded").attribute("value").as_bool();
+	hasLoaded = gameStateFile.child("game_state").child("hasloaded").attribute("value").as_bool();
 	
 	if (result == NULL)
 	{
@@ -392,7 +392,9 @@ bool App::LoadGame()
 
 	while (item != NULL && ret == true)
 	{
-		ret = item->data->LoadState(gameStateFile.child("game_state").child(item->data->name.GetString()));
+		if (item->data->IsEnabled()) {
+			ret = item->data->LoadState(gameStateFile.child("game_state").child(item->data->name.GetString()));
+		}
 		item = item->next;
 	}
 
@@ -410,7 +412,7 @@ bool App::SaveGame() const
 	pugi::xml_document* saveDoc = new pugi::xml_document();
 	pugi::xml_node saveStateNode = saveDoc->append_child("game_state");
 
-	saveStateNode.append_child("hasloaded").append_attribute("value").set_value(hasloaded);
+	saveStateNode.append_child("hasloaded").append_attribute("value").set_value(hasLoaded);
 
 	ListItem<Module*>* item;
 	item = modules.start;

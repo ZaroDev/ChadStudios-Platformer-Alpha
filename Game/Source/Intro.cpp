@@ -68,13 +68,14 @@ bool Intro::Start()
 
 	btn2->state = GuiControlState::DISABLED;
 
+	app->entman->Disable();
+
 	return true;
 }
 
 // Called each loop iteration
 bool Intro::PreUpdate()
 {
-
 	return true;
 }
 
@@ -118,10 +119,10 @@ bool Intro::PostUpdate()
 		app->LoadGameRequest();
 		load = false;
 	}
-	if (app->hasloaded)
+	if (app->hasLoaded)
 	{
 		btn2->state = GuiControlState::NORMAL;
-		app->hasloaded = false;
+		//app->hasloaded = false;
 	}
 	return ret;
 }
@@ -142,6 +143,7 @@ bool Intro::OnGuiMouseClickEvent(GuiControl* control)
 		if (control->id == 2)
 		{
 			//checkear archivo cargado
+			app->canContinue = true;
 			app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene);
 		}
 		

@@ -71,6 +71,14 @@ bool Scene::Start()
 	{
 		app->LoadGameRequest();
 	}
+
+	app->entman->Enable();
+
+	if (app->hasLoaded && app->canContinue)
+	{
+		app->LoadGameRequest();
+	}
+
 	return true;
 }
 

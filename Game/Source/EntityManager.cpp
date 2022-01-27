@@ -187,7 +187,7 @@ void EntityManager::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		{
 			app->SaveGameRequest();
 			bodyB->eListener->Use();
-			app->hasloaded = true;
+			app->hasLoaded = true;
 			return;
 		}
 		else if (bodyB->eListener->type == DOOR)
@@ -201,7 +201,7 @@ void EntityManager::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			{
 				app->currentScene = 2;
 			}
-			app->hasloaded = true;
+			app->hasLoaded = true;
 			app->SaveGameRequest();
 			bodyB->eListener->Use();
 			return;
