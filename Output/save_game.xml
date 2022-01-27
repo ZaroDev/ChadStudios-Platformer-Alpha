@@ -20,7 +20,7 @@
 	<ui />
 	<entities currentScene="1">
 		<player>
-			<pos x="630" y="642" />
+			<pos x="627" y="615" />
 			<values lives="3" />
 		</player>
 		<door0 active="true" />
@@ -66,7 +66,7 @@
 			<values lives="1" />
 		</eagle10>
 		<rat0>
-			<pos x="379" y="773" />
+			<pos x="378" y="773" />
 			<values lives="1" />
 		</rat0>
 		<rat1>
@@ -144,6 +144,6 @@
 	</entities>
 	<guiManager />
 	<render>
-		<camera x="-1095" y="-1482" />
+		<camera x="-1086" y="-1401" />
 	</render>
 </game_state>
