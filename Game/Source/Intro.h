@@ -43,7 +43,7 @@ public:
 private:
 	SDL_Texture* logoImg;
 	SDL_Texture* background;
-	SDL_Texture* enterImg;
+
 	Animation logoAnim;
 	int frames = 0;
 	SString folder;

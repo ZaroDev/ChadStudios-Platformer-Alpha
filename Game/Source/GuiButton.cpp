@@ -3,18 +3,33 @@
 #include "App.h"
 #include "Audio.h"
 
-GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::BUTTON, id)
+GuiButton::GuiButton(uint32 id, SDL_Rect bounds, GuiButtonType btype, const char* text) : GuiControl(GuiControlType::BUTTON, id)
 {
 	this->bounds = bounds;
 	this->text = text;
-
+	this->buttonType = btype;
 	//TODO Poner las animaciones
-
-	pressed.PushBack({ 0,0,154,45 });
-	focused.PushBack({ 0,46,154,45 });
-	normal.PushBack({ 0,93,154,45 });
-	disabled.PushBack({ 0,139,154,45 });
-
+	if (buttonType == GuiButtonType::PLAY || buttonType == GuiButtonType::CREDITS || buttonType == GuiButtonType::EXIT)
+	{
+		pressed.PushBack({ 0,0,97,42});
+		focused.PushBack({ 0,46,97,42 });
+		normal.PushBack({ 0,93,97,42 });
+		disabled.PushBack({ 0,139,97,42 });
+	}
+	else if(buttonType == GuiButtonType::CONTINUE || buttonType == GuiButtonType::SETTINGS || buttonType == GuiButtonType::RESUME || buttonType == GuiButtonType::BACKTOTILE)
+	{
+		pressed.PushBack({ 0,0,154,45 });
+		focused.PushBack({ 0,46,154,45 });
+		normal.PushBack({ 0,93,154,45 });
+		disabled.PushBack({ 0,139,154,45 });
+	}
+	else if (buttonType == GuiButtonType::CLOSE)
+	{
+		pressed.PushBack({ 0,0,44,42 });
+		focused.PushBack({ 0,46,44,42 });
+		normal.PushBack({ 0,93,44,42 });
+		disabled.PushBack({ 0,139,44,42 });
+	}
 	canClick = true;
 	drawBasic = false;
 }

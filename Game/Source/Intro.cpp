@@ -49,28 +49,27 @@ bool Intro::Start()
 	// L03: DONE: Load map
 	SString tmp("%s%s", folder.GetString(), "intro.png");
 	SString tmp2("%s%s", folder.GetString(), "logoAnim.png");
-	SString tmp3("%s%s", folder.GetString(), "enter.png");
 	SString tmp4("%s%s", audioFile.GetString(), "music/intro.wav");
 	app->audio->PlayMusic(tmp4.GetString());
 	app->currentScene = 0;
 	background = app->tex->Load(tmp.GetString());
 	logoImg = app->tex->Load(tmp2.GetString());
-	enterImg = app->tex->Load(tmp3.GetString());
+
 	load = true;
 	//GUI
 	uint x;
 	uint y;
 	app->win->GetWindowSize(x,y);
-	btn1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Test1", { ((int)x / 2) - 625, (int)y / 10, 160, 40}, this);
-	btn1->buttonType = GuiButtonType::PLAY;
-	btn2 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Test2", { ((int)x / 2) - 625, ((int)y / 10) + 50, 160, 40 }, this);
-	btn2->buttonType = GuiButtonType::CONTINUE;
-	btn3 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "Test3", { ((int)x / 2) - 625, ((int)y / 10) + 100, 160, 40 }, this);
-	btn3->buttonType = GuiButtonType::SETTINGS;
-	btn4 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "Test4", { ((int)x / 2) - 625, ((int)y / 10) + 150, 160, 40 }, this);
-	btn4->buttonType = GuiButtonType::EXIT;
-	btn5 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, "Test5", { ((int)x / 2) - 400, ((int)y / 10) + 150, 160, 40 }, this);
-	btn5->buttonType = GuiButtonType::CREDITS;
+	
+	btn1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, GuiButtonType::PLAY, 1, "Test1", { ((int)x / 2) - 600, (int)y / 10, 97, 42}, this);
+
+	btn2 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, GuiButtonType::CONTINUE, 2, "Test2", { ((int)x / 2) - 625, ((int)y / 10) + 50, 154, 45 }, this);
+	
+	btn3 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, GuiButtonType::SETTINGS,3, "Test3", { ((int)x / 2) - 625, ((int)y / 10) + 100, 154, 45 }, this);
+
+	btn4 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, GuiButtonType::EXIT, 4, "Test4", { ((int)x / 2) - 600, ((int)y / 10) + 150, 97, 42 }, this);
+
+	btn5 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, GuiButtonType::CREDITS, 5, "Test5", { ((int)x / 2) - 400, ((int)y / 10) + 150, 97, 42 }, this);
 
 	btn2->state = GuiControlState::DISABLED;
 
@@ -113,11 +112,6 @@ bool Intro::PostUpdate()
 
 	SDL_Rect rect = logoAnim.GetCurrentFrame();
 	app->render->DrawTexture(logoImg, 0, 0, &rect);
-	
-	if ((frames / 60) % 2 == 0)
-	{
-		app->render->DrawTexture(enterImg, 152, 154, NULL);
-	}
 
 	//Draw GUI
 	app->guiManager->Draw();
@@ -197,6 +191,5 @@ bool Intro::CleanUp()
 	LOG("Freeing scene");
 	app->tex->UnLoad(background);
 	app->tex->UnLoad(logoImg);
-	app->tex->UnLoad(enterImg);
 	return true;
 }

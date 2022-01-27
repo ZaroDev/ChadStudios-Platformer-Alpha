@@ -25,7 +25,7 @@ bool GuiManager::Start()
 	return true;
 }
 
-GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char* text, SDL_Rect bounds, Module* observer, SDL_Rect sliderBounds)
+GuiControl* GuiManager::CreateGuiControl(GuiControlType type, GuiButtonType btype, int id, const char* text, SDL_Rect bounds, Module* observer, SDL_Rect sliderBounds)
 {
 	// L14: TODO1: Create a GUI control and add it to the list of controls
 
@@ -35,7 +35,8 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char
 	switch (type)
 	{
 	case GuiControlType::BUTTON:
-		control = new GuiButton(id, bounds, text);
+
+		control = new GuiButton(id, bounds, btype, text);
 		break;
 
 		// More Gui Controls can go here
@@ -141,7 +142,14 @@ bool GuiManager::CleanUp()
 		RELEASE(control);
 	}
 
-	return true;
 
-	return false;
+	app->tex->UnLoad(playTex);
+	app->tex->UnLoad(continueTex);
+	app->tex->UnLoad(settingsTex);
+	app->tex->UnLoad(exitTex);
+	app->tex->UnLoad(creditsTex);
+	app->tex->UnLoad(resumeTex);
+	app->tex->UnLoad(bttTex);
+
+	return true;
 }

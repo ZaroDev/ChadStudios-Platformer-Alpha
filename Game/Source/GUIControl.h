@@ -32,7 +32,8 @@ enum class GuiButtonType
 	EXIT,
 	CREDITS,
 	RESUME,
-	BACKTOTILE
+	BACKTOTILE,
+	CLOSE
 };
 
 enum class GuiControlState
