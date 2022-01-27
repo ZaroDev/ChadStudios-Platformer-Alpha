@@ -114,11 +114,6 @@ bool Intro::PostUpdate()
 
 	//Draw GUI
 	app->guiManager->Draw();
-	if (load)
-	{
-		app->LoadGameRequest();
-		load = false;
-	}
 	if (app->hasLoaded)
 	{
 		btn2->state = GuiControlState::NORMAL;

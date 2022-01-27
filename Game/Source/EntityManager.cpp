@@ -185,6 +185,7 @@ void EntityManager::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		}
 		else if (bodyB->eListener->type == CHECKPOINT)
 		{
+			app->SaveConfigRequest();
 			app->SaveGameRequest();
 			bodyB->eListener->Use();
 			app->hasLoaded = true;
@@ -202,7 +203,7 @@ void EntityManager::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 				app->currentScene = 2;
 			}
 			app->hasLoaded = true;
-			app->SaveGameRequest();
+			app->SaveConfigRequest();
 			bodyB->eListener->Use();
 			return;
 		}

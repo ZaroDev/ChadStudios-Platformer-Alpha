@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <game_state>
-	<hasloaded value="true" />
 	<window />
 	<input />
 	<textures />
@@ -66,7 +65,7 @@
 			<values lives="1" />
 		</eagle10>
 		<rat0>
-			<pos x="379" y="773" />
+			<pos x="378" y="773" />
 			<values lives="1" />
 		</rat0>
 		<rat1>
@@ -135,6 +134,7 @@
 		<gem36 active="true" />
 		<gem37 active="true" />
 		<gem38 active="true" />
+		<cherry0 active="true" />
 		<cherry2 active="true" />
 		<cherry3 active="true" />
 		<cherry4 active="true" />

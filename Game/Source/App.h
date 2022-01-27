@@ -73,11 +73,13 @@ public:
 	void LoadGameRequest();
 	void SaveGameRequest() const;
 
+	void SaveConfigRequest()const;
 private:
 
 	// Load config file
 	// NOTE: It receives config document
 	pugi::xml_node LoadConfig(pugi::xml_document&) const;
+	bool SaveConfig() const;
 
 	// Call modules before each loop iteration
 	void PrepareUpdate();
@@ -151,6 +153,7 @@ private:
 	mutable bool saveGameRequested;
 	bool loadGameRequested;
 
+	mutable bool saveConfigRequested;
 
 	PerfTimer* ptimer;
 	PerfTimer* frameDuration;
