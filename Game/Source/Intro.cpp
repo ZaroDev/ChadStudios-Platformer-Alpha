@@ -75,16 +75,9 @@ bool Intro::Start()
 
 	btn5 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, GuiButtonType::CREDITS, 5, "Test5", { ((int)x / 2) - 400, ((int)y / 10) + 150, 97, 42 }, this);
 
-	btn2->state = GuiControlState::DISABLED;
-	if (load)
-	{
-		app->LoadGameRequest();
-		load = false;
-	}
-	if (app->hasLoaded)
-	{
-		btn2->state = GuiControlState::NORMAL;
-	}
+
+
+	
 
 	settingsShow = false;
 	creditShow = false;
@@ -94,6 +87,20 @@ bool Intro::Start()
 // Called each loop iteration
 bool Intro::PreUpdate()
 {
+	LOG("%i", app->hasLoaded);
+	if (load)
+	{
+		app->LoadGameRequest();
+		load = false;
+	}
+	if (!app->hasLoaded || settingsShow || creditShow)
+	{
+		btn2->state = GuiControlState::DISABLED;
+	}
+	else
+	{ 
+		btn2->state = GuiControlState::NORMAL;
+	}
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
 	return true;

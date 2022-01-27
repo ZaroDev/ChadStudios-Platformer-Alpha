@@ -20,7 +20,7 @@
 	<ui />
 	<entities currentScene="1">
 		<player>
-			<pos x="574" y="642" />
+			<pos x="630" y="642" />
 			<values lives="3" />
 		</player>
 		<door0 active="true" />
@@ -144,6 +144,6 @@
 	</entities>
 	<guiManager />
 	<render>
-		<camera x="-927" y="-1482" />
+		<camera x="-1095" y="-1482" />
 	</render>
 </game_state>
