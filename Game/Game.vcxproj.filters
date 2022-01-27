@@ -90,6 +90,8 @@
     </ClCompile>
     <ClCompile Include="Source\GuiButton.cpp" />
     <ClCompile Include="Source\GuiManager.cpp" />
+    <ClCompile Include="Source\GuiCheck.cpp" />
+    <ClCompile Include="Source\GuiSlidder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Animation.h">
@@ -209,6 +211,8 @@
     <ClInclude Include="Source\GUIControl.h" />
     <ClInclude Include="Source\GuiButton.h" />
     <ClInclude Include="Source\GuiManager.h" />
+    <ClInclude Include="Source\GuiCheck.h" />
+    <ClInclude Include="Source\GuiSlidder.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Output\config.xml">

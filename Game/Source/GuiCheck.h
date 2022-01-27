@@ -1,5 +1,5 @@
-#ifndef __GUIBUTTON_H__
-#define __GUIBUTTON_H__
+#ifndef __GUICHECK_H__
+#define __GUICHECK_H__
 
 #include "GuiControl.h"
 
@@ -9,12 +9,12 @@
 
 class SDL_Texture;
 
-class GuiButton : public GuiControl
+class GuiCheck : public GuiControl
 {
 public:
 
-	GuiButton(uint32 id, SDL_Rect bounds, GuiButtonType btype, const char* text);
-	virtual ~GuiButton();
+	GuiCheck(uint32 id, SDL_Rect bounds, const char* text);
+	virtual ~GuiCheck();
 
 	bool Update(float dt);
 	bool Draw(Render* render, SDL_Texture* tex);
@@ -22,14 +22,14 @@ public:
 	int mouseX, mouseY;
 	unsigned int click;
 
+	bool checked;
 	
 	Animation pressed;
 	Animation focused;
 	Animation normal;
-	Animation disabled;
 
 	bool canClick = true;
 	bool drawBasic = false;
 };
 
-#endif // __GUIBUTTON_H__
+#endif // __GUICHECK_H__

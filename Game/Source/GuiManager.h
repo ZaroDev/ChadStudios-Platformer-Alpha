@@ -52,6 +52,7 @@ public:
 	SDL_Texture* bttTex;
 	SDL_Texture* closeTex;
 
+	SDL_Texture* checkbox;
 };
 
 #endif // __GUIMANAGER_H__
