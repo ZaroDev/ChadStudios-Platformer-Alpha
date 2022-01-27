@@ -79,6 +79,7 @@ bool Intro::Start()
 
 
 	btn6->state = GuiControlState::DISABLED;
+	
 
 	settingsShow = false;
 	creditShow = false;
@@ -88,20 +89,16 @@ bool Intro::Start()
 // Called each loop iteration
 bool Intro::PreUpdate()
 {
-	LOG("%i", app->hasLoaded);
 	if (load)
 	{
 		app->LoadGameRequest();
 		load = false;
 	}
-	if (!app->hasLoaded || settingsShow || creditShow)
+	if (app->hasLoaded && !creditShow && !settingsShow)
 	{
-		btn2->state = GuiControlState::DISABLED;
-	}
-	else
-	{ 
 		btn2->state = GuiControlState::NORMAL;
 	}
+	LOG("%i", app->hasLoaded);
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
 	return true;
@@ -177,11 +174,11 @@ bool Intro::OnGuiMouseClickEvent(GuiControl* control)
 		if (control->id == 3)
 		{
 			settingsShow = true;
-			btn1->state = GuiControlState::DISABLED;
-			btn2->state = GuiControlState::DISABLED;
-			btn3->state = GuiControlState::DISABLED;
-			btn4->state = GuiControlState::DISABLED;
-			btn5->state = GuiControlState::DISABLED;
+			btn1->state = GuiControlState::NONE;
+			btn2->state = GuiControlState::NONE;
+			btn3->state = GuiControlState::NONE;
+			btn4->state = GuiControlState::NONE;
+			btn5->state = GuiControlState::NONE;
 			btn6->state = GuiControlState::NORMAL;
 		}
 		
@@ -193,11 +190,11 @@ bool Intro::OnGuiMouseClickEvent(GuiControl* control)
 		if (control->id == 5)
 		{
 			creditShow = true;
-			btn1->state = GuiControlState::DISABLED;
-			btn2->state = GuiControlState::DISABLED;
-			btn3->state = GuiControlState::DISABLED;
-			btn4->state = GuiControlState::DISABLED;
-			btn5->state = GuiControlState::DISABLED;
+			btn1->state = GuiControlState::NONE;
+			btn2->state = GuiControlState::NONE;
+			btn3->state = GuiControlState::NONE;
+			btn4->state = GuiControlState::NONE;
+			btn5->state = GuiControlState::NONE;
 			btn6->state = GuiControlState::NORMAL;
 		}
 
@@ -210,7 +207,7 @@ bool Intro::OnGuiMouseClickEvent(GuiControl* control)
 			btn3->state = GuiControlState::NORMAL;
 			btn4->state = GuiControlState::NORMAL;
 			btn5->state = GuiControlState::NORMAL;
-			btn6->state = GuiControlState::DISABLED;
+			btn6->state = GuiControlState::NONE;
 		}
 	}
 	//Other cases here

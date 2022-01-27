@@ -15,6 +15,7 @@ GuiButton::GuiButton(uint32 id, SDL_Rect bounds, GuiButtonType btype, const char
 		focused.PushBack({ 0,46,97,42 });
 		normal.PushBack({ 0,93,97,42 });
 		disabled.PushBack({ 0,139,97,42 });
+		
 	}
 	else if(buttonType == GuiButtonType::CONTINUE || buttonType == GuiButtonType::SETTINGS || buttonType == GuiButtonType::RESUME || buttonType == GuiButtonType::BACKTOTILE)
 	{
@@ -30,6 +31,7 @@ GuiButton::GuiButton(uint32 id, SDL_Rect bounds, GuiButtonType btype, const char
 		normal.PushBack({ 0,93,44,42 });
 		disabled.PushBack({ 0,139,44,42 });
 	}
+	noDraw.PushBack({ 0, 0, 1, 1 });
 	canClick = true;
 	drawBasic = false;
 }
@@ -42,7 +44,7 @@ GuiButton::~GuiButton()
 bool GuiButton::Update(float dt)
 {
 	bool ret = true;
-	if (state != GuiControlState::DISABLED)
+	if (state != GuiControlState::DISABLED && state != GuiControlState::NONE)
 	{
 		// L14: TODO 3: Update the state of the GUiButton according to the mouse position
 		int mouseX, mouseY;
@@ -64,7 +66,7 @@ bool GuiButton::Update(float dt)
 				ret = NotifyObserver();
 			}
 		}
-		else state = GuiControlState::NORMAL;
+		else if(state != GuiControlState::NONE) state = GuiControlState::NORMAL;
 	}
 
 	return ret;
@@ -76,7 +78,6 @@ bool GuiButton::Draw(Render* render, SDL_Texture* tex)
 	// Draw the right button depending on state
 	switch (state)
 	{
-
 	case GuiControlState::DISABLED:
 	{
 		render->DrawTexture(tex, bounds.x, bounds.y, &disabled.GetCurrentFrame());
@@ -87,8 +88,6 @@ bool GuiButton::Draw(Render* render, SDL_Texture* tex)
 		render->DrawTexture(tex, bounds.x, bounds.y, &normal.GetCurrentFrame());
 
 	} break;
-
-	//L14: TODO 4: Draw the button according the GuiControl State
 	case GuiControlState::FOCUSED:
 	{
 		render->DrawTexture(tex, bounds.x, bounds.y, &focused.GetCurrentFrame());
@@ -125,9 +124,6 @@ bool GuiButton::Draw(Render* render, SDL_Texture* tex)
 		{
 			render->DrawRectangle(bounds, 255, 255, 255, 255);
 		} break;
-
-		/******/
-
 		case GuiControlState::SELECTED: render->DrawRectangle(bounds, 0, 255, 0, 255);
 			break;
 
@@ -136,5 +132,5 @@ bool GuiButton::Draw(Render* render, SDL_Texture* tex)
 		}
 	}
 
-	return false;
+	return true;
 }

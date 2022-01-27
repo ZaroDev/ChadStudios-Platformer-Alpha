@@ -99,39 +99,40 @@ bool GuiManager::Draw() {
 
 	while (control != nullptr)
 	{
-		switch (control->data->buttonType)
+		if (control->data->state != GuiControlState::NONE)
 		{
-		
-		default:
-			break;
+			switch (control->data->buttonType)
+			{
 
-		case GuiButtonType::PLAY:
-			control->data->Draw(app->render, playTex);
-			break;		
-		case GuiButtonType::CONTINUE:
-			control->data->Draw(app->render, continueTex);
-			break;		
-		case GuiButtonType::SETTINGS:
-			control->data->Draw(app->render, settingsTex);
-			break;		
-		case GuiButtonType::EXIT:
-			control->data->Draw(app->render, exitTex);
-			break;		
-		case GuiButtonType::CREDITS:
-			control->data->Draw(app->render, creditsTex);
-			break;		
-		case GuiButtonType::RESUME:
-			control->data->Draw(app->render, resumeTex);
-			break;		
-		case GuiButtonType::BACKTOTILE:
-			control->data->Draw(app->render, bttTex);
-			break;	
-		case GuiButtonType::CLOSE:
-			control->data->Draw(app->render, closeTex);
-			break;		
+			default:
+				break;
+
+			case GuiButtonType::PLAY:
+				control->data->Draw(app->render, playTex);
+				break;
+			case GuiButtonType::CONTINUE:
+				control->data->Draw(app->render, continueTex);
+				break;
+			case GuiButtonType::SETTINGS:
+				control->data->Draw(app->render, settingsTex);
+				break;
+			case GuiButtonType::EXIT:
+				control->data->Draw(app->render, exitTex);
+				break;
+			case GuiButtonType::CREDITS:
+				control->data->Draw(app->render, creditsTex);
+				break;
+			case GuiButtonType::RESUME:
+				control->data->Draw(app->render, resumeTex);
+				break;
+			case GuiButtonType::BACKTOTILE:
+				control->data->Draw(app->render, bttTex);
+				break;
+			case GuiButtonType::CLOSE:
+				control->data->Draw(app->render, closeTex);
+				break;
+			}
 		}
-
-
 
 		control = control->next;
 	}
