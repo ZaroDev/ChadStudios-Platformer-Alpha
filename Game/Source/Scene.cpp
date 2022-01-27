@@ -159,16 +159,6 @@ bool Scene::Update(float dt)
 	app->render->DrawTexture(background, 0,0, NULL, false,0.75f);
 	app->render->DrawTexture(jungle, 0, 284, NULL,false , 0.5f);
 	app->map->Draw();
-
-	app->guiManager->Draw();
-	return true;
-}
-
-// Called each loop iteration
-bool Scene::PostUpdate()
-{
-	bool ret = true;
-
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		pauseShow = true;
 
@@ -183,6 +173,16 @@ bool Scene::PostUpdate()
 	{
 		app->render->DrawTexture(settings, 75, 25, NULL);
 	}
+
+	app->guiManager->Draw();
+	return true;
+}
+
+// Called each loop iteration
+bool Scene::PostUpdate()
+{
+	bool ret = true;
+
 
 	return ret;
 }
