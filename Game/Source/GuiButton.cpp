@@ -41,6 +41,7 @@ GuiButton::~GuiButton()
 
 bool GuiButton::Update(float dt)
 {
+	bool ret = true;
 	if (state != GuiControlState::DISABLED)
 	{
 		// L14: TODO 3: Update the state of the GUiButton according to the mouse position
@@ -60,13 +61,13 @@ bool GuiButton::Update(float dt)
 			// If mouse button pressed -> Generate event!
 			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_UP)
 			{
-				NotifyObserver();
+				ret = NotifyObserver();
 			}
 		}
 		else state = GuiControlState::NORMAL;
 	}
 
-	return false;
+	return ret;
 }
 
 bool GuiButton::Draw(Render* render, SDL_Texture* tex)

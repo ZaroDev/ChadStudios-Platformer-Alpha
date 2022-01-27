@@ -129,7 +129,7 @@ bool Intro::PostUpdate()
 
 bool Intro::OnGuiMouseClickEvent(GuiControl* control)
 {
-
+	bool ret = true;
 	switch (control->type)
 	{
 	case GuiControlType::BUTTON:
@@ -157,7 +157,7 @@ bool Intro::OnGuiMouseClickEvent(GuiControl* control)
 		
 		if (control->id == 4)
 		{
-			LOG("Click on button 2");
+			ret = false;
 		}
 		
 		if (control->id == 5)
@@ -171,7 +171,7 @@ bool Intro::OnGuiMouseClickEvent(GuiControl* control)
 	default: break;
 	}
 
-	return true;
+	return ret;
 }
 
 bool Intro::SaveState(pugi::xml_node& data) const
