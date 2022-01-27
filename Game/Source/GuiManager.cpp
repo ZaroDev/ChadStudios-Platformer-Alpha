@@ -3,6 +3,7 @@
 #include "Textures.h"
 
 #include "GuiButton.h"
+#include "GuiCheck.h"
 #include "Audio.h"
 
 GuiManager::GuiManager(bool startEnabled) : Module(startEnabled)
@@ -14,7 +15,7 @@ GuiManager::~GuiManager() {}
 
 bool GuiManager::Start()
 {
-	
+	//button
 	playTex = app->tex->Load("Assets/textures/GUI/play.png");
 	continueTex = app->tex->Load("Assets/textures/GUI/continue.png");
 	settingsTex = app->tex->Load("Assets/textures/GUI/settings.png");
@@ -23,6 +24,8 @@ bool GuiManager::Start()
 	resumeTex = app->tex->Load("Assets/textures/GUI/resume.png");
 	bttTex = app->tex->Load("Assets/textures/GUI/backToTitle.png");
 	closeTex = app->tex->Load("Assets/textures/GUI/close.png");
+
+	checkbox = app->tex->Load("Assets/textures/GUI/checkbox.png");
 	return true;
 }
 
@@ -41,6 +44,10 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, GuiButtonType btyp
 		break;
 
 		// More Gui Controls can go here
+	case GuiControlType::CHECKBOX:
+
+		control = new GuiCheck(id, bounds, text);
+		break;
 
 	default:
 		break;
@@ -106,37 +113,50 @@ bool GuiManager::Draw() {
 	{
 		if (control->data->state != GuiControlState::NONE)
 		{
-			switch (control->data->buttonType)
+			switch (control->data->type)
 			{
-
 			default:
 				break;
+			case GuiControlType::BUTTON:
+				switch (control->data->buttonType)
+				{
+				default:
+					break;
+				case GuiButtonType::PLAY:
+					control->data->Draw(app->render, playTex);
+					break;
+				case GuiButtonType::CONTINUE:
+					control->data->Draw(app->render, continueTex);
+					break;
+				case GuiButtonType::SETTINGS:
+					control->data->Draw(app->render, settingsTex);
+					break;
+				case GuiButtonType::EXIT:
+					control->data->Draw(app->render, exitTex);
+					break;
+				case GuiButtonType::CREDITS:
+					control->data->Draw(app->render, creditsTex);
+					break;
+				case GuiButtonType::RESUME:
+					control->data->Draw(app->render, resumeTex);
+					break;
+				case GuiButtonType::BACKTOTILE:
+					control->data->Draw(app->render, bttTex);
+					break;
+				case GuiButtonType::CLOSE:
+					control->data->Draw(app->render, closeTex);
+					break;
+				}
+					break;
 
-			case GuiButtonType::PLAY:
-				control->data->Draw(app->render, playTex);
-				break;
-			case GuiButtonType::CONTINUE:
-				control->data->Draw(app->render, continueTex);
-				break;
-			case GuiButtonType::SETTINGS:
-				control->data->Draw(app->render, settingsTex);
-				break;
-			case GuiButtonType::EXIT:
-				control->data->Draw(app->render, exitTex);
-				break;
-			case GuiButtonType::CREDITS:
-				control->data->Draw(app->render, creditsTex);
-				break;
-			case GuiButtonType::RESUME:
-				control->data->Draw(app->render, resumeTex);
-				break;
-			case GuiButtonType::BACKTOTILE:
-				control->data->Draw(app->render, bttTex);
-				break;
-			case GuiButtonType::CLOSE:
-				control->data->Draw(app->render, closeTex);
-				break;
+			case GuiControlType::CHECKBOX:
+				control->data->Draw(app->render, checkbox);
+					break;
+
+			case GuiControlType::SLIDERBAR:
+					break;
 			}
+			
 		}
 
 		control = control->next;

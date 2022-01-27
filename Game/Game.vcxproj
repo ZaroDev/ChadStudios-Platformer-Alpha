@@ -21,7 +21,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -98,7 +98,9 @@
     <ClCompile Include="Source\Fonts.cpp" />
     <ClCompile Include="Source\Gem.cpp" />
     <ClCompile Include="Source\GuiButton.cpp" />
+    <ClCompile Include="Source\GuiCheck.cpp" />
     <ClCompile Include="Source\GuiManager.cpp" />
+    <ClCompile Include="Source\GuiSlidder.cpp" />
     <ClCompile Include="Source\Intro.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\App.cpp" />
@@ -130,8 +132,10 @@
     <ClInclude Include="Source\Fonts.h" />
     <ClInclude Include="Source\Gem.h" />
     <ClInclude Include="Source\GuiButton.h" />
+    <ClInclude Include="Source\GuiCheck.h" />
     <ClInclude Include="Source\GUIControl.h" />
     <ClInclude Include="Source\GuiManager.h" />
+    <ClInclude Include="Source\GuiSlidder.h" />
     <ClInclude Include="Source\Intro.h" />
     <ClInclude Include="Source\Map.h" />
     <ClInclude Include="Source\FadeToBlack.h" />
