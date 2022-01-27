@@ -49,11 +49,15 @@ bool Intro::Start()
 	// L03: DONE: Load map
 	SString tmp("%s%s", folder.GetString(), "intro.png");
 	SString tmp2("%s%s", folder.GetString(), "logoAnim.png");
+	//SString tmp3("%s%s", folder.GetString(), "creditsMenu.png");
+	//SString tmp5("%s%s", folder.GetString(), "settingsMenu.png");
 	SString tmp4("%s%s", audioFile.GetString(), "music/intro.wav");
 	app->audio->PlayMusic(tmp4.GetString());
 	app->currentScene = 0;
 	background = app->tex->Load(tmp.GetString());
 	logoImg = app->tex->Load(tmp2.GetString());
+	credits = app->tex->Load("Assets/textures/GUI/creditsMenu.png");
+	settings = app->tex->Load("Assets/textures/GUI/settingsMenu.png");
 
 	load = true;
 	//GUI
@@ -72,8 +76,18 @@ bool Intro::Start()
 	btn5 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, GuiButtonType::CREDITS, 5, "Test5", { ((int)x / 2) - 400, ((int)y / 10) + 150, 97, 42 }, this);
 
 	btn2->state = GuiControlState::DISABLED;
+	if (load)
+	{
+		app->LoadGameRequest();
+		load = false;
+	}
+	if (app->hasLoaded)
+	{
+		btn2->state = GuiControlState::NORMAL;
+	}
 
-
+	settingsShow = false;
+	creditShow = false;
 	return true;
 }
 
@@ -115,14 +129,14 @@ bool Intro::PostUpdate()
 
 	//Draw GUI
 	app->guiManager->Draw();
-	if (load)
+
+	if (creditShow == true)
 	{
-		app->LoadGameRequest();
-		load = false;
+		app->render->DrawTexture(credits, 75, 25, NULL);
 	}
-	if (app->hasLoaded)
+	if (settingsShow == true)
 	{
-		btn2->state = GuiControlState::NORMAL;
+		app->render->DrawTexture(settings, 75, 25, NULL);
 	}
 	return ret;
 }
@@ -152,7 +166,12 @@ bool Intro::OnGuiMouseClickEvent(GuiControl* control)
 		
 		if (control->id == 3)
 		{
-			LOG("Click on button 2");
+			settingsShow = true;
+			btn1->state = GuiControlState::DISABLED;
+			btn2->state = GuiControlState::DISABLED;
+			btn3->state = GuiControlState::DISABLED;
+			btn4->state = GuiControlState::DISABLED;
+			btn5->state = GuiControlState::DISABLED;
 		}
 		
 		if (control->id == 4)
@@ -162,7 +181,12 @@ bool Intro::OnGuiMouseClickEvent(GuiControl* control)
 		
 		if (control->id == 5)
 		{
-			LOG("Click on button 2");
+			creditShow = true;
+			btn1->state = GuiControlState::DISABLED;
+			btn2->state = GuiControlState::DISABLED;
+			btn3->state = GuiControlState::DISABLED;
+			btn4->state = GuiControlState::DISABLED;
+			btn5->state = GuiControlState::DISABLED;
 		}
 
 	}

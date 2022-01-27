@@ -43,6 +43,8 @@ public:
 private:
 	SDL_Texture* logoImg;
 	SDL_Texture* background;
+	SDL_Texture* credits;
+	SDL_Texture* settings;
 
 	Animation logoAnim;
 	int frames = 0;
@@ -54,7 +56,10 @@ private:
 	GuiButton* btn3;
 	GuiButton* btn4;
 	GuiButton* btn5;
+	GuiButton* btn6;
 	bool load;
+	bool settingsShow = false;
+	bool creditShow = false;
 };
 
 #endif // __SCENE_H__
