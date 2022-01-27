@@ -379,6 +379,7 @@ bool App::LoadGame()
 	bool ret = true;
 
 	pugi::xml_parse_result result = gameStateFile.load_file("save_game.xml");
+	hasloaded = gameStateFile.child("game_state").child("hasloaded").attribute("value").as_bool();
 	
 	if (result == NULL)
 	{
@@ -397,7 +398,6 @@ bool App::LoadGame()
 
 	loadGameRequested = false;
 
-	hasloaded = gameStateFile.child("hasloaded").attribute("value").as_bool();
 
 	return ret;
 }

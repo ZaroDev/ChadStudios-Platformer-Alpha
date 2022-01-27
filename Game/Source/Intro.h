@@ -12,7 +12,6 @@ public:
 
 	Intro(bool startEnabled);
 
-	bool load = true;
 
 	// Destructor
 	virtual ~Intro();
@@ -53,6 +52,7 @@ private:
 	GuiButton* btn3;
 	GuiButton* btn4;
 	GuiButton* btn5;
+	bool load;
 };
 
 #endif // __SCENE_H__

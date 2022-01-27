@@ -55,7 +55,7 @@ bool Intro::Start()
 	background = app->tex->Load(tmp.GetString());
 	logoImg = app->tex->Load(tmp2.GetString());
 	enterImg = app->tex->Load(tmp3.GetString());
-
+	load = true;
 	//GUI
 	uint x;
 	uint y;
@@ -64,7 +64,9 @@ bool Intro::Start()
 	btn2 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Test2", { ((int)x / 2) - 625, ((int)y / 10) + 50, 160, 40 }, this);
 	btn3 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "Test3", { ((int)x / 2) - 625, ((int)y / 10) + 100, 160, 40 }, this);
 	btn4 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "Test4", { ((int)x / 2) - 625, ((int)y / 10) + 150, 160, 40 }, this);
-	btn5 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "Test5", { ((int)x / 2) - 400, ((int)y / 10) + 150, 75, 30 }, this);
+	btn5 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, "Test5", { ((int)x / 2) - 400, ((int)y / 10) + 150, 75, 30 }, this);
+
+	btn2->state = GuiControlState::DISABLED;
 
 	return true;
 }
@@ -72,6 +74,7 @@ bool Intro::Start()
 // Called each loop iteration
 bool Intro::PreUpdate()
 {
+
 	return true;
 }
 
@@ -85,15 +88,7 @@ bool Intro::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		app->SaveGameRequest();
-	if (load) 
-	{
-		app->LoadGameRequest();
-		load = false;
-		if (app->hasloaded == false)
-		{
-			btn2->state = GuiControlState::DISABLED;
-		}
-	}
+	
 	logoAnim.Update();
 	return true;
 }
@@ -118,7 +113,16 @@ bool Intro::PostUpdate()
 
 	//Draw GUI
 	app->guiManager->Draw();
-
+	if (load)
+	{
+		app->LoadGameRequest();
+		load = false;
+	}
+	if (app->hasloaded)
+	{
+		btn2->state = GuiControlState::NORMAL;
+		app->hasloaded = false;
+	}
 	return ret;
 }
 
