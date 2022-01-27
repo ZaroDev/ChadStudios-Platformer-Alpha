@@ -23,10 +23,9 @@ public:
 	unsigned int click;
 
 	
-
-	Animation normal;
-	Animation focused;
 	Animation pressed;
+	Animation focused;
+	Animation normal;
 	Animation disabled;
 
 	bool canClick = true;

@@ -62,10 +62,15 @@ bool Intro::Start()
 	uint y;
 	app->win->GetWindowSize(x,y);
 	btn1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Test1", { ((int)x / 2) - 625, (int)y / 10, 160, 40}, this);
+	btn1->buttonType = GuiButtonType::PLAY;
 	btn2 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Test2", { ((int)x / 2) - 625, ((int)y / 10) + 50, 160, 40 }, this);
+	btn2->buttonType = GuiButtonType::CONTINUE;
 	btn3 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "Test3", { ((int)x / 2) - 625, ((int)y / 10) + 100, 160, 40 }, this);
+	btn3->buttonType = GuiButtonType::SETTINGS;
 	btn4 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "Test4", { ((int)x / 2) - 625, ((int)y / 10) + 150, 160, 40 }, this);
-	btn5 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, "Test5", { ((int)x / 2) - 400, ((int)y / 10) + 150, 75, 30 }, this);
+	btn4->buttonType = GuiButtonType::EXIT;
+	btn5 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, "Test5", { ((int)x / 2) - 400, ((int)y / 10) + 150, 160, 40 }, this);
+	btn5->buttonType = GuiButtonType::CREDITS;
 
 	btn2->state = GuiControlState::DISABLED;
 

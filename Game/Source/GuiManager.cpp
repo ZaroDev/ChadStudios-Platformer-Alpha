@@ -14,6 +14,14 @@ GuiManager::~GuiManager() {}
 
 bool GuiManager::Start()
 {
+	
+	playTex = app->tex->Load("Assets/textures/GUI/play.png");
+	continueTex = app->tex->Load("Assets/textures/GUI/continue.png");
+	settingsTex = app->tex->Load("Assets/textures/GUI/settings.png");
+	exitTex = app->tex->Load("Assets/textures/GUI/exit.png");
+	creditsTex = app->tex->Load("Assets/textures/GUI/credits.png");
+	resumeTex = app->tex->Load("Assets/textures/GUI/resume.png");
+	bttTex = app->tex->Load("Assets/textures/GUI/backToTitle.png");
 	return true;
 }
 
@@ -91,6 +99,28 @@ bool GuiManager::Draw() {
 		
 		default:
 			break;
+
+		case GuiButtonType::PLAY:
+			control->data->Draw(app->render, playTex);
+			break;		
+		case GuiButtonType::CONTINUE:
+			control->data->Draw(app->render, continueTex);
+			break;		
+		case GuiButtonType::SETTINGS:
+			control->data->Draw(app->render, settingsTex);
+			break;		
+		case GuiButtonType::EXIT:
+			control->data->Draw(app->render, exitTex);
+			break;		
+		case GuiButtonType::CREDITS:
+			control->data->Draw(app->render, creditsTex);
+			break;		
+		case GuiButtonType::RESUME:
+			control->data->Draw(app->render, resumeTex);
+			break;		
+		case GuiButtonType::BACKTOTILE:
+			control->data->Draw(app->render, bttTex);
+			break;		
 		}
 
 

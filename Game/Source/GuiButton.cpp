@@ -10,6 +10,11 @@ GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(
 
 	//TODO Poner las animaciones
 
+	pressed.PushBack({ 0,0,154,45 });
+	focused.PushBack({ 0,46,154,45 });
+	normal.PushBack({ 0,93,154,45 });
+	disabled.PushBack({ 0,139,154,45 });
+
 	canClick = true;
 	drawBasic = false;
 }

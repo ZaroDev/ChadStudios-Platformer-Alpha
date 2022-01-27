@@ -48,6 +48,8 @@ public:
 	SDL_Texture* settingsTex;
 	SDL_Texture* creditsTex;
 	SDL_Texture* exitTex;
+	SDL_Texture* resumeTex;
+	SDL_Texture* bttTex;
 
 };
 
