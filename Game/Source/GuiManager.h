@@ -43,6 +43,12 @@ public:
 
 	SDL_Texture* texture;
 
+	SDL_Texture* playTex;
+	SDL_Texture* continueTex;
+	SDL_Texture* settingsTex;
+	SDL_Texture* creditsTex;
+	SDL_Texture* exitTex;
+
 };
 
 #endif // __GUIMANAGER_H__

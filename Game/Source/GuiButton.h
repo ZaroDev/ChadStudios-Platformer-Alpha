@@ -5,6 +5,9 @@
 
 #include "Point.h"
 #include "SString.h"
+#include "Animation.h"
+
+class SDL_Texture;
 
 class GuiButton : public GuiControl
 {
@@ -14,10 +17,17 @@ public:
 	virtual ~GuiButton();
 
 	bool Update(float dt);
-	bool Draw(Render* render);
+	bool Draw(Render* render, SDL_Texture* tex);
 
 	int mouseX, mouseY;
 	unsigned int click;
+
+	
+
+	Animation normal;
+	Animation focused;
+	Animation pressed;
+	Animation disabled;
 
 	bool canClick = true;
 	bool drawBasic = false;

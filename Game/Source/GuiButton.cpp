@@ -8,6 +8,8 @@ GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(
 	this->bounds = bounds;
 	this->text = text;
 
+	//TODO Poner las animaciones
+
 	canClick = true;
 	drawBasic = false;
 }
@@ -47,7 +49,7 @@ bool GuiButton::Update(float dt)
 	return false;
 }
 
-bool GuiButton::Draw(Render* render)
+bool GuiButton::Draw(Render* render, SDL_Texture* tex)
 {
 
 	// Draw the right button depending on state
@@ -56,32 +58,61 @@ bool GuiButton::Draw(Render* render)
 
 	case GuiControlState::DISABLED:
 	{
-		render->DrawRectangle(bounds, 0, 0, 0, 0);
+		render->DrawTexture(tex, bounds.x, bounds.y, &disabled.GetCurrentFrame());
 	} break;
 
 	case GuiControlState::NORMAL:
 	{
-		render->DrawRectangle(bounds, 255, 0, 0, 255);
+		render->DrawTexture(tex, bounds.x, bounds.y, &normal.GetCurrentFrame());
 
 	} break;
 
 	//L14: TODO 4: Draw the button according the GuiControl State
 	case GuiControlState::FOCUSED:
 	{
-		render->DrawRectangle(bounds, 255, 255, 255, 160);
+		render->DrawTexture(tex, bounds.x, bounds.y, &focused.GetCurrentFrame());
 	} break;
 	case GuiControlState::PRESSED:
 	{
-		render->DrawRectangle(bounds, 255, 255, 255, 255);
+		render->DrawTexture(tex, bounds.x, bounds.y, &pressed.GetCurrentFrame());
 	} break;
-
-	/******/
-
-	case GuiControlState::SELECTED: render->DrawRectangle(bounds, 0, 255, 0, 255);
-		break;
-
 	default:
 		break;
+	}
+	if (app->debug)
+	{
+		switch (state)
+		{
+
+		case GuiControlState::DISABLED:
+		{
+			render->DrawRectangle(bounds, 0, 0, 0, 0);
+		} break;
+
+		case GuiControlState::NORMAL:
+		{
+			render->DrawRectangle(bounds, 255, 0, 0, 255);
+
+		} break;
+
+		//L14: TODO 4: Draw the button according the GuiControl State
+		case GuiControlState::FOCUSED:
+		{
+			render->DrawRectangle(bounds, 255, 255, 255, 160);
+		} break;
+		case GuiControlState::PRESSED:
+		{
+			render->DrawRectangle(bounds, 255, 255, 255, 255);
+		} break;
+
+		/******/
+
+		case GuiControlState::SELECTED: render->DrawRectangle(bounds, 0, 255, 0, 255);
+			break;
+
+		default:
+			break;
+		}
 	}
 
 	return false;

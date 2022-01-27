@@ -86,7 +86,15 @@ bool GuiManager::Draw() {
 
 	while (control != nullptr)
 	{
-		control->data->Draw(app->render);
+		switch (control->data->buttonType)
+		{
+		
+		default:
+			break;
+		}
+
+
+
 		control = control->next;
 	}
 

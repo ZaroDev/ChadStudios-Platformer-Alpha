@@ -24,6 +24,17 @@ enum class GuiControlType
 	SPINNER
 };
 
+enum class GuiButtonType
+{
+	PLAY,
+	CONTINUE,
+	SETTINGS,
+	EXIT,
+	CREDITS,
+	RESUME,
+	BACKTOTILE
+};
+
 enum class GuiControlState
 {
 	DISABLED,
@@ -54,7 +65,7 @@ public:
 		return true;
 	}
 
-	virtual bool Draw(Render* render)
+	virtual bool Draw(Render* render, SDL_Texture* tex)
 	{
 		return true;
 	}
@@ -79,6 +90,7 @@ public:
 
 	uint32 id;
 	GuiControlType type;
+	GuiButtonType buttonType;
 	GuiControlState state;
 
 	SString text;           // Control text (if required)
