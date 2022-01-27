@@ -27,6 +27,7 @@ public:
 	Animation focused;
 	Animation normal;
 	Animation disabled;
+	Animation noDraw;
 
 	bool canClick = true;
 	bool drawBasic = false;
