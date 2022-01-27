@@ -50,6 +50,7 @@ public:
 	SDL_Texture* exitTex;
 	SDL_Texture* resumeTex;
 	SDL_Texture* bttTex;
+	SDL_Texture* closeTex;
 
 };
 
