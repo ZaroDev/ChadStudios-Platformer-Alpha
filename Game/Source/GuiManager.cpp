@@ -83,6 +83,8 @@ bool GuiManager::UpdateAll(float dt, bool doLogic) {
 		{
 			ret = control->data->Update(dt);
 			control = control->next;
+			if (!ret)
+				break;
 		}
 
 	}

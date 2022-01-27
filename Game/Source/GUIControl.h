@@ -84,7 +84,8 @@ public:
 
 	bool NotifyObserver()
 	{
-		return observer->OnGuiMouseClickEvent(this);
+		bool ret = observer->OnGuiMouseClickEvent(this);
+		return ret;
 	}
 
 public:
