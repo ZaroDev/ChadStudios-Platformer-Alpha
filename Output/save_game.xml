@@ -17,14 +17,17 @@
 	<scene2 />
 	<fonts />
 	<map />
-	<ui />
 	<entities currentScene="1">
 		<player>
-			<pos x="627" y="615" />
-			<values lives="3" />
+			<pos x="569" y="642" />
+			<values lives="2" />
 		</player>
 		<door0 active="true" />
 		<door1 active="true" />
+		<eagle0>
+			<pos x="-2147483648" y="-2147483648" />
+			<values lives="1" />
+		</eagle0>
 		<eagle1>
 			<pos x="872" y="168" />
 			<values lives="1" />
@@ -33,14 +36,6 @@
 			<pos x="920" y="200" />
 			<values lives="1" />
 		</eagle2>
-		<eagle3>
-			<pos x="967" y="423" />
-			<values lives="1" />
-		</eagle3>
-		<eagle4>
-			<pos x="1000" y="696" />
-			<values lives="1" />
-		</eagle4>
 		<eagle5>
 			<pos x="1192" y="232" />
 			<values lives="1" />
@@ -66,7 +61,7 @@
 			<values lives="1" />
 		</eagle10>
 		<rat0>
-			<pos x="378" y="773" />
+			<pos x="357" y="773" />
 			<values lives="1" />
 		</rat0>
 		<rat1>
@@ -78,7 +73,7 @@
 			<values lives="1" />
 		</rat2>
 		<rat3>
-			<pos x="1575" y="693" />
+			<pos x="1562" y="693" />
 			<values lives="1" />
 		</rat3>
 		<rat4>
@@ -100,25 +95,19 @@
 		<gem1 active="true" />
 		<gem2 active="true" />
 		<gem3 active="true" />
-		<gem4 active="true" />
-		<gem5 active="true" />
-		<gem6 active="true" />
 		<gem7 active="true" />
 		<gem8 active="true" />
 		<gem9 active="true" />
 		<gem10 active="true" />
 		<gem11 active="true" />
-		<gem12 active="true" />
 		<gem13 active="true" />
 		<gem14 active="true" />
 		<gem15 active="true" />
-		<gem16 active="true" />
 		<gem17 active="true" />
 		<gem18 active="true" />
 		<gem19 active="true" />
 		<gem20 active="true" />
 		<gem21 active="true" />
-		<gem22 active="true" />
 		<gem23 active="true" />
 		<gem24 active="true" />
 		<gem25 active="true" />
@@ -142,8 +131,9 @@
 		<checkpoint0 active="true" />
 		<checkpoint1 active="false" />
 	</entities>
+	<ui />
 	<guiManager />
 	<render>
-		<camera x="-1086" y="-1401" />
+		<camera x="-912" y="-1482" />
 	</render>
 </game_state>

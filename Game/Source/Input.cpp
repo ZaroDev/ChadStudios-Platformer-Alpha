@@ -125,7 +125,7 @@ bool Input::PreUpdate()
 				mouseMotionY = event.motion.yrel / scale;
 				mouseX = event.motion.x / scale;
 				mouseY = event.motion.y / scale;
-				//LOG("Mouse motion x %d y %d", mouse_motion_x, mouse_motion_y);
+				
 			break;
 		}
 	}

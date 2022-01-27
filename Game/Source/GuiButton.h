@@ -28,7 +28,7 @@ public:
 	Animation normal;
 	Animation disabled;
 	Animation noDraw;
-
+	bool UI = false;
 	bool canClick = true;
 	bool drawBasic = false;
 };

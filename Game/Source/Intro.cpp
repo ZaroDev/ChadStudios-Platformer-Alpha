@@ -235,5 +235,6 @@ bool Intro::CleanUp()
 	LOG("Freeing scene");
 	app->tex->UnLoad(background);
 	app->tex->UnLoad(logoImg);
+	app->guiManager->CleanUp();
 	return true;
 }

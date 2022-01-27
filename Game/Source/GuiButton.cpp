@@ -2,7 +2,8 @@
 #include "Render.h"
 #include "App.h"
 #include "Audio.h"
-
+#include "Window.h"
+#include "Log.h"
 GuiButton::GuiButton(uint32 id, SDL_Rect bounds, GuiButtonType btype, const char* text) : GuiControl(GuiControlType::BUTTON, id)
 {
 	this->bounds = bounds;
@@ -49,9 +50,12 @@ bool GuiButton::Update(float dt)
 		// L14: TODO 3: Update the state of the GUiButton according to the mouse position
 		int mouseX, mouseY;
 		app->input->GetMousePosition(mouseX, mouseY);
-
-		if ((mouseX > bounds.x) && (mouseX < (bounds.x + bounds.w)) &&
-			(mouseY > bounds.y) && (mouseY < (bounds.y + bounds.h)))
+		LOG("Button x %i y %i", bounds.x, bounds.y);
+		LOG("Mouse x %i y %i", mouseX, mouseY);
+		int offsetX = -app->render->camera.x / app->win->GetScale();
+		int offsetY = -app->render->camera.y / app->win->GetScale();
+		if ((mouseX + offsetX > bounds.x) && (mouseX + offsetX < (bounds.x + bounds.w)) &&
+			(mouseY + offsetY > bounds.y) && (mouseY + offsetY < (bounds.y + bounds.h)))
 		{
 			state = GuiControlState::FOCUSED;
 
@@ -76,6 +80,9 @@ bool GuiButton::Draw(Render* render, SDL_Texture* tex)
 {
 
 	// Draw the right button depending on state
+
+	
+
 	switch (state)
 	{
 	case GuiControlState::DISABLED:
@@ -99,6 +106,7 @@ bool GuiButton::Draw(Render* render, SDL_Texture* tex)
 	default:
 		break;
 	}
+	
 	if (app->debug)
 	{
 		switch (state)

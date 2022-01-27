@@ -2,7 +2,6 @@
 #define __SCENE_H__
 
 #include "Module.h"
-#include "GuiButton.h"
 
 
 struct SDL_Texture;
@@ -31,8 +30,7 @@ public:
 	// Called before all Updates
 	bool PostUpdate();
 
-	// Define multiple Gui Event methods
-	bool OnGuiMouseClickEvent(GuiControl* control);
+
 
 	// Called before quitting
 	bool CleanUp();
@@ -43,9 +41,7 @@ private:
 	SDL_Texture* background;
 	SDL_Texture* jungle;
 	SDL_Texture* pathTex;
-	SDL_Texture* originTex;
-	SDL_Texture* pausetex;
-	SDL_Texture* settings;
+
 	
 	SString folder;
 	SString audioFile;
@@ -55,13 +51,9 @@ private:
 	iPoint origin;
 	bool originSelected = false;
 
-	GuiButton* btn1;
-	GuiButton* btn2;
-	GuiButton* btn3;
-	GuiButton* btn4;
 
-	bool settingsShow = false;
-	bool pauseShow = false;
+
+
 };
 
 #endif // __SCENE_H__

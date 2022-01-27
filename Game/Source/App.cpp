@@ -63,8 +63,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene2);
 	AddModule(fonts);
 	AddModule(map);
-	AddModule(ui);
 	AddModule(entman);
+	AddModule(ui);
 	AddModule(guiManager);
 	// Render last to swap buffer
 	AddModule(render);

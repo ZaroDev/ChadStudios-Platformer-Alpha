@@ -57,6 +57,11 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, GuiButtonType btyp
 	return control;
 }
 
+void GuiManager::DestroyGuiControl(GuiControl* entity)
+{
+	
+}
+
 bool GuiManager::Update(float dt)
 {
 	bool ret = true;
@@ -143,14 +148,7 @@ bool GuiManager::Draw() {
 
 bool GuiManager::CleanUp()
 {
-	ListItem<GuiControl*>* control = controls.start;
-
-	while (control != nullptr)
-	{
-		RELEASE(control);
-	}
-
-
+	controls.Clear();
 	app->tex->UnLoad(playTex);
 	app->tex->UnLoad(continueTex);
 	app->tex->UnLoad(settingsTex);
@@ -159,6 +157,5 @@ bool GuiManager::CleanUp()
 	app->tex->UnLoad(resumeTex);
 	app->tex->UnLoad(bttTex);
 	app->tex->UnLoad(closeTex);
-
 	return true;
 }

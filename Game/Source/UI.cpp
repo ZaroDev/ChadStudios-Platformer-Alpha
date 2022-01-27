@@ -4,7 +4,10 @@
 #include "Render.h"
 #include "Fonts.h"
 #include "Player.h"
-
+#include "Input.h"
+#include "Window.h"
+#include "GuiManager.h"
+#include "Log.h"
 UI::UI(bool startEnabled) : Module(startEnabled)
 {
 	name.Create("ui");
@@ -50,14 +53,39 @@ bool UI::Start()
 	SString tmp2("%s%s", folder.GetString(), "gem.png");
 	SString tmp3("%s%s", folder.GetString(), "font.png");
 	SString tmp4("%s%s", folder.GetString(), "abilityAnim.png");
-
+	app->guiManager->Start();
 	heart = app->tex->Load(tmp1.GetString());
 	gem = app->tex->Load(tmp2.GetString());
 	anim = app->tex->Load(tmp4.GetString());
 	char lookUpTable[] = { "abcdefghijklmnopqrstuvwxyz0123456789!.?   " };
-
+	pausetex = app->tex->Load("Assets/textures/GUI/pauseMenu.png");
+	settings = app->tex->Load("Assets/textures/GUI/settingsMenu.png");
 	font = app->fonts->Load(tmp3.GetString(), lookUpTable, 7);
+	//GUI
 
+	btn1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, GuiButtonType::RESUME, 1, "Test1", {0,0, 154, 45 }, this);
+
+	btn2 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, GuiButtonType::SETTINGS, 2, "Test2", { 0,0, 154, 45 }, this);
+
+	btn3 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, GuiButtonType::BACKTOTILE, 3, "Test3", { 0,0, 154, 45 }, this);
+
+	btn4 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, GuiButtonType::CLOSE, 4, "Test4", { 0,0, 97, 42 }, this);
+	btn5 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, GuiButtonType::EXIT, 5, "Test4", { 0,0, 97, 42 }, this);
+	btn1->state = GuiControlState::NONE;
+	btn2->state = GuiControlState::NONE;
+	btn3->state = GuiControlState::NONE;
+	btn4->state = GuiControlState::DISABLED;
+	btn5->state = GuiControlState::NONE;
+	settingsShow = false;
+	pauseShow = false;
+
+
+	return true;
+}
+
+bool UI::Update()
+{
+	
 	return true;
 }
 
@@ -73,7 +101,23 @@ bool UI::PostUpdate()
 			seconds = 0;
 			minutes++;
 		}
+		btn1->bounds.x = -app->render->camera.x / app->win->GetScale() + 200;
+		btn1->bounds.y = -app->render->camera.y / app->win->GetScale() + 50;
 
+		btn2->bounds.x = -app->render->camera.x / app->win->GetScale() + 200;
+		btn2->bounds.y = -app->render->camera.y / app->win->GetScale() + 100;
+
+		btn3->bounds.x = -app->render->camera.x / app->win->GetScale() + 200;
+		btn3->bounds.y = -app->render->camera.y / app->win->GetScale() + 150;
+
+		btn4->bounds.x = -app->render->camera.x / app->win->GetScale() + 200;
+		btn4->bounds.y = -app->render->camera.y / app->win->GetScale() + 150;
+
+		btn5->bounds.x = -app->render->camera.x / app->win->GetScale() + 225;
+		btn5->bounds.y = -app->render->camera.y / app->win->GetScale() + 200;
+	
+
+		LOG("x%i y%i", app->render->camera.x, app->render->camera.y);
 		heartAnim.Update();
 		gemAnim.Update();
 		abAnim.Update();
@@ -104,6 +148,37 @@ bool UI::PostUpdate()
 		{
 			app->render->DrawTexture(anim, 1420, 790, &abAnim.GetCurrentFrame(), true);
 		}
+
+
+		if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+			pauseShow = !pauseShow;
+
+		if (pauseShow == true)
+		{
+			app->render->DrawTexture(pausetex, 500, 25, NULL, true);
+			if (onPause == true)
+			{
+				btn1->state = GuiControlState::NORMAL;
+				btn2->state = GuiControlState::NORMAL;
+				btn3->state = GuiControlState::NORMAL;
+				btn5->state = GuiControlState::NORMAL;
+				onPause = false;
+			}
+		}
+		else
+		{
+			btn1->state = GuiControlState::NONE;
+			btn2->state = GuiControlState::NONE;
+			btn3->state = GuiControlState::NONE;
+			btn5->state = GuiControlState::NONE;
+			onPause = true;
+		}
+		if (settingsShow == true)
+		{
+			app->render->DrawTexture(settings, 75, 25, NULL, true);
+		}
+
+		app->guiManager->Draw();
 	}
 	else if (app->currentScene == 3)
 	{
@@ -191,4 +266,54 @@ bool UI::SaveState(pugi::xml_node&data)
 	pugi::xml_node hscr = data.append_child("highscore");
 	hscr.append_attribute("value").set_value(highScore);
 	return true;
+}
+bool UI::OnGuiMouseClickEvent(GuiControl* control)
+{
+	bool ret = true;
+	switch (control->type)
+	{
+	case GuiControlType::BUTTON:
+	{
+		//Checks the GUI element ID
+		if (control->id == 1)
+		{
+			pauseShow = false;
+			btn1->state = GuiControlState::DISABLED;
+			btn2->state = GuiControlState::DISABLED;
+			btn3->state = GuiControlState::DISABLED;
+		}
+
+		if (control->id == 2)
+		{
+			settingsShow = true;
+			btn1->state = GuiControlState::DISABLED;
+			btn2->state = GuiControlState::DISABLED;
+			btn3->state = GuiControlState::DISABLED;
+			btn4->state = GuiControlState::NORMAL;
+		}
+
+		if (control->id == 3)
+		{
+			app->fadeToBlack->MFadeToBlack(this, (Module*)app->intro);
+		}
+
+		if (control->id == 4)
+		{
+			settingsShow = false;
+			btn1->state = GuiControlState::NORMAL;
+			btn2->state = GuiControlState::NORMAL;
+			btn3->state = GuiControlState::NORMAL;
+			btn4->state = GuiControlState::DISABLED;
+		}
+		if (control->id == 5)
+		{
+			ret = false;
+		}
+	}
+	//Other cases here
+
+	default: break;
+	}
+
+	return ret;
 }
