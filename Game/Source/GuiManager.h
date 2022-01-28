@@ -53,6 +53,8 @@ public:
 	SDL_Texture* closeTex;
 
 	SDL_Texture* checkbox;
+
+	SDL_Texture* slider;
 };
 
 #endif // __GUIMANAGER_H__
