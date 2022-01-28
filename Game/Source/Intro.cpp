@@ -77,8 +77,8 @@ bool Intro::Start()
 	
 	btn6 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, GuiButtonType::CLOSE, 6, "Test6", { ((int)x / 2) - 350, ((int)y / 10) - 65, 97, 42 }, this);
 
-	check1 = (GuiCheck*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, GuiButtonType::NONE, 7, "Check1", { ((int)x / 2) - 450, ((int)y / 10) + 110, 42, 42 }, this);
-	check2 = (GuiCheck*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, GuiButtonType::NONE, 8, "Check2", { ((int)x / 2) - 450, ((int)y / 10) + 50, 42, 42 }, this);
+	check1 = (GuiCheck*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, GuiButtonType::NONE, 7, "Check1", { ((int)x / 2) - 450, ((int)y / 10) + 50, 42, 42 }, this);
+	check2 = (GuiCheck*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, GuiButtonType::NONE, 8, "Check2", { ((int)x / 2) - 450, ((int)y / 10) + 110, 42, 42 }, this);
 
 	slid1 = (GuiSlidder*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, GuiButtonType::NONE, 9, "sld1", { ((int)x / 2) - 600, ((int)y / 10) - 50, 210, 38 }, this);
 	slid2 = (GuiSlidder*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, GuiButtonType::NONE, 10, "sld2", { ((int)x / 2) - 600, ((int)y / 10) , 210, 38 }, this);
@@ -162,7 +162,7 @@ bool Intro::PostUpdate()
 
 	app->guiManager->Draw();
 
-	
+	check2->checked = app->render->vsync;
 	return ret;
 }
 
@@ -245,17 +245,16 @@ bool Intro::OnGuiMouseClickEvent(GuiControl* control)
 	case GuiControlType::CHECKBOX:
 		if (control->id == 7)
 		{
-			if (check1->checked == true)
-			{
-				app->win
-			}
+	
+			bool fullscreen = check1->checked;
+			app->win->SetFullScreen(fullscreen);
+			app->render->SetFullScreen();
+
 		}
 		if (control->id == 8)
 		{
-			if (check1->checked == true)
-			{
-				app->render->renderer;
-			}
+			app->render->vsync = !app->render->vsync;
+			app->render->SetVsync(app->render->vsync,(Module*)this);
 		}
 		break;
 	default: break;

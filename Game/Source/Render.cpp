@@ -5,7 +5,7 @@
 
 #include "Defs.h"
 #include "Log.h"
-
+#include "FadeToBlack.h"
 #define VSYNC true
 
 Render::Render(bool startEnabled) : Module(startEnabled)
@@ -36,7 +36,7 @@ bool Render::Awake(pugi::xml_node& config)
 	}
 
 	renderer = SDL_CreateRenderer(app->win->window, -1, flags);
-
+	
 	if(renderer == NULL)
 	{
 		LOG("Could not create the renderer! SDL_Error: %s\n", SDL_GetError());
@@ -117,6 +117,39 @@ bool Render::SaveState(pugi::xml_node& data) const
 void Render::SetBackgroundColor(SDL_Color color)
 {
 	background = color;
+}
+
+void Render::SetFullScreen()
+{
+	uint w, h;
+	app->win->GetWindowSize(w, h);
+	SDL_RenderSetLogicalSize(renderer, w, h);
+}
+
+void Render::SetVsync(bool value, Module* scene)
+{
+	vsync = value;
+	SDL_DestroyRenderer(renderer);
+	Uint32 flags = SDL_RENDERER_ACCELERATED;
+
+	if (vsync)
+	{
+		flags |= SDL_RENDERER_PRESENTVSYNC;
+	}
+
+	renderer = SDL_CreateRenderer(app->win->window, -1, flags);
+	if (renderer == NULL)
+	{
+		LOG("Could not create the renderer! SDL_Error: %s\n", SDL_GetError());
+	}
+	else
+	{
+		camera.w = app->win->screenSurface->w;
+		camera.h = app->win->screenSurface->h;
+		camera.x = 0;
+		camera.y = 0;
+	}
+	app->fadeToBlack->MFadeToBlack(scene, scene, 0);
 }
 
 void Render::SetViewPort(const SDL_Rect& rect)

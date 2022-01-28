@@ -241,11 +241,12 @@ void App::FinishUpdate()
 	//LOG("F: %f Delay:%f", frameDuration->ReadMs(), delay);
 
 	// L08: DONE 3: Measure accurately the amount of time SDL_Delay() actually waits compared to what was expected
-	PerfTimer* delayt = new PerfTimer();
-	delayt->Start();
-	if (maxFrameRate > 0 && delay > 0) SDL_Delay(delay);
-	LOG("Expected %f milliseconds and the real delay is % f", delay, delayt->ReadMs());
-
+	if (!app->render->vsync) {
+		PerfTimer* delayt = new PerfTimer();
+		delayt->Start();
+		if (maxFrameRate > 0 && delay > 0) SDL_Delay(delay);
+		LOG("Expected %f milliseconds and the real delay is % f", delay, delayt->ReadMs());
+	}
 	app->win->SetTitle(title);
 }
 
@@ -430,6 +431,8 @@ bool App::SaveGame() const
 	saveGameRequested = false;
 	return ret;
 }
+
+
 
 
 
