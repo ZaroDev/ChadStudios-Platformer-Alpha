@@ -34,6 +34,7 @@ public:
 	Animation xcheck;
 
 	int fxaudio;
+	bool isPlaying;
 
 	bool canClick = true;
 	bool drawBasic = false;

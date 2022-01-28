@@ -55,11 +55,16 @@ bool GuiSlidder::Update(float dt)
 			(mouseY + offsetY > bounds.y) && (mouseY + offsetY < (bounds.y + bounds.h)))
 		{
 			state = GuiControlState::FOCUSED;
-			app->audio->PlayFx(fxaudio);
+			if (isPlaying == false)
+			{
+				app->audio->PlayFx(fxaudio);
+				isPlaying = true;
+			}
+			if(app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_DOWN)
+				app->audio->PlayFx(fxaudio);
 			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)
 			{
 				state = GuiControlState::PRESSED;
-				app->audio->PlayFx(fxaudio);
 				SliderControl(mouseX, mouseY);
 			}
 
@@ -69,7 +74,11 @@ bool GuiSlidder::Update(float dt)
 				ret = NotifyObserver();
 			}
 		}
-		else state = GuiControlState::NORMAL;
+		else
+		{
+			state = GuiControlState::NORMAL;
+			isPlaying = false;
+		}
 	}
 
 	return ret;
