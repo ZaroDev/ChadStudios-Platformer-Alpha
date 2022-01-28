@@ -13,11 +13,14 @@ class GuiCheck : public GuiControl
 {
 public:
 
-	GuiCheck(uint32 id, SDL_Rect bounds, const char* text);
+	GuiCheck(uint32 id, SDL_Rect bounds, const char* text, bool initState = false);
 	virtual ~GuiCheck();
 
 	bool Update(float dt);
 	bool Draw(Render* render, SDL_Texture* tex);
+
+	bool GetValue() { return checked; };
+	void SetValue(bool state) { checked = state; };
 
 	int mouseX, mouseY;
 	unsigned int click;
@@ -27,6 +30,7 @@ public:
 	Animation pressed;
 	Animation focused;
 	Animation normal;
+	Animation xcheck;
 
 	bool canClick = true;
 	bool drawBasic = false;

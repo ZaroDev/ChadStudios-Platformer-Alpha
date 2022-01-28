@@ -77,6 +77,8 @@ bool Intro::Start()
 	
 	btn6 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, GuiButtonType::CLOSE, 6, "Test6", { ((int)x / 2) - 350, ((int)y / 10) - 65, 97, 42 }, this);
 
+	check1 = (GuiCheck*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, GuiButtonType::NONE, 7, "Check1", { ((int)x / 2) - 350, ((int)y / 10) - 65, 97, 42 }, this);
+
 
 	btn6->state = GuiControlState::DISABLED;
 

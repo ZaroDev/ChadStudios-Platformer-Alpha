@@ -4,6 +4,7 @@
 
 #include "GuiButton.h"
 #include "GuiCheck.h"
+#include "GuiSlidder.h"
 #include "Audio.h"
 
 GuiManager::GuiManager(bool startEnabled) : Module(startEnabled)
@@ -26,6 +27,8 @@ bool GuiManager::Start()
 	closeTex = app->tex->Load("Assets/textures/GUI/close.png");
 
 	checkbox = app->tex->Load("Assets/textures/GUI/checkbox.png");
+
+	slider = app->tex->Load("Assets/textures/GUI/slider.png");
 	return true;
 }
 
@@ -46,7 +49,12 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, GuiButtonType btyp
 		// More Gui Controls can go here
 	case GuiControlType::CHECKBOX:
 
-		control = new GuiCheck(id, bounds, text);
+		control = new GuiCheck(id, bounds, text, false);
+		break;
+	
+	case GuiControlType::SLIDER:
+
+		control = new GuiSlidder(id, bounds, text);
 		break;
 
 	default:
@@ -154,6 +162,7 @@ bool GuiManager::Draw() {
 					break;
 
 			case GuiControlType::SLIDERBAR:
+				control->data->Draw(app->render, slider);
 					break;
 			}
 			
