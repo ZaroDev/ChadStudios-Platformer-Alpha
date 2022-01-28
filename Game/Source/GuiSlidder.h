@@ -30,7 +30,7 @@ public:
 	int margin = 10;
 	int marginSliders = 4;
 
-	int value;
+	float value;
 	int lastValue;
 
 	int minValue;
@@ -42,6 +42,8 @@ public:
 	/*Animation empty;
 	Animation full;
 	Animation slidebtn;*/
+
+	iPoint knobPos;
 	SDL_Rect inside;
 	SDL_Rect outside;
 	SDL_Rect knob;

@@ -79,7 +79,7 @@ bool Intro::Start()
 
 	check1 = (GuiCheck*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, GuiButtonType::NONE, 7, "Check1", { ((int)x / 2) - 350, ((int)y / 10) - 65, 97, 42 }, this);
 
-	slid1 = (GuiSlidder*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, GuiButtonType::NONE, 8, "sld1", { ((int)x / 2) - 500, ((int)y / 10), 97, 42 }, this);
+	slid1 = (GuiSlidder*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, GuiButtonType::NONE, 8, "sld1", { ((int)x / 2) - 500, ((int)y / 10), 210, 38 }, this);
 
 
 	btn6->state = GuiControlState::DISABLED;

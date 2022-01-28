@@ -5,13 +5,14 @@
 
 #include "GuiSlidder.h"
 #include "Window.h"
-
+#include "Log.h"
 GuiSlidder::GuiSlidder(uint32 id, SDL_Rect bounds, const char* text, int min, int max) : GuiControl(GuiControlType::SLIDER, id)
 {
 	this->bounds = bounds;
 	this->text = text;
 	//TODO Poner las animaciones
-
+	knobPos.x = bounds.x;
+	knobPos.y = bounds.y;
 	canClick = true;
 	drawBasic = false;
 
@@ -25,18 +26,12 @@ GuiSlidder::GuiSlidder(uint32 id, SDL_Rect bounds, const char* text, int min, in
 		minValue = min;
 		maxValue = max;
 	}
-
-	inside = { 218,0,210,38 };
-	outside = { 0,0,210,38 };
+	value = 0.0f;
+	outside = { 218,0,210,38 };
+	inside = { 0,0,210,38 };
 	knob = { 456,0,39,38 };
-
 	minOutside = outside.x;
 	maxOutside = outside.x + outside.w;
-
-
-	//full.PushBack({ 0,0,210,38 });
-	//empty.PushBack({ 218,0,210,38 });
-	//slidebtn.PushBack({ 456,0,39,38 });
 }
 
 GuiSlidder::~GuiSlidder()
@@ -62,7 +57,7 @@ bool GuiSlidder::Update(float dt)
 			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)
 			{
 				state = GuiControlState::PRESSED;
-				//SliderControl(mouseX, mouseY);
+				SliderControl(mouseX, mouseY);
 			}
 
 			// If mouse button pressed -> Generate event!
@@ -79,6 +74,7 @@ bool GuiSlidder::Update(float dt)
 
 bool GuiSlidder::Draw(Render* render, SDL_Texture* tex)
 {
+	outside.w = inside.w * value;
 	// Draw the right button depending on state
 	switch (state)
 	{
@@ -90,11 +86,12 @@ bool GuiSlidder::Draw(Render* render, SDL_Texture* tex)
 
 	case GuiControlState::NORMAL:
 	{
+		
 		render->DrawTexture(tex, bounds.x, bounds.y, &inside);
 		render->DrawTexture(tex, bounds.x, bounds.y, &outside);
-		render->DrawTexture(tex, bounds.x, bounds.y, &knob);
+		render->DrawTexture(tex, knobPos.x, knobPos.y, &knob);
 		//draw
-		knob.w *= value;
+
 	} break;
 
 	//L14: TODO 4: Draw the button according the GuiControl State
@@ -102,15 +99,15 @@ bool GuiSlidder::Draw(Render* render, SDL_Texture* tex)
 	{
 		render->DrawTexture(tex, bounds.x, bounds.y, &inside);
 		render->DrawTexture(tex, bounds.x, bounds.y, &outside);
-		render->DrawTexture(tex, bounds.x, bounds.y, &knob);
-		outside.w *= value;
+		render->DrawTexture(tex, knobPos.x, knobPos.y, &knob);
+
 	} break;
 	case GuiControlState::PRESSED:
 	{
 		render->DrawTexture(tex, bounds.x, bounds.y, &inside);
 		render->DrawTexture(tex, bounds.x, bounds.y, &outside);
-		render->DrawTexture(tex, bounds.x, bounds.y, &knob);
-		outside.w *= value;
+		render->DrawTexture(tex, knobPos.x, knobPos.y, &knob);
+
 	} break;
 	default:
 		break;
@@ -156,19 +153,18 @@ bool GuiSlidder::Draw(Render* render, SDL_Texture* tex)
 
 void GuiSlidder::SliderControl(int mouseX, int mouseY)
 {
-	knob.x = mouseX - (knob.w / 2);
-
-	value = ((maxValue - minValue) * (mouseX - (float)(outside.x + knob.w / 2))) / (float)(outside.w - knob.w) + minValue;
-
+	knobPos.x = mouseX - (knob.w / 2);
+	LOG("Value %f", value);
+	if (knobPos.x < bounds.x)
+	{
+		knobPos.x = bounds.x;
+		value = minValue / 100;
+	}
+	if ((knobPos.x + knob.w) > (knobPos.x + bounds.w))
+	{
+		knobPos.x = (bounds.x + bounds.w) - knob.w;
+		value = maxValue / 100;
+	}
+	value = (((maxValue - minValue) * (mouseX - (float)(bounds.x + knob.w / 2))) / (float)(bounds.w - knob.w) + minValue) / 100;
 	// Limits
-	if (knob.x < outside.x)
-	{
-		knob.x = outside.x;
-		value = minValue;
-	}
-	if ((knob.x + knob.w) > (outside.x + outside.w))
-	{
-		knob.x = (outside.x + outside.w) - knob.w;
-		value = maxValue;
-	}
 }
