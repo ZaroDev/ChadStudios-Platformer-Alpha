@@ -21,7 +21,6 @@ public:
 	void Use();
 	void LoadAnims();
 
-	void Initialize();
 
 	bool grounded;
 	bool god;
@@ -37,6 +36,8 @@ private:
 	int jumpSFX;
 	int superJumpSFX;
 	//Jump SFX folder path
+	iPoint startPos;
+
 	SString jumpSFXFile;
 	//Variable for double jump
 	int numJumps;

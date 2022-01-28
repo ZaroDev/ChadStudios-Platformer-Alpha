@@ -29,13 +29,14 @@ EntityManager::~EntityManager()
 bool EntityManager::Awake(pugi::xml_node& config)
 {
 	folder.Create(config.child("folder").child_value());
-
+	audio.Create(config.child("audio").child_value());
 
 	return true;
 }
 
 bool EntityManager::Start()
 {
+	//Loading sprites
 	SString pathPlayer("%s%s", folder.GetString(), "player.png");
 	SString pathEnemies("%s%s", folder.GetString(), "enemies.png");
 	SString pathCollect("%s%s", folder.GetString(), "collect.png");
@@ -46,6 +47,9 @@ bool EntityManager::Start()
 	checkTex = app->tex->Load(pathCheck.GetString());
 	collectTex = app->tex->Load(pathCollect.GetString());
 	path = app->tex->Load(pathPath.GetString());
+
+	//Loading audio
+
 
 	return true;
 }
@@ -67,17 +71,30 @@ bool EntityManager::PreUpdate()
 	OPTICK_CATEGORY("PreUpdate EntityManager", Optick::Category::AI);
 	return true;
 }
-void EntityManager::UpdateAll(float dt)
+void EntityManager::UpdateAll(float dt, bool canUpdate)
 {
-	for (ListItem<Entity*>* ent = entities.start; ent != nullptr; ent = ent->next)
+	if (canUpdate)
 	{
-		ent->data->Update(dt);
+		for (ListItem<Entity*>* ent = entities.start; ent != nullptr; ent = ent->next)
+		{
+			ent->data->Update(dt);
+		}
 	}
 	return;
 }
 bool EntityManager::Update(float dt)
 {
-	UpdateAll(dt);
+	accumulatedTime += dt;
+	if (accumulatedTime >= updateMsCycle) doLogic = true;
+
+	UpdateAll(dt, doLogic);
+
+	if (doLogic == true)
+	{
+		accumulatedTime = 0.0f;
+		doLogic = false;
+	}
+
 
 	if (currentPlayer != nullptr)
 	{
@@ -158,7 +175,7 @@ void EntityManager::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 				if (!currentPlayer->god)
 				{
 					bodyA->eListener->health--;
-					app->audio->PlayFx(playerHit);
+					app->audio->PlayFx(playerHitSFX);
 					currentPlayer->SetState(EntityState::HURT);
 				}
 			}
@@ -175,11 +192,13 @@ void EntityManager::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 				app->ui->AddScore(50);
 			}
 			bodyB->eListener->Use();
+			app->audio->PlayFx(cherrySFX);
 			return;
 		}
 		else if (bodyB->eListener->type == GEM)
 		{
 			bodyB->eListener->Use();
+			app->audio->PlayFx(gemSFX);
 			app->ui->AddScore(100);
 			return;
 		}
@@ -187,6 +206,7 @@ void EntityManager::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		{
 
 			app->SaveGameRequest();
+			app->audio->PlayFx(checkpointSFX);
 			bodyB->eListener->Use();
 
 			return;
@@ -321,4 +341,9 @@ void EntityManager::DrawPath(SDL_Texture* tex)
 			app->render->DrawTexture(tex, pos.x, pos.y);
 		}
 	}
+}
+
+void EntityManager::PlayJump()
+{
+	
 }

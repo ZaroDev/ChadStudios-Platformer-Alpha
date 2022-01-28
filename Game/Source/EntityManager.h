@@ -19,7 +19,7 @@ public:
 	bool SaveState(pugi::xml_node& data) const;
 	bool LoadState(pugi::xml_node& data);
 	//Updates all the entities
-	void UpdateAll(float dt);
+	void UpdateAll(float dt, bool canUpdate);
 	//Util functions
 	Entity* CreateEntity(EntityType type_, iPoint position_);
 	void DestroyAllEntities();
@@ -27,21 +27,33 @@ public:
 	void SetPlayer(Player* player);
 	void DrawPath(SDL_Texture* tex);
 
+	void PlayJump();
+
 public:
 	Player* currentPlayer = nullptr;
 private:
 	int hitSFX;
-	int playerHit;
+	int playerHitSFX;
+	int playerJumpSFX;
+	int playerSuperJumpSFX;
+	int checkpointSFX;
+	int gemSFX;
+	int cherrySFX;
+
+
 	List<Entity*> entities;
 	float accumulatedTime;
 	float updateMsCycle;
 	bool doLogic;
+
 	SDL_Texture* playerTex;
 	SDL_Texture* collectTex;
 	SDL_Texture* checkTex;
 	SDL_Texture* enemiesTex;
 	SDL_Texture* path;
+
 	SString folder;
+	SString audio;
 
 	int numRat = 0;
 	int numEagle = 0;
@@ -49,4 +61,6 @@ private:
 	int numDoor = 0;
 	int numCheckPoint = 0;
 	int numCherry = 0;
+
+	
 };

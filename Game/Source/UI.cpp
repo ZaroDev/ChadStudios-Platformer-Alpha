@@ -121,18 +121,21 @@ bool UI::PostUpdate()
 		heartAnim.Update();
 		gemAnim.Update();
 		abAnim.Update();
-		if (app->entman->currentPlayer->GetHealth() == 3)
+		if (app->entman->currentPlayer != nullptr)
 		{
-			app->render->DrawTexture(heart, 115, 10, &heartAnim.GetCurrentFrame(), true);
-		}
-		if (app->entman->currentPlayer->GetHealth() >= 2)
-		{
-			app->render->DrawTexture(heart, 60, 10, &heartAnim.GetCurrentFrame(), true);
-		}
-		if (app->entman->currentPlayer->GetHealth() >= 1)
-		{
-			app->render->DrawTexture(heart, 5, 10, &heartAnim.GetCurrentFrame(), true);
-		}
+			if (app->entman->currentPlayer->GetHealth() == 3)
+			{
+				app->render->DrawTexture(heart, 115, 10, &heartAnim.GetCurrentFrame(), true);
+			}
+			if (app->entman->currentPlayer->GetHealth() >= 2)
+			{
+				app->render->DrawTexture(heart, 60, 10, &heartAnim.GetCurrentFrame(), true);
+			}
+			if (app->entman->currentPlayer->GetHealth() >= 1)
+			{
+				app->render->DrawTexture(heart, 5, 10, &heartAnim.GetCurrentFrame(), true);
+			}
+		
 		SString tmp("%4d", score);
 		SString tmp2("%d", (360 - app->entman->currentPlayer->abilityCD) / app->framesPerSecond);
 		SString tmp3("time %d.%.2f",minutes, seconds);
@@ -149,7 +152,7 @@ bool UI::PostUpdate()
 			app->render->DrawTexture(anim, 1420, 790, &abAnim.GetCurrentFrame(), true);
 		}
 
-
+}
 		if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 			pauseShow = !pauseShow;
 
@@ -180,7 +183,7 @@ bool UI::PostUpdate()
 
 		app->guiManager->Draw();
 	}
-	else if (app->currentScene == 3)
+	else if (app->currentScene == 3 && app->win_)
 	{
 		//SCORING SYSTEM
 		SString tmp("score %4d", score);

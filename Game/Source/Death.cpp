@@ -118,8 +118,8 @@ bool Death::Update(float dt)
 		winAnim.Update();	
 		app->render->DrawTexture(backgroundWin, 0, 0, NULL);
 		SDL_Rect rect = winAnim.GetCurrentFrame();
-		app->render->DrawTexture(winImg, 137, 172, &rect);
-		app->render->DrawTexture(winImg, 370, 172, &rect);
+		app->render->DrawTexture(winImg, 75, 250, &rect);
+		app->render->DrawTexture(winImg, 475, 250, &rect);
 
 	}
 

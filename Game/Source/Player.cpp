@@ -17,9 +17,10 @@ Player::Player(iPoint position_) : Entity(EntityType::PLAYER, position_)
 	maxVel = 5;
 	minVel = 2.5;
 	jumpVel = -5;
+	startPos = position_;
 	currentAnimation = &idleAnimR;
 	grounded = true;
-	LOG("Player spawned at x%f, y%f \n", position.x, position.y);
+	LOG("Player spawned at x%i, y%i", position.x, position.y);
 	this->w = 20;
 	this->h = 26;
 	pbody = app->physics->CreateRectangle(position.x, position.y, w, h, DYNAMIC);
@@ -53,10 +54,7 @@ void Player::Update(float dt)
 		god = !god;
 	if (app->input->GetKey(SDL_SCANCODE_F3))
 	{
-		/*if(currentScene == 1)
-			pbody->body->SetTransform({ PIXEL_TO_METERS(scene1.x), PIXEL_TO_METERS(scene1.y) }, 0.0f);
-		if(currentScene == 2)
-			pbody->body->SetTransform({ PIXEL_TO_METERS(scene2.x), PIXEL_TO_METERS(scene2.y) }, 0.0f);*/
+		pbody->body->SetTransform({PIXEL_TO_METERS(startPos.x), PIXEL_TO_METERS(startPos.y) }, 0.0f);
 	}
 	if (pbody->body->GetLinearVelocity().y < 0.1f && pbody->body->GetLinearVelocity().y > -0.1f)
 		grounded = true;
@@ -253,56 +251,6 @@ void Player::LoadAnims()
 	abilityAnimL.loop = true;
 	abilityAnimL.speed = 0.1f;
 }
-
-void Player::Initialize()
-{
-	/*currentScene = config.child("start").attribute("value").as_int();
-	numJumps = config.child("num_jumps").attribute("value").as_int();
-	minVel = config.child("min_vel").attribute("value").as_float();
-	maxVel = config.child("max_vel").attribute("value").as_float();
-	jumpVel = config.child("jump_vel").attribute("value").as_float();
-	folder.Create(config.child("folder").child_value());
-	jumpSFXFile.Create(config.child("jump_SFX").child_value());
-	scene1.x = config.child("scene1").attribute("x").as_int();
-	scene1.y = config.child("scene1").attribute("y").as_int();
-
-	scene2.x = config.child("scene2").attribute("x").as_int();
-	scene2.y = config.child("scene2").attribute("y").as_int();*/
-
-	maxVel = 5;
-	minVel = 2.5;
-
-	currentAnimation = &idleAnimR;
-	grounded = true;
-	position.x = 23;
-	position.y = 800;
-	b2BodyDef cbody;
-	cbody.type = b2_dynamicBody;
-	cbody.position.Set(PIXEL_TO_METERS(position.x), PIXEL_TO_METERS(position.y));
-	LOG("Player spawned at x%f, y%f \n", cbody.position.x, cbody.position.y);
-	cbody.fixedRotation = true;
-	c = app->physics->world->CreateBody(&cbody);
-	b2CircleShape circle;
-	circle.m_radius = PIXEL_TO_METERS(12);
-	b2FixtureDef fixturec;
-	fixturec.shape = &circle;
-	fixturec.density = 20.0f;
-	fixturec.friction = 100.0f;
-	c->ResetMassData();
-	c->CreateFixture(&fixturec);
-
-	this->pbody = new PhysBody();
-	pbody->body = c;
-	c->SetUserData(pbody);
-	pbody->width = 24 * 0.5f;
-	pbody->height = 27 * 0.5f;
-	useDownDash = false;
-	god = false;
-	this->w = 27;
-	this->h = 27;
-	this->health = 3;
-}
-
 
 
 bool Player::LoadState(pugi::xml_node& data)
