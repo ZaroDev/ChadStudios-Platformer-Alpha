@@ -52,8 +52,7 @@ bool GuiButton::Update(float dt)
 		// L14: TODO 3: Update the state of the GUiButton according to the mouse position
 		int mouseX, mouseY;
 		app->input->GetMousePosition(mouseX, mouseY);
-		LOG("Button x %i y %i", bounds.x, bounds.y);
-		LOG("Mouse x %i y %i", mouseX, mouseY);
+
 		int offsetX = -app->render->camera.x / app->win->GetScale();
 		int offsetY = -app->render->camera.y / app->win->GetScale();
 		if ((mouseX + offsetX > bounds.x) && (mouseX + offsetX < (bounds.x + bounds.w)) &&

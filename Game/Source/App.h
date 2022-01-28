@@ -99,6 +99,8 @@ private:
 	bool LoadGame();
 	bool SaveGame() const;
 
+
+
 public:
 	// Settings
 	bool debug = false;
@@ -126,6 +128,7 @@ public:
 	Intro* intro;
 	Scene2* scene2;
 	Death* death;
+
 
 	bool fpsCap = false;
 	float dt = 0.0f;

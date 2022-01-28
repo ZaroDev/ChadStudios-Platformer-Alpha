@@ -46,7 +46,10 @@ public:
 
 	// Set background color
 	void SetBackgroundColor(SDL_Color color);
+	 
+	void SetFullScreen();
 
+	void SetVsync(bool value, Module* scene);
 public:
 
 	SDL_Renderer* renderer;

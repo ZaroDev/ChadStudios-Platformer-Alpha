@@ -35,10 +35,10 @@ bool Window::Awake(pugi::xml_node& config)
 		// Create window
 		// L01: DONE 6: Load all required configurations from config.xml
 		Uint32 flags = SDL_WINDOW_SHOWN;
-		bool fullscreen = config.child("fullscreen").attribute("value").as_bool(false);
-		bool borderless = config.child("borderless").attribute("value").as_bool(false);
-		bool resizable = config.child("resizable").attribute("value").as_bool(false);
-		bool fullscreen_window = config.child("fullscreen_window").attribute("value").as_bool(false);
+		bool fullscreen = config.child("fullscreen").attribute("value").as_bool();
+		bool borderless = config.child("borderless").attribute("value").as_bool();
+		bool resizable = config.child("resizable").attribute("value").as_bool();
+		bool fullscreen_window = config.child("fullscreen_window").attribute("value").as_bool();
 		folder.Create(config.child("folder").child_value());
 
 		width = config.child("resolution").attribute("width").as_int(640);
@@ -100,4 +100,12 @@ void Window::GetWindowSize(uint& width, uint& height) const
 uint Window::GetScale() const
 {
 	return scale;
+}
+
+void Window::SetFullScreen(bool value)
+{
+	if (value)
+		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+	else if(!value)
+		SDL_SetWindowFullscreen(window, SDL_FALSE);
 }
