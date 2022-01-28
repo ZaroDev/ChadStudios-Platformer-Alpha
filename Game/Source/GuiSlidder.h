@@ -36,9 +36,15 @@ public:
 	int minValue;
 	int maxValue;
 
-	Animation empty;
+	int maxOutside;
+	int minOutside;
+
+	/*Animation empty;
 	Animation full;
-	Animation slidebtn;
+	Animation slidebtn;*/
+	SDL_Rect inside;
+	SDL_Rect outside;
+	SDL_Rect knob;
 
 	bool canClick = true;
 	bool drawBasic = false;

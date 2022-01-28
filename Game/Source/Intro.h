@@ -5,6 +5,7 @@
 #include "Animation.h"
 #include "GuiButton.h"
 #include "GuiCheck.h"
+#include "GuiSlidder.h"
 struct SDL_Texture;
 
 class Intro : public Module
@@ -60,6 +61,9 @@ private:
 	GuiButton* btn6;
 
 	GuiCheck* check1;
+
+	GuiSlidder* slid1;
+
 	bool load;
 	bool settingsShow = false;
 	bool creditShow = false;

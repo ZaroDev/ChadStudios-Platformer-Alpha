@@ -54,7 +54,7 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, GuiButtonType btyp
 	
 	case GuiControlType::SLIDER:
 
-		control = new GuiSlidder(id, bounds, text);
+		control = new GuiSlidder(id, bounds, text,0,100);
 		break;
 
 	default:
@@ -161,7 +161,7 @@ bool GuiManager::Draw() {
 				control->data->Draw(app->render, checkbox);
 					break;
 
-			case GuiControlType::SLIDERBAR:
+			case GuiControlType::SLIDER:
 				control->data->Draw(app->render, slider);
 					break;
 			}
