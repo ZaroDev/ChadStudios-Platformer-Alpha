@@ -61,8 +61,10 @@ private:
 	GuiButton* btn6;
 
 	GuiCheck* check1;
+	GuiCheck* check2;
 
 	GuiSlidder* slid1;
+	GuiSlidder* slid2;
 
 	bool load;
 	bool settingsShow = false;

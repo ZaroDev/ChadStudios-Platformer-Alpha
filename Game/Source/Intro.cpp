@@ -77,12 +77,20 @@ bool Intro::Start()
 	
 	btn6 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, GuiButtonType::CLOSE, 6, "Test6", { ((int)x / 2) - 350, ((int)y / 10) - 65, 97, 42 }, this);
 
-	check1 = (GuiCheck*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, GuiButtonType::NONE, 7, "Check1", { ((int)x / 2) - 350, ((int)y / 10) - 65, 97, 42 }, this);
+	check1 = (GuiCheck*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, GuiButtonType::NONE, 7, "Check1", { ((int)x / 2) - 450, ((int)y / 10) + 110, 42, 42 }, this);
+	check2 = (GuiCheck*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, GuiButtonType::NONE, 8, "Check2", { ((int)x / 2) - 450, ((int)y / 10) + 50, 42, 42 }, this);
 
-	slid1 = (GuiSlidder*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, GuiButtonType::NONE, 8, "sld1", { ((int)x / 2) - 500, ((int)y / 10), 210, 38 }, this);
+	slid1 = (GuiSlidder*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, GuiButtonType::NONE, 9, "sld1", { ((int)x / 2) - 600, ((int)y / 10) - 50, 210, 38 }, this);
+	slid2 = (GuiSlidder*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, GuiButtonType::NONE, 10, "sld2", { ((int)x / 2) - 600, ((int)y / 10) , 210, 38 }, this);
 
 
 	btn6->state = GuiControlState::DISABLED;
+
+	check1->state = GuiControlState::DISABLED;
+	check2->state = GuiControlState::DISABLED;
+
+	slid1->state = GuiControlState::DISABLED;
+	slid2->state = GuiControlState::DISABLED;
 
 
 
@@ -122,6 +130,9 @@ bool Intro::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		app->SaveGameRequest();
 	
+	app->audio->volMusic = slid1->value * 100;
+	app->audio->volFX = slid2->value * 100;
+
 	logoAnim.Update();
 	return true;
 }
@@ -187,6 +198,10 @@ bool Intro::OnGuiMouseClickEvent(GuiControl* control)
 			btn4->state = GuiControlState::NONE;
 			btn5->state = GuiControlState::NONE;
 			btn6->state = GuiControlState::NORMAL;
+			check1->state = GuiControlState::NORMAL;
+			check2->state = GuiControlState::NORMAL;
+			slid1->state = GuiControlState::NORMAL;
+			slid2->state = GuiControlState::NORMAL;
 		}
 		
 		if (control->id == 4)
@@ -203,6 +218,10 @@ bool Intro::OnGuiMouseClickEvent(GuiControl* control)
 			btn4->state = GuiControlState::NONE;
 			btn5->state = GuiControlState::NONE;
 			btn6->state = GuiControlState::NORMAL;
+			check1->state = GuiControlState::DISABLED;
+			check2->state = GuiControlState::DISABLED;
+			slid1->state = GuiControlState::DISABLED;
+			slid2->state = GuiControlState::DISABLED;
 		}
 
 		if (control->id == 6)
@@ -215,10 +234,30 @@ bool Intro::OnGuiMouseClickEvent(GuiControl* control)
 			btn4->state = GuiControlState::NORMAL;
 			btn5->state = GuiControlState::NORMAL;
 			btn6->state = GuiControlState::NONE;
+			check1->state = GuiControlState::DISABLED;
+			check2->state = GuiControlState::DISABLED;
+			slid1->state = GuiControlState::DISABLED;
+			slid2->state = GuiControlState::DISABLED;
 		}
+		
 	}
 	//Other cases here
-
+	case GuiControlType::CHECKBOX:
+		if (control->id == 7)
+		{
+			if (check1->checked == true)
+			{
+				app->win
+			}
+		}
+		if (control->id == 8)
+		{
+			if (check1->checked == true)
+			{
+				app->render->renderer;
+			}
+		}
+		break;
 	default: break;
 	}
 
