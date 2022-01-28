@@ -61,6 +61,7 @@ bool Death::Start()
 	backgroundWin = app->tex->Load(tmp4.GetString());
 	winImg = app->tex->Load(tmp5.GetString());
 	app->tex->Enable();
+	app->ui->Enable();
 	app->render->camera.x = app->render->camera.y = 0;
 	return true;
 }
@@ -139,6 +140,6 @@ bool Death::CleanUp()
 	app->tex->UnLoad(backgroundDeath);
 	app->tex->UnLoad(backgroundWin);
 	app->tex->UnLoad(deathImg);
-
+	app->ui->Disable();
 	return true;
 }

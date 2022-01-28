@@ -13,6 +13,7 @@
 #include "EntityManager.h"
 #include "Defs.h"
 #include "Log.h"
+#include "UI.h"
 
 Scene2::Scene2(bool startEnabled) : Module(startEnabled)
 {
@@ -49,7 +50,7 @@ bool Scene2::Start()
 	app->physics->Enable();
 	app->map->Enable();
 	app->audio->Enable();
-
+	app->ui->Enable();
 	app->currentScene = 2;
 
 	Player* player = (Player*)app->entman->CreateEntity(PLAYER, iPoint{ startX, startY });
@@ -155,6 +156,7 @@ bool Scene2::CleanUp()
 	app->map->Unload();
 	app->map->Disable();
 
+	app->ui->Disable();
 	app->physics->Disable();
 	return true;
 }

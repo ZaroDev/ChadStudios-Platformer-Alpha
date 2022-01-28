@@ -45,7 +45,7 @@ bool Intro::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool Intro::Start()
 {
-	
+	app->guiManager->Start();
 	// L03: DONE: Load map
 	SString tmp("%s%s", folder.GetString(), "intro.png");
 	SString tmp2("%s%s", folder.GetString(), "logoAnim.png");
@@ -79,7 +79,8 @@ bool Intro::Start()
 
 
 	btn6->state = GuiControlState::DISABLED;
-	
+
+
 
 	settingsShow = false;
 	creditShow = false;
@@ -89,6 +90,7 @@ bool Intro::Start()
 // Called each loop iteration
 bool Intro::PreUpdate()
 {
+	LOG("Cam x%i y%i", app->render->camera.x, app->render->camera.y);
 	if (load)
 	{
 		app->LoadGameRequest();
@@ -107,6 +109,7 @@ bool Intro::PreUpdate()
 // Called each loop iteration
 bool Intro::Update(float dt)
 {
+
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene);
 	if (app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)

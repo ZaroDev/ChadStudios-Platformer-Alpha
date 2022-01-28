@@ -163,5 +163,6 @@ bool Scene::CleanUp()
 	app->map->Disable();
 	app->entman->DestroyAllEntities();
 	app->physics->Disable();
+	app->ui->Disable();
 	return true;
 }

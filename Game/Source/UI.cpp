@@ -62,7 +62,7 @@ bool UI::Start()
 	settings = app->tex->Load("Assets/textures/GUI/settingsMenu.png");
 	font = app->fonts->Load(tmp3.GetString(), lookUpTable, 7);
 	//GUI
-
+	app->guiManager->Start();
 	btn1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, GuiButtonType::RESUME, 1, "Test1", {0,0, 154, 45 }, this);
 
 	btn2 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, GuiButtonType::SETTINGS, 2, "Test2", { 0,0, 154, 45 }, this);
@@ -135,7 +135,7 @@ bool UI::PostUpdate()
 		}
 		SString tmp("%4d", score);
 		SString tmp2("%d", (360 - app->entman->currentPlayer->abilityCD) / app->framesPerSecond);
-		SString tmp3("%d.%f",minutes, seconds);
+		SString tmp3("time %d.%.2f",minutes, seconds);
 		scoreMult = app->entman->currentPlayer->GetHealth();
 		app->render->DrawTexture(gem, 1550, 10, &gemAnim.GetCurrentFrame(), true);
 		app->fonts->BlitText(480, 5, font, tmp.GetString());
@@ -182,10 +182,15 @@ bool UI::PostUpdate()
 	}
 	else if (app->currentScene == 3)
 	{
+		//SCORING SYSTEM
 		SString tmp("score %4d", score);
 		SString tmp2("score mult %i", scoreMult);
+		SString tmp5("time %i.%f", minutes, seconds);
 		SString tmp3("total score %4d", scoreMult * score);
 		SString tmp4;
+
+
+
 		counter++;
 		if (highScore < scoreMult * score)
 		{
@@ -196,37 +201,49 @@ bool UI::PostUpdate()
 		{
 			tmp4.Create("new high score %4d", highScore);
 		}
+
+
+		//SCORE
 		if (counter <= 120)
 		{
 			if ((counter / 60) % 2 == 0)
-				app->fonts->BlitText(100, 50, font, tmp.GetString());
+				app->fonts->BlitText(225, 100, font, tmp.GetString());
 		}
 		else
-			app->fonts->BlitText(100, 50, font, tmp.GetString());
+			app->fonts->BlitText(225, 100, font, tmp.GetString());
 
-		if (counter <= 180)
-		{
-			if ((counter / 60) % 2 == 0)
-			app->fonts->BlitText(100, 100, font, tmp2.GetString());
-		}
-		else
-			app->fonts->BlitText(100, 100, font, tmp2.GetString());
 
+		//SCORE MULT
 		if (counter <= 240)
 		{
 			if ((counter / 60) % 2 == 0)
-				app->fonts->BlitText(100, 150, font, tmp3.GetString());
+				app->fonts->BlitText(225, 125, font, tmp2.GetString());
 		}
 		else
-			app->fonts->BlitText(100, 150, font, tmp3.GetString());
-
-		if (counter <= 300)
+			app->fonts->BlitText(225, 125, font, tmp2.GetString());
+		
+		
+		
+		//TOTAL SCORE
+		if (counter <= 360)
 		{
 			if ((counter / 60) % 2 == 0)
-				app->fonts->BlitText(100, 200, font, tmp4.GetString());
+				app->fonts->BlitText(225, 150, font, tmp3.GetString());
 		}
 		else
-			app->fonts->BlitText(100, 200, font, tmp4.GetString());
+			app->fonts->BlitText(225, 150, font, tmp3.GetString());
+
+
+		//HIGHSCORE
+	
+		if (counter <= 480)
+		{
+			if ((counter / 60) % 2 == 0)
+				app->fonts->BlitText(225, 175, font, tmp4.GetString());
+		}
+		else
+			app->fonts->BlitText(225, 175, font, tmp4.GetString());
+
 	}
 	return true;
 }
@@ -238,6 +255,7 @@ bool UI::CleanUp()
 	app->tex->UnLoad(heart);
 	app->tex->UnLoad(gem);
 	app->fonts->UnLoad(font);
+	app->guiManager->CleanUp();
 	return true;
 }
 
@@ -294,7 +312,14 @@ bool UI::OnGuiMouseClickEvent(GuiControl* control)
 
 		if (control->id == 3)
 		{
-			app->fadeToBlack->MFadeToBlack(this, (Module*)app->intro);
+			if (app->currentScene == 1)
+			{
+				app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->intro);
+			}
+			if(app->currentScene == 2)
+			{
+				app->fadeToBlack->MFadeToBlack((Module*)app->scene2, (Module*)app->intro);
+			}
 		}
 
 		if (control->id == 4)

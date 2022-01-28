@@ -301,6 +301,7 @@ void EntityManager::SetPlayer(Player* player)
 }
 void EntityManager::DestroyAllEntities()
 {
+	currentPlayer = nullptr;
 	entities.Clear();
 	numCherry = 0;
 	numCheckPoint = 0;
