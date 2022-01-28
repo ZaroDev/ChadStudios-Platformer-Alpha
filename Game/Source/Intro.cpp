@@ -247,7 +247,7 @@ bool Intro::OnGuiMouseClickEvent(GuiControl* control)
 		{
 			if (check1->checked == true)
 			{
-				app->win
+				//app->win
 			}
 		}
 		if (control->id == 8)

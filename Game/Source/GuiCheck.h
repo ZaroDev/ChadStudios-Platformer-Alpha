@@ -6,6 +6,7 @@
 #include "Point.h"
 #include "SString.h"
 #include "Animation.h"
+#include "Audio.h"
 
 class SDL_Texture;
 
@@ -31,6 +32,8 @@ public:
 	Animation focused;
 	Animation normal;
 	Animation xcheck;
+
+	int fxaudio;
 
 	bool canClick = true;
 	bool drawBasic = false;

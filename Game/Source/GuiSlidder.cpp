@@ -32,6 +32,8 @@ GuiSlidder::GuiSlidder(uint32 id, SDL_Rect bounds, const char* text, int min, in
 	knob = { 456,0,39,38 };
 	minOutside = outside.x;
 	maxOutside = outside.x + outside.w;
+
+	fxaudio = app->audio->LoadFx("Assets/audio/fx/gem.wav");
 }
 
 GuiSlidder::~GuiSlidder()
@@ -53,10 +55,11 @@ bool GuiSlidder::Update(float dt)
 			(mouseY + offsetY > bounds.y) && (mouseY + offsetY < (bounds.y + bounds.h)))
 		{
 			state = GuiControlState::FOCUSED;
-
+			app->audio->PlayFx(fxaudio);
 			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)
 			{
 				state = GuiControlState::PRESSED;
+				app->audio->PlayFx(fxaudio);
 				SliderControl(mouseX, mouseY);
 			}
 

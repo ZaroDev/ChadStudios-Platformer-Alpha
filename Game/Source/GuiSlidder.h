@@ -6,6 +6,7 @@
 #include "Point.h"
 #include "SString.h"
 #include "Animation.h"
+#include "Audio.h"
 
 class GuiSlidder : public GuiControl
 {
@@ -47,6 +48,8 @@ public:
 	SDL_Rect inside;
 	SDL_Rect outside;
 	SDL_Rect knob;
+
+	int fxaudio;
 
 	bool canClick = true;
 	bool drawBasic = false;

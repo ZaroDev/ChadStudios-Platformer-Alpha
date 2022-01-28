@@ -35,6 +35,8 @@ GuiButton::GuiButton(uint32 id, SDL_Rect bounds, GuiButtonType btype, const char
 	noDraw.PushBack({ 0, 0, 1, 1 });
 	canClick = true;
 	drawBasic = false;
+
+	fxaudio = app->audio->LoadFx("Assets/audio/fx/gem.wav");
 }
 
 GuiButton::~GuiButton()
@@ -58,10 +60,11 @@ bool GuiButton::Update(float dt)
 			(mouseY + offsetY > bounds.y) && (mouseY + offsetY < (bounds.y + bounds.h)))
 		{
 			state = GuiControlState::FOCUSED;
-
+			app->audio->PlayFx(fxaudio);
 			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)
 			{
 				state = GuiControlState::PRESSED;
+				app->audio->PlayFx(fxaudio);
 			}
 
 			// If mouse button pressed -> Generate event!

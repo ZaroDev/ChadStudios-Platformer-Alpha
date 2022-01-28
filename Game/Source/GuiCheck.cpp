@@ -20,6 +20,7 @@ GuiCheck::GuiCheck(uint32 id, SDL_Rect bounds,  const char* text, bool initState
 	normal.PushBack({ 95,0,44,45 });
 	xcheck.PushBack({ 148,0,20,45 });
 		
+	fxaudio = app->audio->LoadFx("Assets/audio/fx/gem.wav");
 }
 
 GuiCheck::~GuiCheck()
@@ -41,10 +42,11 @@ bool GuiCheck::Update(float dt)
 			(mouseY + offsetY > bounds.y) && (mouseY + offsetY < (bounds.y + bounds.h)))
 		{
 			state = GuiControlState::FOCUSED;
-
+			app->audio->PlayFx(fxaudio);
 			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)
 			{
 				state = GuiControlState::PRESSED;
+				app->audio->PlayFx(fxaudio);
 			}
 
 			// If mouse button pressed -> Generate event!
