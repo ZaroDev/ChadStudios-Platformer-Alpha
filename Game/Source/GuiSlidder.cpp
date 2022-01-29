@@ -2,7 +2,7 @@
 #include "Render.h"
 #include "App.h"
 #include "Audio.h"
-
+#include "GuiManager.h"
 #include "GuiSlidder.h"
 #include "Window.h"
 #include "Log.h"
@@ -136,7 +136,7 @@ bool GuiSlidder::Draw(Render* render, SDL_Texture* tex)
 	default:
 		break;
 	}
-	if (app->debug)
+	if (app->guiManager->showBounds)
 	{
 		switch (state)
 		{

@@ -3,6 +3,7 @@
 #include "App.h"
 #include "Audio.h"
 #include "Window.h"
+#include "GuiManager.h"
 #include "Log.h"
 GuiButton::GuiButton(uint32 id, SDL_Rect bounds, GuiButtonType btype, const char* text) : GuiControl(GuiControlType::BUTTON, id)
 {
@@ -117,7 +118,7 @@ bool GuiButton::Draw(Render* render, SDL_Texture* tex)
 		break;
 	}
 	
-	if (app->debug)
+	if (app->guiManager->showBounds)
 	{
 		switch (state)
 		{

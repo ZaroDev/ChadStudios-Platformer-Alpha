@@ -108,7 +108,8 @@ bool GuiManager::Update(float dt)
 		accumulatedTime = 0.0f;
 		doLogic = false;
 	}
-
+	if (app->input->GetKey(SDL_SCANCODE_F8) == KeyState::KEY_DOWN)
+		showBounds = !showBounds;
 	return ret;
 }
 

@@ -3,7 +3,7 @@
 #include "App.h"
 #include "Audio.h"
 #include "Window.h"
-
+#include "GuiManager.h"
 GuiCheck::GuiCheck(uint32 id, SDL_Rect bounds,  const char* text, bool initState) : GuiControl(GuiControlType::CHECKBOX, id)
 {
 	this->bounds = bounds;
@@ -124,7 +124,7 @@ bool GuiCheck::Draw(Render* render, SDL_Texture* tex)
 	default:
 		break;
 	}
-	if (app->debug)
+	if (app->guiManager->showBounds)
 	{
 		switch (state)
 		{

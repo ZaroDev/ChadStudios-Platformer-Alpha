@@ -15,6 +15,7 @@ A simple platformer made with XML and TMXL
  - Checkpoints
  - AI enemies
  - Collectables
+ - GUI
  
 ## Controls
 
@@ -32,7 +33,7 @@ DEBUG MODE
  - F5 -> Save game
  - F6 -> Load game
  - F7 -> Win
- - F8 -> Hurt player
+ - F8 -> GUI bounds view
  - F9 -> Collision view
  - F10 -> God mode
  - F11 -> Disable/Enable 30 FPS

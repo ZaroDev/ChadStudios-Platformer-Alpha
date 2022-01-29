@@ -58,6 +58,8 @@ public:
 	SDL_Texture* slider;
 
 	SString folder;
+
+	bool showBounds = false;
 };
 
 #endif // __GUIMANAGER_H__
