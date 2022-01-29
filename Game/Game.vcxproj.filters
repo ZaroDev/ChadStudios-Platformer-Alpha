@@ -88,10 +88,18 @@
     <ClCompile Include="Source\Door.cpp">
       <Filter>Source\Modules\Gameplay\Props</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GuiButton.cpp" />
-    <ClCompile Include="Source\GuiManager.cpp" />
-    <ClCompile Include="Source\GuiCheck.cpp" />
-    <ClCompile Include="Source\GuiSlidder.cpp" />
+    <ClCompile Include="Source\GuiButton.cpp">
+      <Filter>Source\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GuiCheck.cpp">
+      <Filter>Source\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GuiManager.cpp">
+      <Filter>Source\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GuiSlidder.cpp">
+      <Filter>Source\GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Animation.h">
@@ -208,11 +216,21 @@
     <ClInclude Include="Source\Door.h">
       <Filter>Source\Modules\Gameplay\Props</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GUIControl.h" />
-    <ClInclude Include="Source\GuiButton.h" />
-    <ClInclude Include="Source\GuiManager.h" />
-    <ClInclude Include="Source\GuiCheck.h" />
-    <ClInclude Include="Source\GuiSlidder.h" />
+    <ClInclude Include="Source\GuiButton.h">
+      <Filter>Source\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiCheck.h">
+      <Filter>Source\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GUIControl.h">
+      <Filter>Source\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiManager.h">
+      <Filter>Source\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiSlidder.h">
+      <Filter>Source\GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Output\config.xml">
@@ -252,6 +270,9 @@
     </Filter>
     <Filter Include="Source\Modules\Gameplay\Enemies">
       <UniqueIdentifier>{5f47d1d5-b319-4fc0-b9f5-4c60f3246470}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GUI">
+      <UniqueIdentifier>{cb125c38-4dbd-4ae2-ac96-fa63aa3d0e6a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

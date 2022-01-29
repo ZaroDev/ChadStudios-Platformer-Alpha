@@ -49,7 +49,7 @@ bool Scene::Start()
 	background = app->tex->Load(tmp.GetString());
 	jungle = app->tex->Load(tmp2.GetString());
 	app->currentScene = 1;
-	
+	app->entman->Start();
 	app->physics->Enable();
 	app->map->Enable();
 	app->pathfinding->Enable();

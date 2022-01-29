@@ -52,7 +52,7 @@ bool Scene2::Start()
 	app->audio->Enable();
 	app->ui->Enable();
 	app->currentScene = 2;
-
+	app->entman->Enable();
 	Player* player = (Player*)app->entman->CreateEntity(PLAYER, iPoint{ startX, startY });
 	app->entman->SetPlayer(player);
 	app->die = false;
@@ -139,9 +139,6 @@ bool Scene2::Update(float dt)
 bool Scene2::PostUpdate()
 {
 	bool ret = true;
-
-	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
 
 	return ret;
 }

@@ -30,6 +30,7 @@ GuiSlidder::GuiSlidder(uint32 id, SDL_Rect bounds, const char* text, int min, in
 	outside = { 218,0,210,38 };
 	inside = { 0,0,210,38 };
 	knob = { 456,0,39,38 };
+	knobPos.x = bounds.x;
 	minOutside = outside.x;
 	maxOutside = outside.x + outside.w;
 
@@ -43,9 +44,11 @@ GuiSlidder::~GuiSlidder()
 
 bool GuiSlidder::Update(float dt)
 {
+
 	bool ret = true;
 	if (state != GuiControlState::DISABLED)
 	{
+		knobPos.y = bounds.y;
 		// L14: TODO 3: Update the state of the GUiButton according to the mouse position
 		int mouseX, mouseY;
 		app->input->GetMousePosition(mouseX, mouseY);
@@ -69,7 +72,17 @@ bool GuiSlidder::Update(float dt)
 				ret = NotifyObserver();
 			}
 		}
-		else state = GuiControlState::NORMAL;
+		else
+		{
+			state = GuiControlState::NORMAL;
+			if (outside.w > 0)
+				knobPos.x = bounds.x + outside.w - knob.w / 2;
+			if (value >= 1)
+				knobPos.x = bounds.x + outside.w - knob.w;
+			else
+				knobPos.x = bounds.x;
+
+		}
 	}
 
 	return ret;

@@ -5,8 +5,8 @@
 	<input />
 	<textures />
 	<audio>
-		<music value="128" />
-		<fx value="128" />
+		<music value="0" />
+		<fx value="0" />
 	</audio>
 	<fadetoblack />
 	<physics />
@@ -17,7 +17,137 @@
 	<scene2 />
 	<fonts />
 	<map />
-	<entities currentScene="1" />
+	<entities currentScene="1">
+		<player>
+			<pos x="0" y="0" />
+			<values lives="0" />
+		</player>
+		<door0 active="false" />
+		<door1 active="false" />
+		<eagle0>
+			<pos x="0" y="0" />
+			<values lives="0" />
+		</eagle0>
+		<eagle1>
+			<pos x="0" y="0" />
+			<values lives="0" />
+		</eagle1>
+		<eagle2>
+			<pos x="0" y="0" />
+			<values lives="0" />
+		</eagle2>
+		<eagle3>
+			<pos x="0" y="0" />
+			<values lives="0" />
+		</eagle3>
+		<eagle4>
+			<pos x="0" y="0" />
+			<values lives="0" />
+		</eagle4>
+		<eagle5>
+			<pos x="0" y="0" />
+			<values lives="0" />
+		</eagle5>
+		<eagle6>
+			<pos x="0" y="0" />
+			<values lives="0" />
+		</eagle6>
+		<eagle7>
+			<pos x="0" y="0" />
+			<values lives="0" />
+		</eagle7>
+		<eagle8>
+			<pos x="0" y="0" />
+			<values lives="0" />
+		</eagle8>
+		<eagle9>
+			<pos x="0" y="0" />
+			<values lives="0" />
+		</eagle9>
+		<eagle10>
+			<pos x="0" y="0" />
+			<values lives="0" />
+		</eagle10>
+		<rat0>
+			<pos x="0" y="0" />
+			<values lives="0" />
+		</rat0>
+		<rat1>
+			<pos x="0" y="0" />
+			<values lives="0" />
+		</rat1>
+		<rat2>
+			<pos x="0" y="0" />
+			<values lives="0" />
+		</rat2>
+		<rat3>
+			<pos x="0" y="0" />
+			<values lives="0" />
+		</rat3>
+		<rat4>
+			<pos x="0" y="0" />
+			<values lives="0" />
+		</rat4>
+		<rat5>
+			<pos x="0" y="0" />
+			<values lives="0" />
+		</rat5>
+		<rat6>
+			<pos x="0" y="0" />
+			<values lives="0" />
+		</rat6>
+		<rat7>
+			<pos x="0" y="0" />
+			<values lives="0" />
+		</rat7>
+		<gem0 active="false" />
+		<gem1 active="false" />
+		<gem2 active="false" />
+		<gem3 active="false" />
+		<gem4 active="false" />
+		<gem5 active="false" />
+		<gem6 active="false" />
+		<gem7 active="false" />
+		<gem8 active="false" />
+		<gem9 active="false" />
+		<gem10 active="false" />
+		<gem11 active="false" />
+		<gem12 active="false" />
+		<gem13 active="false" />
+		<gem14 active="false" />
+		<gem15 active="false" />
+		<gem16 active="false" />
+		<gem17 active="false" />
+		<gem18 active="false" />
+		<gem19 active="false" />
+		<gem20 active="false" />
+		<gem21 active="false" />
+		<gem22 active="false" />
+		<gem23 active="false" />
+		<gem24 active="false" />
+		<gem25 active="false" />
+		<gem26 active="false" />
+		<gem27 active="false" />
+		<gem28 active="false" />
+		<gem29 active="false" />
+		<gem30 active="false" />
+		<gem31 active="false" />
+		<gem32 active="false" />
+		<gem33 active="false" />
+		<gem34 active="false" />
+		<gem35 active="false" />
+		<gem36 active="false" />
+		<gem37 active="false" />
+		<gem38 active="false" />
+		<cherry0 active="false" />
+		<cherry1 active="false" />
+		<cherry2 active="false" />
+		<cherry3 active="false" />
+		<cherry4 active="false" />
+		<cherry5 active="false" />
+		<checkpoint0 active="false" />
+		<checkpoint1 active="false" />
+	</entities>
 	<ui />
 	<guiManager />
 	<render>

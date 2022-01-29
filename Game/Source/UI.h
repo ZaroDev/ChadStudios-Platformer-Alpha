@@ -5,6 +5,8 @@
 #include "Animation.h"
 #include "App.h"
 #include "GuiButton.h"
+#include "GuiCheck.h"
+#include "GuiSlidder.h"
 
 struct SDL_Texture;
 class UI : public Module
@@ -57,6 +59,12 @@ private:
 	GuiButton* btn3;
 	GuiButton* btn4;
 	GuiButton* btn5;
+
+	GuiCheck* check1;
+	GuiCheck* check2;
+
+	GuiSlidder* slid1;
+	GuiSlidder* slid2;
 };
 
 #endif // __UI_H__

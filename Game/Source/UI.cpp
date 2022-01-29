@@ -71,11 +71,24 @@ bool UI::Start()
 
 	btn4 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, GuiButtonType::CLOSE, 4, "Test4", { 0,0, 97, 42 }, this);
 	btn5 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, GuiButtonType::EXIT, 5, "Test4", { 0,0, 97, 42 }, this);
+
+
+	check1 = (GuiCheck*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, GuiButtonType::NONE, 6, "Check1", { 0, 50, 42, 42 }, this);
+	check2 = (GuiCheck*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, GuiButtonType::NONE, 7, "Check2", { 0, 110, 42, 42 }, this);
+
+	slid1 = (GuiSlidder*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, GuiButtonType::NONE, 8, "sld1", { 0, 50, 210, 38 }, this);
+	slid2 = (GuiSlidder*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, GuiButtonType::NONE, 9, "sld2", { 0, 10 , 210, 38 }, this);
+
+
 	btn1->state = GuiControlState::NONE;
 	btn2->state = GuiControlState::NONE;
 	btn3->state = GuiControlState::NONE;
-	btn4->state = GuiControlState::DISABLED;
+	btn4->state = GuiControlState::NONE;
 	btn5->state = GuiControlState::NONE;
+	check1->state = GuiControlState::DISABLED;
+	check2->state = GuiControlState::DISABLED;
+	slid1->state = GuiControlState::DISABLED;
+	slid2->state = GuiControlState::DISABLED;
 	settingsShow = false;
 	pauseShow = false;
 
@@ -110,12 +123,23 @@ bool UI::PostUpdate()
 		btn3->bounds.x = -app->render->camera.x / app->win->GetScale() + 200;
 		btn3->bounds.y = -app->render->camera.y / app->win->GetScale() + 150;
 
-		btn4->bounds.x = -app->render->camera.x / app->win->GetScale() + 200;
-		btn4->bounds.y = -app->render->camera.y / app->win->GetScale() + 150;
+		btn4->bounds.x = -app->render->camera.x / app->win->GetScale() + 410;
+		btn4->bounds.y = -app->render->camera.y / app->win->GetScale() + 5;
 
 		btn5->bounds.x = -app->render->camera.x / app->win->GetScale() + 225;
 		btn5->bounds.y = -app->render->camera.y / app->win->GetScale() + 200;
+
+		check1->bounds.x = -app->render->camera.x / app->win->GetScale() + 250;
+		check1->bounds.y = -app->render->camera.y / app->win->GetScale() + 125;
 	
+		check2->bounds.x = -app->render->camera.x / app->win->GetScale() + 250;
+		check2->bounds.y = -app->render->camera.y / app->win->GetScale() + 175;
+
+		slid1->bounds.x = -app->render->camera.x / app->win->GetScale() + 200;
+		slid1->bounds.y = -app->render->camera.y / app->win->GetScale() + 25;
+
+		slid2->bounds.x = -app->render->camera.x / app->win->GetScale() + 200;
+		slid2->bounds.y = -app->render->camera.y / app->win->GetScale() + 75;
 
 		LOG("x%i y%i", app->render->camera.x, app->render->camera.y);
 		heartAnim.Update();
@@ -142,7 +166,7 @@ bool UI::PostUpdate()
 		scoreMult = app->entman->currentPlayer->GetHealth();
 		app->render->DrawTexture(gem, 1550, 10, &gemAnim.GetCurrentFrame(), true);
 		app->fonts->BlitText(480, 5, font, tmp.GetString());
-		app->fonts->BlitText(400, 5, font, tmp3.GetString());
+		app->fonts->BlitText(200, 5, font, tmp3.GetString());
 		if (app->entman->currentPlayer->abilityCD != 0)
 		{
 			app->fonts->BlitText(480, 270, font, tmp2.GetString());
@@ -189,7 +213,6 @@ bool UI::PostUpdate()
 		SString tmp("score %4d", score);
 		SString tmp2("score mult %i", scoreMult);
 		SString tmp5("time %i.%f", minutes, seconds);
-		SString tmp3("total score %4d", scoreMult * score);
 		SString tmp4;
 
 
@@ -302,6 +325,7 @@ bool UI::OnGuiMouseClickEvent(GuiControl* control)
 			btn1->state = GuiControlState::DISABLED;
 			btn2->state = GuiControlState::DISABLED;
 			btn3->state = GuiControlState::DISABLED;
+			btn5->state = GuiControlState::DISABLED;
 		}
 
 		if (control->id == 2)
@@ -311,6 +335,11 @@ bool UI::OnGuiMouseClickEvent(GuiControl* control)
 			btn2->state = GuiControlState::DISABLED;
 			btn3->state = GuiControlState::DISABLED;
 			btn4->state = GuiControlState::NORMAL;
+			btn5->state = GuiControlState::DISABLED;
+			slid1->state = GuiControlState::NORMAL;
+			slid2->state = GuiControlState::NORMAL;
+			check1->state = GuiControlState::NORMAL;
+			check2->state = GuiControlState::NORMAL;
 		}
 
 		if (control->id == 3)
@@ -319,7 +348,7 @@ bool UI::OnGuiMouseClickEvent(GuiControl* control)
 			{
 				app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->intro);
 			}
-			if(app->currentScene == 2)
+			if (app->currentScene == 2)
 			{
 				app->fadeToBlack->MFadeToBlack((Module*)app->scene2, (Module*)app->intro);
 			}
@@ -331,13 +360,53 @@ bool UI::OnGuiMouseClickEvent(GuiControl* control)
 			btn1->state = GuiControlState::NORMAL;
 			btn2->state = GuiControlState::NORMAL;
 			btn3->state = GuiControlState::NORMAL;
+			btn5->state = GuiControlState::NORMAL;
 			btn4->state = GuiControlState::DISABLED;
+			slid1->state = GuiControlState::DISABLED;
+			slid2->state = GuiControlState::DISABLED;
+			check1->state = GuiControlState::DISABLED;
+			check2->state = GuiControlState::DISABLED;
 		}
 		if (control->id == 5)
 		{
 			ret = false;
 		}
-	}
+
+	}break;
+	case GuiControlType::CHECKBOX:
+	{
+		if (control->id == 6)
+		{
+			bool fullscreen = check1->checked;
+			app->win->SetFullScreen(fullscreen);
+			app->render->SetFullScreen();
+		}
+		if(control->id == 7)
+		{
+			app->render->vsync = !app->render->vsync;
+			app->SaveGameRequest();
+			if (app->currentScene == 1)
+			{
+				app->render->SetVsync(app->render->vsync, (Module*)app->scene);
+			}
+			else if (app->currentScene == 2)
+			{
+				app->render->SetVsync(app->render->vsync, (Module*)app->scene2);
+			}
+			app->LoadGameRequest();
+		}
+	}break;
+	case GuiControlType::SLIDER:
+	{
+		if (control->id == 8)
+		{
+			app->audio->volMusic = slid1->value * 100;
+		}
+		if (control->id == 9)
+		{
+			app->audio->volFX = slid2->value * 100;
+		}
+	}break;
 	//Other cases here
 
 	default: break;
