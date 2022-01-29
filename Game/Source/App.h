@@ -110,6 +110,8 @@ public:
 	bool hasLoaded = false;
 	bool canContinue = false;
 	int currentScene = 1;
+	
+	bool pause = false;
 	// Modules
 	Window* win;
 	Input* input;

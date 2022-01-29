@@ -20,7 +20,10 @@ GuiCheck::GuiCheck(uint32 id, SDL_Rect bounds,  const char* text, bool initState
 	normal.PushBack({ 95,0,44,45 });
 	xcheck.PushBack({ 148,0,20,45 });
 		
-	fxaudio = app->audio->LoadFx("Assets/audio/fx/gem.wav");
+
+	onClickFX = app->audio->LoadFx("Assets/audio/fx/onClickFX.wav");
+	onHoverFX = app->audio->LoadFx("Assets/audio/fx/onHoverFX.wav");
+
 }
 
 GuiCheck::~GuiCheck()
@@ -44,14 +47,14 @@ bool GuiCheck::Update(float dt)
 			state = GuiControlState::FOCUSED;
 			if (isPlaying == false)
 			{
-				app->audio->PlayFx(fxaudio);
+				app->audio->PlayFx(onHoverFX);
 				isPlaying = true;
 			}	
 
 			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_DOWN)
 			{
 				state = GuiControlState::PRESSED;
-				app->audio->PlayFx(fxaudio);
+				app->audio->PlayFx(onClickFX);
 			}
 
 			// If mouse button pressed -> Generate event!

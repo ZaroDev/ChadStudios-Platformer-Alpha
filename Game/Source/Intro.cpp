@@ -130,8 +130,7 @@ bool Intro::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		app->SaveGameRequest();
 	
-	app->audio->volMusic = slid1->value * 100;
-	app->audio->volFX = slid2->value * 100;
+
 
 	logoAnim.Update();
 	return true;
@@ -255,6 +254,18 @@ bool Intro::OnGuiMouseClickEvent(GuiControl* control)
 			app->render->SetVsync(app->render->vsync, (Module*)this);
 		}
 		break;
+
+	case GuiControlType::SLIDER:
+	{
+		if (control->id == 8)
+		{
+			app->audio->volMusic = slid1->value * 100;
+		}
+		if (control->id == 9)
+		{
+			app->audio->volFX = slid2->value * 100;
+		}
+	}break;
 	default: break;
 	}
 

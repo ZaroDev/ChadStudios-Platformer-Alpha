@@ -190,6 +190,7 @@ bool UI::PostUpdate()
 				btn3->state = GuiControlState::NORMAL;
 				btn5->state = GuiControlState::NORMAL;
 				onPause = false;
+				app->pause = false;
 			}
 		}
 		else
@@ -199,6 +200,7 @@ bool UI::PostUpdate()
 			btn3->state = GuiControlState::NONE;
 			btn5->state = GuiControlState::NONE;
 			onPause = true;
+			app->pause = true;
 		}
 		if (settingsShow == true)
 		{
@@ -212,6 +214,7 @@ bool UI::PostUpdate()
 		//SCORING SYSTEM
 		SString tmp("score %4d", score);
 		SString tmp2("score mult %i", scoreMult);
+		SString tmp3("total score %i", score* scoreMult);
 		SString tmp5("time %i.%f", minutes, seconds);
 		SString tmp4;
 

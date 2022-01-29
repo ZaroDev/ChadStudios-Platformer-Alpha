@@ -85,7 +85,7 @@ void EntityManager::UpdateAll(float dt, bool canUpdate)
 bool EntityManager::Update(float dt)
 {
 	accumulatedTime += dt;
-	if (accumulatedTime >= updateMsCycle) doLogic = true;
+	if (accumulatedTime >= updateMsCycle && app->pause) doLogic = true;
 
 	UpdateAll(dt, doLogic);
 

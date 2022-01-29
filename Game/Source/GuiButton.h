@@ -31,7 +31,8 @@ public:
 	Animation noDraw;
 	bool UI = false;
 
-	int fxaudio;
+	int onClickFX;
+	int onHoverFX;
 	bool isPlaying;
 
 	bool canClick = true;

@@ -33,7 +33,9 @@ public:
 	Animation normal;
 	Animation xcheck;
 
-	int fxaudio;
+
+	int onClickFX;
+	int onHoverFX;
 	bool isPlaying;
 
 	bool canClick = true;

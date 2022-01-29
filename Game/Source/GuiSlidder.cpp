@@ -34,7 +34,8 @@ GuiSlidder::GuiSlidder(uint32 id, SDL_Rect bounds, const char* text, int min, in
 	minOutside = outside.x;
 	maxOutside = outside.x + outside.w;
 
-	fxaudio = app->audio->LoadFx("Assets/audio/fx/gem.wav");
+	onClickFX = app->audio->LoadFx("Assets/audio/fx/onClickFX.wav");
+	onHoverFX = app->audio->LoadFx("Assets/audio/fx/onHoverFX.wav");
 }
 
 GuiSlidder::~GuiSlidder()
@@ -60,11 +61,11 @@ bool GuiSlidder::Update(float dt)
 			state = GuiControlState::FOCUSED;
 			if (isPlaying == false)
 			{
-				app->audio->PlayFx(fxaudio);
+				app->audio->PlayFx(onHoverFX);
 				isPlaying = true;
 			}
 			if(app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_DOWN)
-				app->audio->PlayFx(fxaudio);
+				app->audio->PlayFx(onClickFX);
 			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)
 			{
 				state = GuiControlState::PRESSED;
@@ -80,12 +81,13 @@ bool GuiSlidder::Update(float dt)
 		else
 		{
 			state = GuiControlState::NORMAL;
-			if (outside.w > 0)
+			
+		
+			if (value >= 0)
 				knobPos.x = bounds.x + outside.w - knob.w / 2;
 			if (value >= 1)
 				knobPos.x = bounds.x + outside.w - knob.w;
-			else
-				knobPos.x = bounds.x;
+
 			isPlaying = false;
 
 		}

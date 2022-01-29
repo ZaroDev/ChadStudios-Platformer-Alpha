@@ -49,7 +49,8 @@ public:
 	SDL_Rect outside;
 	SDL_Rect knob;
 
-	int fxaudio;
+	int onClickFX;
+	int onHoverFX;
 	bool isPlaying;
 
 	bool canClick = true;
