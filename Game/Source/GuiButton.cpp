@@ -59,8 +59,12 @@ bool GuiButton::Update(float dt)
 			(mouseY + offsetY > bounds.y) && (mouseY + offsetY < (bounds.y + bounds.h)))
 		{
 			state = GuiControlState::FOCUSED;
-			app->audio->PlayFx(fxaudio);
-			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)
+			if (isPlaying == false)
+			{
+				app->audio->PlayFx(fxaudio);
+				isPlaying = true;
+			}
+			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_DOWN)
 			{
 				state = GuiControlState::PRESSED;
 				app->audio->PlayFx(fxaudio);
@@ -72,7 +76,11 @@ bool GuiButton::Update(float dt)
 				ret = NotifyObserver();
 			}
 		}
-		else if(state != GuiControlState::NONE) state = GuiControlState::NORMAL;
+		else if(state != GuiControlState::NONE) 
+		{
+			state = GuiControlState::NORMAL;
+			isPlaying = false;
+		}
 	}
 
 	return ret;
