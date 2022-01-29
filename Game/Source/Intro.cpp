@@ -39,6 +39,7 @@ bool Intro::Awake(pugi::xml_node& config)
 	bool ret = true;
 	folder.Create(config.child("folder").child_value()); 
 	audioFile.Create(config.child("audio").child_value());
+	guiFile.Create(config.child("gui").child_value());
 	return ret;
 }
 
@@ -49,15 +50,15 @@ bool Intro::Start()
 	// L03: DONE: Load map
 	SString tmp("%s%s", folder.GetString(), "intro.png");
 	SString tmp2("%s%s", folder.GetString(), "logoAnim.png");
-	//SString tmp3("%s%s", folder.GetString(), "creditsMenu.png");
-	//SString tmp5("%s%s", folder.GetString(), "settingsMenu.png");
+	SString tmp3("%s%s", guiFile.GetString(), "creditsMenu.png");
 	SString tmp4("%s%s", audioFile.GetString(), "music/intro.wav");
+	SString tmp5("%s%s", guiFile.GetString(), "settingsMenu.png");
 	app->audio->PlayMusic(tmp4.GetString());
 	app->currentScene = 0;
 	background = app->tex->Load(tmp.GetString());
 	logoImg = app->tex->Load(tmp2.GetString());
-	credits = app->tex->Load("Assets/textures/GUI/creditsMenu.png");
-	settings = app->tex->Load("Assets/textures/GUI/settingsMenu.png");
+	credits = app->tex->Load(tmp3.GetString());
+	settings = app->tex->Load(tmp5.GetString());
 
 	load = true;
 	//GUI
@@ -75,7 +76,7 @@ bool Intro::Start()
 
 	btn5 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, GuiButtonType::CREDITS, 5, "Test5", { ((int)x / 2) - 400, ((int)y / 10) + 150, 97, 42 }, this);
 	
-	btn6 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, GuiButtonType::CLOSE, 6, "Test6", { ((int)x / 2) - 350, ((int)y / 10) - 65, 97, 42 }, this);
+	btn6 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, GuiButtonType::CLOSE, 6, "Test6", { ((int)x / 2) - 330, ((int)y / 10) - 80, 97, 42 }, this);
 
 	check1 = (GuiCheck*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, GuiButtonType::NONE, 7, "Check1", { ((int)x / 2) - 450, ((int)y / 10) + 50, 42, 42 }, this);
 	check2 = (GuiCheck*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, GuiButtonType::NONE, 8, "Check2", { ((int)x / 2) - 450, ((int)y / 10) + 110, 42, 42 }, this);
@@ -94,6 +95,10 @@ bool Intro::Start()
 
 
 	check2->checked = app->render->vsync;
+	app->audio->volFX = 50.0f;
+	app->audio->volMusic = 50.0f;
+	slid1->value = 0.5f;
+	slid2->value = 0.5f;
 	settingsShow = false;
 	creditShow = false;
 	return true;
@@ -112,6 +117,10 @@ bool Intro::PreUpdate()
 	{
 		btn2->state = GuiControlState::NORMAL;
 	}
+	else if (!app->hasLoaded && !creditShow && !settingsShow)
+	{
+		btn2->state = GuiControlState::DISABLED;
+	}
 	LOG("%i", app->hasLoaded);
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
@@ -129,8 +138,6 @@ bool Intro::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		app->SaveGameRequest();
-	
-
 
 	logoAnim.Update();
 	return true;
@@ -161,7 +168,6 @@ bool Intro::PostUpdate()
 
 	app->guiManager->Draw();
 
-	
 	return ret;
 }
 
@@ -257,11 +263,11 @@ bool Intro::OnGuiMouseClickEvent(GuiControl* control)
 
 	case GuiControlType::SLIDER:
 	{
-		if (control->id == 8)
+		if (control->id == 9)
 		{
 			app->audio->volMusic = slid1->value * 100;
 		}
-		if (control->id == 9)
+		if (control->id == 10)
 		{
 			app->audio->volFX = slid2->value * 100;
 		}

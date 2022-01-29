@@ -28,7 +28,7 @@ public:
 	void DrawPath(SDL_Texture* tex);
 
 	void PlayJump();
-
+	void PlaySuperJump();
 public:
 	Player* currentPlayer = nullptr;
 private:

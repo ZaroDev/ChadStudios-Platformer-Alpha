@@ -20,8 +20,12 @@
 		<music value="5" />
 		<fx value="5" />
 	</audio>
+  <guiManager>
+    <folder>Assets/textures/GUI/</folder>
+  </guiManager>
 	<ui>
 		<folder>Assets/textures/UI/</folder>
+    <gui>Assets/textures/GUI/</gui>
 	</ui>
 	<entities>
 		<folder>Assets/textures/sprites/</folder>
@@ -33,6 +37,7 @@
 	<intro>
 		<audio>Assets/audio/</audio>
 		<folder>Assets/maps/</folder>
+    <gui>Assets/textures/GUI/</gui>
 	</intro>
 	<scene>
 		<audio>Assets/audio/</audio>

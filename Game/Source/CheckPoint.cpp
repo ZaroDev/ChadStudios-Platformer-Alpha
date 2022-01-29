@@ -36,6 +36,7 @@ void CheckPoint::Update(float dt)
 {
 	if (this->IsActivated() && !anim.HasFinished())
 		anim.Update();
+
 }
 
 void CheckPoint::Use()

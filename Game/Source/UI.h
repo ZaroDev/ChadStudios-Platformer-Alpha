@@ -40,20 +40,28 @@ private:
 	SDL_Texture* originTex;
 	SDL_Texture* pausetex;
 	SDL_Texture* settings;
+
 	bool onPause = true;
+
 	int counter = 0;
 	float seconds = 0;
 	int minutes = 0;
 	int score = 0;
 	int font;
 	int scoreMult = 1;
+
 	Animation heartAnim;
 	Animation gemAnim;
 	Animation abAnim;
+
 	int highScore = 0;
+
 	SString folder;
+	SString guiFile;
+
 	bool settingsShow = false;
 	bool pauseShow = false;
+
 	GuiButton* btn1;
 	GuiButton* btn2;
 	GuiButton* btn3;

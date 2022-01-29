@@ -41,7 +41,7 @@ public:
 	void SetState(EntityState state) { currentState = state; }
 	virtual bool LoadState(pugi::xml_node& data)	
 	{
-		bool ret = true;
+		bool ret = data;
 		active = data.attribute("active").as_bool();
 
 		return ret;

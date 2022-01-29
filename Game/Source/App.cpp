@@ -114,7 +114,7 @@ bool App::Awake()
 		// L01: DONE 4: Read the title from the config file
 		title.Create(configApp.child("title").child_value());
 		organization.Create(configApp.child("organization").child_value());
-		hasLoaded = configApp.child("hasloaded").attribute("value").as_bool();
+	
 		// L08: DONE 1: Read from config file your framerate cap
 		maxFrameRate = configApp.child("frcap").attribute("value").as_int();
 	}
@@ -391,7 +391,7 @@ bool App::LoadGame()
 		LOG("Could not load map xml file config.xml. pugi error: %s", result.description());
 		ret = false;
 	}
-	hasLoaded = gameStateFile.child("game_state").child("hasloaded").attribute("value").as_bool();
+	
 
 	ListItem<Module*>* item;
 	item = modules.start;
@@ -416,7 +416,7 @@ bool App::SaveGame() const
 	pugi::xml_document* saveDoc = new pugi::xml_document();
 	pugi::xml_node saveStateNode = saveDoc->append_child("game_state");
 
-	saveStateNode.append_child("hasloaded").append_attribute("value").set_value(true);
+	
 
 	ListItem<Module*>* item;
 	item = modules.start;

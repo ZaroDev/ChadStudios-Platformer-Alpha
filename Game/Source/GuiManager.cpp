@@ -14,21 +14,39 @@ GuiManager::GuiManager(bool startEnabled) : Module(startEnabled)
 
 GuiManager::~GuiManager() {}
 
+bool GuiManager::Awake(pugi::xml_node&config)
+{
+	folder.Create(config.child("folder").child_value());
+	return true;
+}
+
 bool GuiManager::Start()
 {
 	//button
-	playTex = app->tex->Load("Assets/textures/GUI/play.png");
-	continueTex = app->tex->Load("Assets/textures/GUI/continue.png");
-	settingsTex = app->tex->Load("Assets/textures/GUI/settings.png");
-	exitTex = app->tex->Load("Assets/textures/GUI/exit.png");
-	creditsTex = app->tex->Load("Assets/textures/GUI/credits.png");
-	resumeTex = app->tex->Load("Assets/textures/GUI/resume.png");
-	bttTex = app->tex->Load("Assets/textures/GUI/backToTitle.png");
-	closeTex = app->tex->Load("Assets/textures/GUI/close.png");
+	SString tmp("%s%s", folder.GetString(), "play.png");
+	SString tmp2("%s%s", folder.GetString(), "continue.png");
+	SString tmp3("%s%s", folder.GetString(), "settings.png");
+	SString tmp4("%s%s", folder.GetString(), "exit.png");
+	SString tmp5("%s%s", folder.GetString(), "credits.png");
+	SString tmp6("%s%s", folder.GetString(), "resume.png");
+	SString tmp7("%s%s", folder.GetString(), "backToTitle.png");
+	SString tmp8("%s%s", folder.GetString(), "close.png");
+	SString tmp9("%s%s", folder.GetString(), "checkbox.png");
+	SString tmp10("%s%s", folder.GetString(), "slider.png");
 
-	checkbox = app->tex->Load("Assets/textures/GUI/checkbox.png");
 
-	slider = app->tex->Load("Assets/textures/GUI/slider.png");
+	playTex = app->tex->Load(tmp.GetString());
+	continueTex = app->tex->Load(tmp2.GetString());
+	settingsTex = app->tex->Load(tmp3.GetString());
+	exitTex = app->tex->Load(tmp4.GetString());
+	creditsTex = app->tex->Load(tmp5.GetString());
+	resumeTex = app->tex->Load(tmp6.GetString());
+	bttTex = app->tex->Load(tmp7.GetString());
+	closeTex = app->tex->Load(tmp8.GetString());
+
+	checkbox = app->tex->Load(tmp9.GetString());
+
+	slider = app->tex->Load(tmp10.GetString());
 	return true;
 }
 

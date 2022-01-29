@@ -20,6 +20,7 @@ UI::~UI()
 bool UI::Awake(pugi::xml_node& config)
 {
 	folder.Create(config.child("folder").child_value());
+	guiFile.Create(config.child("gui").child_value());
 
 	heartAnim.PushBack({ 1, 1, 16, 16 });
 	heartAnim.PushBack({ 20, 1, 16, 16 });
@@ -43,7 +44,6 @@ bool UI::Awake(pugi::xml_node& config)
 	abAnim.PushBack({ 31, 13, 20, 19 });
 	abAnim.loop = true;
 	abAnim.speed = 0.1f;
-
 	return true;
 }
 
@@ -53,13 +53,15 @@ bool UI::Start()
 	SString tmp2("%s%s", folder.GetString(), "gem.png");
 	SString tmp3("%s%s", folder.GetString(), "font.png");
 	SString tmp4("%s%s", folder.GetString(), "abilityAnim.png");
+	SString tmp5("%s%s", guiFile.GetString(), "pauseMenu.png");
+	SString tmp6("%s%s", guiFile.GetString(), "settingsMenu.png");
 	app->guiManager->Start();
 	heart = app->tex->Load(tmp1.GetString());
 	gem = app->tex->Load(tmp2.GetString());
 	anim = app->tex->Load(tmp4.GetString());
 	char lookUpTable[] = { "abcdefghijklmnopqrstuvwxyz0123456789!.?   " };
-	pausetex = app->tex->Load("Assets/textures/GUI/pauseMenu.png");
-	settings = app->tex->Load("Assets/textures/GUI/settingsMenu.png");
+	pausetex = app->tex->Load(tmp5.GetString());
+	settings = app->tex->Load(tmp6.GetString());
 	font = app->fonts->Load(tmp3.GetString(), lookUpTable, 7);
 	//GUI
 	app->guiManager->Start();
@@ -91,7 +93,7 @@ bool UI::Start()
 	slid2->state = GuiControlState::DISABLED;
 	settingsShow = false;
 	pauseShow = false;
-
+	check2->checked = app->render->vsync;
 
 	return true;
 }

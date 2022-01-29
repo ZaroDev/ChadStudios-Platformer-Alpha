@@ -81,7 +81,7 @@ bool Death::Update(float dt)
 		if (app->die)
 		{
 			app->hasLost = true;
-		
+			app->LoadGameRequest();
 			if (app->currentScene == 1)
 			{
 				app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene);

@@ -52,7 +52,7 @@ private:
 	int frames = 0;
 	SString folder;
 	SString audioFile;
-
+	SString guiFile;
 	GuiButton* btn1;
 	GuiButton* btn2;
 	GuiButton* btn3;

@@ -8,7 +8,7 @@
 #include "UI.h"
 #include "Textures.h"
 #include "Log.h"
-
+#include "EntityManager.h"
 
 Player::Player(iPoint position_) : Entity(EntityType::PLAYER, position_)
 {
@@ -98,6 +98,7 @@ void Player::Update(float dt)
 		app->audio->PlayFx(jumpSFX);
 		pbody->body->SetLinearVelocity({ pbody->body->GetLinearVelocity().x, jumpVel });
 		numJumps--;
+		app->entman->PlayJump();
 	}
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && grounded)
 	{
@@ -106,6 +107,7 @@ void Player::Update(float dt)
 		{
 			pbody->body->SetLinearVelocity({ pbody->body->GetLinearVelocity().x, jumpVel * 1.5f });
 			useDownDash = true;
+			app->entman->PlaySuperJump();
 		}
 		if (useDownDash == false)
 		{

@@ -29,7 +29,7 @@ EntityManager::~EntityManager()
 bool EntityManager::Awake(pugi::xml_node& config)
 {
 	folder.Create(config.child("folder").child_value());
-	audio.Create(config.child("audio").child_value());
+	audio.Create(config.child("sfx").child_value());
 
 	return true;
 }
@@ -42,12 +42,27 @@ bool EntityManager::Start()
 	SString pathCollect("%s%s", folder.GetString(), "collect.png");
 	SString pathCheck("%s%s", folder.GetString(), "checkpoint.png");
 	SString pathPath("%s%s", folder.GetString(), "nav.png");
+
+	SString jumpPath("%s%s", audio.GetString(), "jumpSFX.wav");
+	SString superJumpPath("%s%s", audio.GetString(), "superJump.wav");
+	SString cherryPath("%s%s", audio.GetString(), "cherry.wav");
+	SString checkPath("%s%s", audio.GetString(), "check.wav");
+	SString enemyPath("%s%s", audio.GetString(), "enemy.wav");
+	SString gemPath("%s%s", audio.GetString(), "gem.wav");
+	SString hurtPath("%s%s", audio.GetString(), "playerHurt.wav");
 	playerTex = app->tex->Load(pathPlayer.GetString());
 	enemiesTex = app->tex->Load(pathEnemies.GetString());
 	checkTex = app->tex->Load(pathCheck.GetString());
 	collectTex = app->tex->Load(pathCollect.GetString());
 	path = app->tex->Load(pathPath.GetString());
 
+	playerJumpSFX = app->audio->LoadFx(jumpPath.GetString());
+	playerSuperJumpSFX = app->audio->LoadFx(superJumpPath.GetString());
+	playerHitSFX = app->audio->LoadFx(hurtPath.GetString());
+	gemSFX = app->audio->LoadFx(gemPath.GetString());
+	checkpointSFX = app->audio->LoadFx(checkPath.GetString());
+	cherrySFX = app->audio->LoadFx(cherryPath.GetString());
+	hitSFX = app->audio->LoadFx(enemyPath.GetString());
 	//Loading audio
 
 
@@ -129,8 +144,18 @@ bool EntityManager::PostUpdate()
 		switch (ent->data->type)
 		{
 		case EntityType::PLAYER: app->render->DrawTexture(playerTex, ent->data->GetPos().x - (ent->data->w / 2), ent->data->GetPos().y - (ent->data->h / 2), &ent->data->currentAnimation->GetCurrentFrame()); break;
-		case EntityType::ENEMY_EAGLE:app->render->DrawTexture(enemiesTex, ent->data->GetPos().x - (ent->data->w / 2), ent->data->GetPos().y - (ent->data->h / 2), &ent->data->currentAnimation->GetCurrentFrame()); break;
-		case EntityType::ENEMY_RAT: app->render->DrawTexture(enemiesTex, ent->data->GetPos().x - (ent->data->w / 2), ent->data->GetPos().y - (ent->data->h / 2), &ent->data->currentAnimation->GetCurrentFrame()); break;
+		case EntityType::ENEMY_EAGLE: 
+		{
+			SDL_RendererFlip rotate = SDL_FLIP_NONE;
+			if (ent->data->pbody->body->GetLinearVelocity().x > 0) rotate = SDL_FLIP_HORIZONTAL;
+			app->render->DrawTexture(enemiesTex, ent->data->GetPos().x - (ent->data->w / 2), ent->data->GetPos().y - (ent->data->h / 2), &ent->data->currentAnimation->GetCurrentFrame(),false, 1.0f, rotate);
+		}break;
+		case EntityType::ENEMY_RAT:
+		{
+			SDL_RendererFlip rotate = SDL_FLIP_NONE;
+			if (ent->data->pbody->body->GetLinearVelocity().x > 0) rotate = SDL_FLIP_HORIZONTAL;
+			app->render->DrawTexture(enemiesTex, ent->data->GetPos().x - (ent->data->w / 2), ent->data->GetPos().y - (ent->data->h / 2), &ent->data->currentAnimation->GetCurrentFrame(),false, 1.0f, rotate);
+		}break;
 		case EntityType::GEM: app->render->DrawTexture(collectTex, ent->data->GetPos().x - (ent->data->w / 2), ent->data->GetPos().y - (ent->data->h / 2), &ent->data->currentAnimation->GetCurrentFrame()); break;
 		case EntityType::CHERRY: app->render->DrawTexture(collectTex, ent->data->GetPos().x - (ent->data->w / 2), ent->data->GetPos().y - (ent->data->h / 2), &ent->data->currentAnimation->GetCurrentFrame()); break;
 		case EntityType::CHECKPOINT: app->render->DrawTexture(checkTex, ent->data->GetPos().x - (ent->data->w / 2), ent->data->GetPos().y - (ent->data->h / 2), &ent->data->currentAnimation->GetCurrentFrame()); break;
@@ -148,6 +173,10 @@ bool EntityManager::PostUpdate()
 bool EntityManager::CleanUp()
 {
 	DestroyAllEntities();
+	app->tex->UnLoad(enemiesTex);
+	app->tex->UnLoad(playerTex);
+	app->tex->UnLoad(collectTex);
+	app->tex->UnLoad(checkTex);
 	return true;
 }
 
@@ -202,7 +231,7 @@ void EntityManager::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			app->ui->AddScore(100);
 			return;
 		}
-		else if (bodyB->eListener->type == CHECKPOINT)
+		else if (bodyB->eListener->type == CHECKPOINT && !bodyB->eListener->active)
 		{
 
 			app->SaveGameRequest();
@@ -260,6 +289,8 @@ bool EntityManager::LoadState(pugi::xml_node& data)
 		ret = item->data->LoadState(data.child(item->data->name.GetString()));
 		item = item->next;
 	}
+	app->hasLoaded = data.first_child();
+
 	app->currentScene = data.attribute("currentScene").as_int();
 	return ret;
 }
@@ -345,5 +376,10 @@ void EntityManager::DrawPath(SDL_Texture* tex)
 
 void EntityManager::PlayJump()
 {
-	
+	app->audio->PlayFx(playerJumpSFX);
+}
+
+void EntityManager::PlaySuperJump()
+{
+	app->audio->PlayFx(playerSuperJumpSFX);
 }

@@ -16,6 +16,7 @@ public:
 	// Destructor
 	virtual ~GuiManager();
 
+	bool Awake(pugi::xml_node&);
 	// Called before the first frame
 	bool Start();
 
@@ -55,6 +56,8 @@ public:
 	SDL_Texture* checkbox;
 
 	SDL_Texture* slider;
+
+	SString folder;
 };
 
 #endif // __GUIMANAGER_H__
